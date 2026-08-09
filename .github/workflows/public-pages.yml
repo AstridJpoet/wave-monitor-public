@@ -51,7 +51,7 @@ jobs:
         run: python scripts/privacy_check.py
 
       - name: Scan markets and build site
-        run: python scripts/run_public_scan.py --a-top-n 200 --us-top-n 60 --limit-per-market 30
+        run: python scripts/run_public_scan.py --a-top-n 800 --us-top-n 300 --limit-per-market 30
 
       - name: Check privacy before publish
         run: python scripts/privacy_check.py
@@ -67,4 +67,3 @@ jobs:
       - name: Deploy Pages
         id: deployment
         uses: actions/deploy-pages@v4
-
