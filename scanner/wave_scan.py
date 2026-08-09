@@ -64,6 +64,12 @@ WAVE2_RETRACE = (0.45, 0.786)
 WAVE4_RETRACE = (0.236, 0.50)
 EASTMONEY_HISTORY_ENABLED = True
 EASTMONEY_QUOTE_ENABLED = True
+INDEX_DEFINITIONS = [
+    {"market": "CN", "symbol": "000001.SS", "name": "上证指数"},
+    {"market": "CN", "symbol": "000300.SS", "name": "沪深300"},
+    {"market": "US", "symbol": "^GSPC", "name": "标普500"},
+    {"market": "US", "symbol": "^IXIC", "name": "纳斯达克综合"},
+]
 
 
 def zigzag(frame: pd.DataFrame, pct: float, col: str = "close") -> list[Pivot]:
@@ -394,10 +400,112 @@ def trend_score_v2(prices: pd.DataFrame) -> float:
     return score
 
 
+def market_index_snapshot(definition: dict, prices: pd.DataFrame) -> dict:
+    if len(prices) < 145:
+        raise ValueError("index history requires at least 145 sessions")
+    frame = prices.reset_index(drop=True)
+    closes = pd.to_numeric(frame["close"], errors="coerce")
+    latest = float(closes.iloc[-1])
+    ma20 = float(closes.rolling(20).mean().iloc[-1])
+    ma50 = float(closes.rolling(50).mean().iloc[-1])
+    ma144 = float(closes.rolling(144).mean().iloc[-1])
+    change_1d = latest / float(closes.iloc[-2]) - 1
+    change_5d = latest / float(closes.iloc[-6]) - 1
+    change_20d = latest / float(closes.iloc[-21]) - 1
+
+    score = 0.0
+    score += 25.0 if latest > ma20 else 0.0
+    score += 20.0 if ma20 > ma50 else 0.0
+    score += 20.0 if latest > ma50 else 0.0
+    score += 15.0 if latest > ma144 else 0.0
+    score += 10.0 if change_5d > 0 else 0.0
+    score += 10.0 if change_20d > 0 else 0.0
+    if score >= 80:
+        status = "强势"
+    elif score >= 60:
+        status = "偏强"
+    elif score >= 40:
+        status = "震荡"
+    else:
+        status = "偏弱"
+    return {
+        "market": str(definition["market"]),
+        "symbol": str(definition["symbol"]),
+        "name": str(definition["name"]),
+        "last_date": pd.Timestamp(frame["date"].iloc[-1]).date().isoformat(),
+        "last_close": round(latest, 4),
+        "change_1d": round(change_1d, 6),
+        "change_5d": round(change_5d, 6),
+        "change_20d": round(change_20d, 6),
+        "ma20": round(ma20, 4),
+        "ma50": round(ma50, 4),
+        "ma144": round(ma144, 4),
+        "score": round(score, 1),
+        "status": status,
+    }
+
+
+def scan_market_indices(
+    start: date,
+    end: date,
+    cache_dir: Path,
+) -> tuple[list[dict], list[dict]]:
+    snapshots: list[dict] = []
+    failures: list[dict] = []
+    for definition in INDEX_DEFINITIONS:
+        try:
+            prices = fetch_yahoo_daily(
+                str(definition["symbol"]),
+                start,
+                end,
+                cache_dir,
+                True,
+                cache_market="INDEX",
+            )
+            snapshots.append(market_index_snapshot(definition, prices))
+        except Exception as exc:
+            failures.append(
+                {
+                    "market": definition["market"],
+                    "symbol": definition["symbol"],
+                    "error": f"{type(exc).__name__}: {exc}",
+                }
+            )
+    return snapshots, failures
+
+
+def market_context_scores(index_snapshots: list[dict]) -> dict[str, float]:
+    grouped: dict[str, list[float]] = {}
+    for snapshot in index_snapshots:
+        grouped.setdefault(str(snapshot["market"]), []).append(float(snapshot["score"]))
+    return {market: round(float(np.mean(scores)), 1) for market, scores in grouped.items() if scores}
+
+
+def market_context_label(score: float | None) -> str:
+    if score is None:
+        return "未取得大盘数据"
+    if score >= 80:
+        return "大盘强势"
+    if score >= 60:
+        return "大盘偏强"
+    if score >= 40:
+        return "大盘震荡"
+    return "大盘偏弱"
+
+
+def market_score_adjustment(score: float | None) -> float:
+    if score is None or score >= 60:
+        return 0.0
+    if score >= 40:
+        return -3.0
+    return -8.0
+
+
 def score_candidate_v2(
     row: dict,
     prices: pd.DataFrame,
     multi_level_alignment: bool,
+    market_context_score: float | None = None,
 ) -> dict | None:
     close = float(row["last_close"])
     support = float(row["support"])
@@ -499,18 +607,36 @@ def score_candidate_v2(
         )
         volume_ratio = latest_volume_ratio
 
+    market_adjustment = market_score_adjustment(market_context_score)
     total_score = round(
-        structure_score + position_score + confirmation_score + trend_score + risk_score,
+        structure_score + position_score + confirmation_score + trend_score + risk_score + market_adjustment,
         1,
     )
     if total_score < 65:
         return None
-    signal_stage = "trigger" if trigger and total_score >= 75 else "watch"
+    left_probe = bool(
+        not is_breakout
+        and not trigger
+        and -0.02 <= distance <= 0.025
+        and structure_score >= 28
+        and trend_score >= 5
+        and risk_reward >= 2.0
+        and total_score >= 75
+    )
+    if trigger and total_score >= 75:
+        signal_stage = "trigger"
+        stage_label = "右侧触发"
+    elif left_probe:
+        signal_stage = "probe"
+        stage_label = "左侧试错"
+    else:
+        signal_stage = "watch"
+        stage_label = "观察候选"
     row.update(
         {
             "score": total_score,
             "signal_stage": signal_stage,
-            "stage_label": "今日触发" if signal_stage == "trigger" else "观察候选",
+            "stage_label": stage_label,
             "structure_score": round(structure_score, 1),
             "position_score": round(position_score, 1),
             "confirmation_score": round(confirmation_score, 1),
@@ -520,12 +646,19 @@ def score_candidate_v2(
             "volume_ratio": round(volume_ratio, 3) if volume_ratio is not None else np.nan,
             "confirmation_detail": "、".join(confirmation) if confirmation else "等待右侧确认",
             "multi_level_alignment": multi_level_alignment,
+            "market_context_score": round(market_context_score, 1) if market_context_score is not None else np.nan,
+            "market_context_label": market_context_label(market_context_score),
+            "market_adjustment": market_adjustment,
         }
     )
     return row
 
 
-def scan_instrument(instrument: Instrument, prices: pd.DataFrame) -> list[dict]:
+def scan_instrument(
+    instrument: Instrument,
+    prices: pd.DataFrame,
+    market_context_score: float | None = None,
+) -> list[dict]:
     if len(prices) < 260:
         return []
     prices = prices.reset_index(drop=True)
@@ -555,10 +688,11 @@ def scan_instrument(instrument: Instrument, prices: pd.DataFrame) -> list[dict]:
     rows = []
     for row in setups:
         aligned = len(pattern_levels.get(str(row["pattern"]), set())) > 1
-        scored = score_candidate_v2(row, prices, aligned)
+        scored = score_candidate_v2(row, prices, aligned, market_context_score)
         if scored:
             rows.append(scored)
-    return sorted(rows, key=lambda item: (item["signal_stage"] == "trigger", item["score"]), reverse=True)
+    stage_priority = {"trigger": 2, "probe": 1, "watch": 0}
+    return sorted(rows, key=lambda item: (stage_priority.get(item["signal_stage"], 0), item["score"]), reverse=True)
 
 
 def yyyymmdd_to_date(value: str) -> date | None:
@@ -828,15 +962,23 @@ def main() -> int:
     out_dir.mkdir(parents=True, exist_ok=True)
     instruments = build_pool(args)
     scan_started_at = pd.Timestamp.now()
+    index_snapshots, index_failures = scan_market_indices(start, end, cache_dir)
+    context_scores = market_context_scores(index_snapshots)
 
     results = []
     failures = []
     print(f"Scanning {len(instruments)} instruments from {start} to {end}")
+    print(f"Market indices: {len(index_snapshots)} ready, {len(index_failures)} failed")
+    for snapshot in index_snapshots:
+        print(
+            f"  {snapshot['symbol']} {snapshot['status']} "
+            f"score={snapshot['score']:.0f} close={snapshot['last_close']}"
+        )
     print("A-share sources: Eastmoney history/realtime -> Sina realtime -> Yahoo history fallback")
     for idx, instrument in enumerate(instruments, start=1):
         try:
             prices = fetch_prices(instrument, start, end, cache_dir, args.recent_cache_days)
-            rows = scan_instrument(instrument, prices)
+            rows = scan_instrument(instrument, prices, context_scores.get(instrument.market))
             results.extend(rows)
             print(f"[{idx:03d}/{len(instruments)}] {instrument.market} {instrument.symbol}: {len(rows)} setups")
         except Exception as exc:
@@ -869,6 +1011,11 @@ def main() -> int:
         "candidate_count": len(df),
         "failure_count": len(failures),
         "failure_rate": failure_rate,
+        "index_count": len(index_snapshots),
+        "index_failure_count": len(index_failures),
+        "index_snapshots": index_snapshots,
+        "index_failures": index_failures,
+        "market_context_scores": context_scores,
         "protected_existing": protected_existing,
         "failures": failures,
     }
