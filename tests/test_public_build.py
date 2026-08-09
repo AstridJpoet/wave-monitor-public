@@ -57,6 +57,24 @@ class PublicBuildTests(unittest.TestCase):
                         "failure_count": 2,
                         "failure_rate": 0.01,
                         "duration_seconds": 30,
+                        "index_snapshots": [
+                            {
+                                "market": "US",
+                                "symbol": "^GSPC",
+                                "name": "标普500",
+                                "last_date": "2026-08-08",
+                                "last_close": 6500,
+                                "change_1d": 0.01,
+                                "change_5d": 0.02,
+                                "change_20d": 0.03,
+                                "ma20": 6400,
+                                "ma50": 6300,
+                                "ma144": 6000,
+                                "score": 100,
+                                "status": "强势",
+                                "private_note": "must stay private",
+                            }
+                        ],
                         "failures": [{"error": "must stay private"}],
                         "args": {"cache_dir": "/private/path"},
                     }
@@ -71,6 +89,8 @@ class PublicBuildTests(unittest.TestCase):
             self.assertNotIn("failures", payload["metadata"])
             self.assertNotIn("args", payload["metadata"])
             self.assertEqual(payload["metadata"]["instrument_count"], 262)
+            self.assertEqual(payload["metadata"]["index_count"], 1)
+            self.assertNotIn("private_note", payload["metadata"]["index_snapshots"][0])
 
     def test_high_failure_rate_stops_publication(self) -> None:
         with tempfile.TemporaryDirectory() as tmp:
