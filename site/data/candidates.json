@@ -1,5 +1,5 @@
 {
-  "schema_version": 1,
+  "schema_version": 2,
   "published_at": null,
   "metadata": {
     "scan_generated_at": null,
@@ -7,6 +7,9 @@
     "instrument_count": 0,
     "candidate_count": 0,
     "raw_candidate_count": 0,
+    "deduped_candidate_count": 0,
+    "trigger_count": 0,
+    "watch_count": 0,
     "failure_count": 0,
     "failure_rate": null,
     "a_share_source_priority": null,
