@@ -1,0 +1,117 @@
+<!doctype html>
+<html lang="zh-CN">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="color-scheme" content="light" />
+    <meta name="description" content="A股、美股与黄金波浪形态候选的公开只读扫描结果。" />
+    <title>波浪候选扫描</title>
+    <link rel="icon" href="./favicon.svg" type="image/svg+xml" />
+    <link rel="stylesheet" href="./styles.css" />
+  </head>
+  <body>
+    <header class="topbar">
+      <div class="brand">
+        <div class="brand-mark" aria-hidden="true"><span></span><span></span><span></span></div>
+        <div>
+          <div class="eyebrow">PUBLIC MARKET SCAN</div>
+          <h1>波浪候选扫描</h1>
+        </div>
+      </div>
+      <div class="publish-state" id="publishState">
+        <span class="status-dot" aria-hidden="true"></span>
+        <span id="publishStateText">读取数据</span>
+      </div>
+    </header>
+
+    <main class="workspace">
+      <section class="filter-band" aria-label="候选筛选">
+        <label class="search-field">
+          <span>搜索</span>
+          <input id="searchBox" type="search" placeholder="代码 / 名称" autocomplete="off" />
+        </label>
+
+        <div class="market-filter">
+          <span class="field-label">市场</span>
+          <div class="segmented" id="marketTabs" role="group" aria-label="市场">
+            <button class="active" type="button" data-market="">全部</button>
+            <button type="button" data-market="CN">A股</button>
+            <button type="button" data-market="US">美股</button>
+            <button type="button" data-market="GOLD">黄金</button>
+          </div>
+        </div>
+
+        <label>
+          <span>最低价</span>
+          <input id="minPrice" type="number" min="0" step="0.01" placeholder="不限" inputmode="decimal" />
+        </label>
+        <label>
+          <span>最高价</span>
+          <input id="maxPrice" type="number" min="0" step="0.01" placeholder="不限" inputmode="decimal" />
+        </label>
+        <label>
+          <span>最低推荐</span>
+          <input id="minScore" type="number" min="0" max="120" step="1" value="60" inputmode="numeric" />
+        </label>
+        <label>
+          <span>排序</span>
+          <select id="sortBy">
+            <option value="recommend">推荐优先</option>
+            <option value="upside">目标空间</option>
+            <option value="price-asc">价格从低到高</option>
+            <option value="price-desc">价格从高到低</option>
+          </select>
+        </label>
+        <button class="clear-button" id="clearFilters" type="button">清空</button>
+      </section>
+
+      <section class="summary-strip" aria-label="扫描摘要">
+        <div><strong id="candidateCount">-</strong><span>当前候选</span></div>
+        <div><strong id="priorityCount">-</strong><span>优先关注</span></div>
+        <div><strong id="instrumentCount">-</strong><span>扫描标的</span></div>
+        <div><strong id="marketCount">-</strong><span>覆盖市场</span></div>
+        <div><strong id="failureRate">-</strong><span>数据失败率</span></div>
+      </section>
+
+      <section class="candidate-panel">
+        <div class="panel-head">
+          <div>
+            <h2>扫描候选</h2>
+            <p id="candidateMeta">等待扫描数据</p>
+          </div>
+          <div class="result-count" id="resultCount">0 条</div>
+        </div>
+
+        <div class="table-wrap">
+          <table>
+            <thead>
+              <tr>
+                <th>市场</th>
+                <th>标的</th>
+                <th>浪形 / 位置</th>
+                <th>推荐</th>
+                <th>最新价</th>
+                <th>支撑</th>
+                <th>失效</th>
+                <th>目标</th>
+                <th>潜在空间</th>
+              </tr>
+            </thead>
+            <tbody id="candidateRows">
+              <tr><td class="empty" colspan="9">正在读取候选数据...</td></tr>
+            </tbody>
+          </table>
+        </div>
+
+        <div class="mobile-list" id="candidateCards" aria-live="polite"></div>
+      </section>
+
+      <footer>
+        <p id="disclaimer">仅供研究参考，不构成投资建议。</p>
+        <p>公开只读数据 · 不保存访客信息</p>
+      </footer>
+    </main>
+
+    <script src="./app.js"></script>
+  </body>
+</html>
