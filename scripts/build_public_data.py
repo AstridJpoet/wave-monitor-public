@@ -35,6 +35,8 @@ NUMERIC_FIELDS = {
     "risk_score",
     "risk_reward",
     "volume_ratio",
+    "market_context_score",
+    "market_adjustment",
 }
 
 PUBLIC_FIELDS = {
@@ -69,6 +71,36 @@ PUBLIC_FIELDS = {
     "volume_ratio",
     "confirmation_detail",
     "multi_level_alignment",
+    "market_context_score",
+    "market_context_label",
+    "market_adjustment",
+}
+
+INDEX_PUBLIC_FIELDS = {
+    "market",
+    "symbol",
+    "name",
+    "last_date",
+    "last_close",
+    "change_1d",
+    "change_5d",
+    "change_20d",
+    "ma20",
+    "ma50",
+    "ma144",
+    "score",
+    "status",
+}
+
+INDEX_NUMERIC_FIELDS = {
+    "last_close",
+    "change_1d",
+    "change_5d",
+    "change_20d",
+    "ma20",
+    "ma50",
+    "ma144",
+    "score",
 }
 
 
@@ -158,6 +190,18 @@ def public_row(raw: dict[str, Any]) -> dict[str, Any]:
     return {field: row.get(field) for field in PUBLIC_FIELDS}
 
 
+def public_index_snapshot(raw: dict[str, Any]) -> dict[str, Any]:
+    row = dict(raw)
+    for field in INDEX_NUMERIC_FIELDS:
+        row[field] = to_float(row.get(field))
+    row["market"] = str(row.get("market") or "").strip().upper()
+    row["symbol"] = str(row.get("symbol") or "").strip().upper()
+    row["name"] = str(row.get("name") or "").strip()
+    row["status"] = str(row.get("status") or "").strip()
+    row["last_date"] = str(row.get("last_date") or "").strip()
+    return {field: row.get(field) for field in INDEX_PUBLIC_FIELDS}
+
+
 def read_rows(path: Path) -> list[dict[str, Any]]:
     if not path.exists():
         return []
@@ -187,9 +231,10 @@ def build_payload(
     if failure_rate is not None and failure_rate > 0.55:
         raise RuntimeError(f"scan failure rate is too high: {failure_rate:.1%}")
 
+    stage_priority = {"trigger": 0, "probe": 1, "watch": 2}
     rows.sort(
         key=lambda item: (
-            0 if item.get("signal_stage") == "trigger" else 1,
+            stage_priority.get(str(item.get("signal_stage") or "watch"), 3),
             -(to_float(item.get("recommend_score")) or 0),
             -(to_float(item.get("score")) or 0),
             str(item.get("market") or ""),
@@ -219,10 +264,17 @@ def build_payload(
 
     market_counts = Counter(str(row.get("market") or "OTHER") for row in selected)
     trigger_count = sum(row.get("signal_stage") == "trigger" for row in selected)
+    probe_count = sum(row.get("signal_stage") == "probe" for row in selected)
+    watch_count = sum(row.get("signal_stage") == "watch" for row in selected)
+    index_snapshots = [
+        public_index_snapshot(raw)
+        for raw in metadata.get("index_snapshots", [])
+        if isinstance(raw, dict)
+    ]
 
     published_at = datetime.now(ZoneInfo("Asia/Shanghai")).isoformat(timespec="seconds")
     return {
-        "schema_version": 2,
+        "schema_version": 3,
         "published_at": published_at,
         "metadata": {
             "scan_generated_at": metadata.get("generated_at"),
@@ -232,12 +284,16 @@ def build_payload(
             "raw_candidate_count": raw_candidate_count,
             "deduped_candidate_count": len(rows),
             "trigger_count": trigger_count,
-            "watch_count": len(selected) - trigger_count,
+            "probe_count": probe_count,
+            "alert_count": trigger_count + probe_count,
+            "watch_count": watch_count,
             "failure_count": int(to_float(metadata.get("failure_count")) or 0),
             "failure_rate": failure_rate,
             "a_share_source_priority": metadata.get("a_share_source_priority"),
             "a_share_fallback_active": bool(metadata.get("a_share_fallback_active")),
             "market_counts": dict(market_counts),
+            "index_count": len(index_snapshots),
+            "index_snapshots": index_snapshots,
         },
         "candidates": selected,
         "disclaimer": "仅供研究参考，不构成投资建议。波浪识别具有主观性，历史形态不代表未来表现。",

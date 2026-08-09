@@ -21,8 +21,8 @@ TEXT_SUFFIXES = {"", ".css", ".csv", ".html", ".js", ".json", ".md", ".py", ".tx
 
 def forbidden_patterns() -> list[tuple[str, re.Pattern[str]]]:
     return [
-        ("personal home path", re.compile(re.escape("/Users/" + "jiang"), re.IGNORECASE)),
-        ("personal identifier", re.compile("jiang" + "xiaofan", re.IGNORECASE)),
+        ("macOS home path", re.compile(r"/Users/[A-Za-z0-9._-]+(?:/|$)", re.IGNORECASE)),
+        ("Windows home path", re.compile(r"[A-Z]:\\Users\\[A-Za-z0-9._-]+(?:\\|$)", re.IGNORECASE)),
         ("Telegram API", re.compile("api\\." + "telegram\\.org", re.IGNORECASE)),
         ("Telegram token variable", re.compile("TELEGRAM_" + "BOT_TOKEN", re.IGNORECASE)),
         ("bot token shape", re.compile(r"\b\d{6,12}:[A-Za-z0-9_-]{20,}\b")),
@@ -71,4 +71,3 @@ def main() -> int:
 
 if __name__ == "__main__":
     raise SystemExit(main())
-
