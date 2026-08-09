@@ -1,0 +1,70 @@
+name: Public Wave Scan
+
+on:
+  workflow_dispatch:
+  schedule:
+    - cron: "30 7 * * 1-5"
+    - cron: "30 22 * * 1-5"
+
+permissions:
+  contents: read
+  pages: write
+  id-token: write
+
+concurrency:
+  group: public-pages
+  cancel-in-progress: false
+
+jobs:
+  scan-and-deploy:
+    runs-on: ubuntu-latest
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+    steps:
+      - name: Check out public source
+        uses: actions/checkout@v4
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+          cache: pip
+
+      - name: Restore market cache
+        uses: actions/cache@v4
+        with:
+          path: |
+            data/scan_cache
+            data/results_wave_scan
+          key: wave-scan-${{ runner.os }}-${{ github.run_id }}
+          restore-keys: |
+            wave-scan-${{ runner.os }}-
+
+      - name: Install scanner dependencies
+        run: python -m pip install --requirement requirements.txt
+
+      - name: Test public build
+        run: python -m unittest discover -s tests
+
+      - name: Check privacy before scan
+        run: python scripts/privacy_check.py
+
+      - name: Scan markets and build site
+        run: python scripts/run_public_scan.py --a-top-n 200 --us-top-n 60 --limit-per-market 30
+
+      - name: Check privacy before publish
+        run: python scripts/privacy_check.py
+
+      - name: Configure Pages
+        uses: actions/configure-pages@v5
+
+      - name: Upload static site
+        uses: actions/upload-pages-artifact@v3
+        with:
+          path: site
+
+      - name: Deploy Pages
+        id: deployment
+        uses: actions/deploy-pages@v4
+
