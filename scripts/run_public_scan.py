@@ -22,8 +22,8 @@ def years_ago(today: date, years: int) -> date:
 
 def main() -> int:
     parser = argparse.ArgumentParser(description="Refresh the public wave candidate site.")
-    parser.add_argument("--a-top-n", type=int, default=200)
-    parser.add_argument("--us-top-n", type=int, default=60)
+    parser.add_argument("--a-top-n", type=int, default=800)
+    parser.add_argument("--us-top-n", type=int, default=300)
     parser.add_argument("--limit-per-market", type=int, default=30)
     args = parser.parse_args()
 
@@ -70,4 +70,3 @@ def main() -> int:
 
 if __name__ == "__main__":
     raise SystemExit(main())
-

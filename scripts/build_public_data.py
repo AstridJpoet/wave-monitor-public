@@ -28,6 +28,13 @@ NUMERIC_FIELDS = {
     "ma144",
     "ma249",
     "zigzag_threshold",
+    "structure_score",
+    "position_score",
+    "confirmation_score",
+    "trend_score",
+    "risk_score",
+    "risk_reward",
+    "volume_ratio",
 }
 
 PUBLIC_FIELDS = {
@@ -36,6 +43,9 @@ PUBLIC_FIELDS = {
     "monitor_symbol",
     "name",
     "pattern",
+    "wave_level",
+    "signal_stage",
+    "stage_label",
     "score",
     "recommend_score",
     "recommend_label",
@@ -50,6 +60,15 @@ PUBLIC_FIELDS = {
     "target_1_upside",
     "position_label",
     "scenario",
+    "structure_score",
+    "position_score",
+    "confirmation_score",
+    "trend_score",
+    "risk_score",
+    "risk_reward",
+    "volume_ratio",
+    "confirmation_detail",
+    "multi_level_alignment",
 }
 
 
@@ -71,37 +90,15 @@ def normalize_symbol(symbol: Any, market: Any) -> str:
 
 
 def recommendation_score(row: dict[str, Any]) -> float:
-    score = to_float(row.get("score")) or 0.0
-    pattern_bonus = {
-        "4浪回踩候选": 4.0,
-        "大2浪/ABC末端候选": 3.0,
-        "疑似3浪突破": 2.0,
-    }.get(str(row.get("pattern") or ""), 0.0)
-
-    proximity_bonus = 0.0
-    close = to_float(row.get("last_close"))
-    support = to_float(row.get("support"))
-    if close and support and support > 0:
-        distance = abs(close / support - 1)
-        if distance <= 0.03:
-            proximity_bonus = 8.0
-        elif distance <= 0.08:
-            proximity_bonus = 5.0
-        elif distance <= 0.15:
-            proximity_bonus = 2.0
-        elif close > support * 1.25:
-            proximity_bonus = -4.0
-        elif close < support * 0.95:
-            proximity_bonus = -3.0
-    return round(score + pattern_bonus + proximity_bonus, 1)
+    return round(min(100.0, max(0.0, to_float(row.get("score")) or 0.0)), 1)
 
 
 def recommendation_label(score: float) -> str:
-    if score >= 88:
+    if score >= 85:
         return "优先"
-    if score >= 78:
+    if score >= 75:
         return "较强"
-    if score >= 68:
+    if score >= 65:
         return "观察"
     return "一般"
 
@@ -130,7 +127,8 @@ def scenario_for(row: dict[str, Any]) -> tuple[str, str]:
 
     scripts = {
         "4浪回踩候选": "守住支撑，观察是否展开5浪；跌破失效位则放弃剧本。",
-        "大2浪/ABC末端候选": "等待调整止跌并出现右侧确认，失效位下方不参与。",
+        "2浪回撤候选": "等待2浪调整止跌并出现右侧确认，失效位下方不参与。",
+        "ABC/C浪末端候选": "等待C浪衰竭与转向确认，未收复支撑前只观察。",
         "疑似3浪突破": "关注突破后的回踩承接，守住支撑才保留延续预期。",
     }
     return position, scripts.get(pattern, "围绕支撑、失效位和目标位跟踪，不追逐单日波动。")
@@ -143,6 +141,11 @@ def public_row(raw: dict[str, Any]) -> dict[str, Any]:
     row["market"] = str(row.get("market") or "").strip().upper()
     row["symbol"] = str(row.get("symbol") or "").strip().upper()
     row["monitor_symbol"] = normalize_symbol(row["symbol"], row["market"])
+    row["multi_level_alignment"] = str(row.get("multi_level_alignment") or "").strip().lower() in {
+        "1",
+        "true",
+        "yes",
+    }
     row["recommend_score"] = recommendation_score(row)
     row["recommend_label"] = recommendation_label(row["recommend_score"])
 
@@ -178,6 +181,7 @@ def build_payload(
     limit_per_market: int = 30,
 ) -> dict[str, Any]:
     rows = read_rows(candidates_path)
+    raw_candidate_count = len(rows)
     metadata = read_metadata(metadata_path)
     failure_rate = to_float(metadata.get("failure_rate"))
     if failure_rate is not None and failure_rate > 0.55:
@@ -185,31 +189,50 @@ def build_payload(
 
     rows.sort(
         key=lambda item: (
+            0 if item.get("signal_stage") == "trigger" else 1,
             -(to_float(item.get("recommend_score")) or 0),
             -(to_float(item.get("score")) or 0),
             str(item.get("market") or ""),
             str(item.get("symbol") or ""),
         )
     )
+    deduped: list[dict[str, Any]] = []
+    seen_symbols: set[tuple[str, str]] = set()
+    for row in rows:
+        key = (str(row.get("market") or ""), str(row.get("symbol") or ""))
+        if key in seen_symbols:
+            continue
+        seen_symbols.add(key)
+        deduped.append(row)
+    rows = deduped
+
     selected: list[dict[str, Any]] = []
-    market_counts: Counter[str] = Counter()
+    market_stage_counts: Counter[tuple[str, str]] = Counter()
     for row in rows:
         market = str(row.get("market") or "OTHER")
-        if market_counts[market] >= limit_per_market:
+        stage = str(row.get("signal_stage") or "watch")
+        key = (market, stage)
+        if market_stage_counts[key] >= limit_per_market:
             continue
-        market_counts[market] += 1
+        market_stage_counts[key] += 1
         selected.append(row)
+
+    market_counts = Counter(str(row.get("market") or "OTHER") for row in selected)
+    trigger_count = sum(row.get("signal_stage") == "trigger" for row in selected)
 
     published_at = datetime.now(ZoneInfo("Asia/Shanghai")).isoformat(timespec="seconds")
     return {
-        "schema_version": 1,
+        "schema_version": 2,
         "published_at": published_at,
         "metadata": {
             "scan_generated_at": metadata.get("generated_at"),
             "duration_seconds": to_float(metadata.get("duration_seconds")),
             "instrument_count": int(to_float(metadata.get("instrument_count")) or 0),
             "candidate_count": len(selected),
-            "raw_candidate_count": len(rows),
+            "raw_candidate_count": raw_candidate_count,
+            "deduped_candidate_count": len(rows),
+            "trigger_count": trigger_count,
+            "watch_count": len(selected) - trigger_count,
             "failure_count": int(to_float(metadata.get("failure_count")) or 0),
             "failure_rate": failure_rate,
             "a_share_source_priority": metadata.get("a_share_source_priority"),
@@ -241,4 +264,3 @@ def main() -> int:
 
 if __name__ == "__main__":
     raise SystemExit(main())
-
