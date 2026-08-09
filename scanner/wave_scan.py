@@ -13,20 +13,36 @@ from pathlib import Path
 import numpy as np
 import pandas as pd
 
-from ma_touch_backtest import (
-    Instrument,
-    SP100_FALLBACK,
-    fetch_a_share_daily,
-    fetch_a_share_yahoo_daily,
-    fetch_yahoo_daily,
-    load_a_share_pool,
-    load_us_pool,
-    normalize_ohlc,
-    parse_date,
-    read_cached_csv,
-    request_get_with_retries,
-)
-from ma_touch_confirm_backtest import load_pool_from_metadata
+try:
+    from .ma_touch_backtest import (
+        Instrument,
+        SP100_FALLBACK,
+        fetch_a_share_daily,
+        fetch_a_share_yahoo_daily,
+        fetch_yahoo_daily,
+        load_a_share_pool,
+        load_us_pool,
+        normalize_ohlc,
+        parse_date,
+        read_cached_csv,
+        request_get_with_retries,
+    )
+    from .ma_touch_confirm_backtest import load_pool_from_metadata
+except ImportError:
+    from ma_touch_backtest import (
+        Instrument,
+        SP100_FALLBACK,
+        fetch_a_share_daily,
+        fetch_a_share_yahoo_daily,
+        fetch_yahoo_daily,
+        load_a_share_pool,
+        load_us_pool,
+        normalize_ohlc,
+        parse_date,
+        read_cached_csv,
+        request_get_with_retries,
+    )
+    from ma_touch_confirm_backtest import load_pool_from_metadata
 
 
 SCRIPT_ROOT = Path(__file__).resolve().parent
@@ -43,6 +59,7 @@ class Pivot:
 
 
 MIN_GAIN = {"CN": 0.55, "US": 0.25, "GOLD": 0.12}
+MIN_GAIN_MEDIUM = {"CN": 0.25, "US": 0.15, "GOLD": 0.08}
 WAVE2_RETRACE = (0.45, 0.786)
 WAVE4_RETRACE = (0.236, 0.50)
 EASTMONEY_HISTORY_ENABLED = True
@@ -116,6 +133,11 @@ def fib_score(value: float, target: float, width: float) -> float:
     return max(0.0, 1.0 - abs(value - target) / width)
 
 
+def min_gain_for(market: str, wave_level: str) -> float:
+    table = MIN_GAIN if wave_level == "大级别" else MIN_GAIN_MEDIUM
+    return table.get(market, 0.20)
+
+
 def pct(value: float) -> str:
     return f"{value * 100:.1f}%"
 
@@ -146,10 +168,12 @@ def trend_points(last_close: float, mas: pd.Series) -> float:
 def latest_high_pullback(
     instrument: Instrument,
     prices: pd.DataFrame,
-    weekly: pd.DataFrame,
+    structure: pd.DataFrame,
     pivots: list[Pivot],
+    wave_level: str,
 ) -> dict | None:
-    highs = [p for p in pivots if p.kind == "H" and (weekly.index[-1] - p.idx) <= 90]
+    max_age = 90 if wave_level == "大级别" else 180
+    highs = [p for p in pivots if p.kind == "H" and (structure.index[-1] - p.idx) <= max_age]
     if not highs:
         return None
     high = max(highs[-6:], key=lambda p: p.price)
@@ -159,7 +183,7 @@ def latest_high_pullback(
     low = lows_before[-1]
     last_close = float(prices["close"].iloc[-1])
     gain = high.price / low.price - 1
-    if gain < MIN_GAIN.get(instrument.market, 0.20) or last_close >= high.price:
+    if gain < min_gain_for(instrument.market, wave_level) or last_close >= high.price:
         return None
     retrace = (high.price - last_close) / (high.price - low.price)
     if not (WAVE2_RETRACE[0] <= retrace <= WAVE2_RETRACE[1]):
@@ -170,11 +194,20 @@ def latest_high_pullback(
     score = 45 * fib_score(retrace, 0.618, 0.22) + trend_points(last_close, mas) + min(20, max(0, bounce * 140))
     target_1 = high.price
     target_2 = last_close + (high.price - low.price)
+    post_high = [pivot for pivot in pivots if pivot.idx > high.idx]
+    is_abc = (
+        len(post_high) >= 3
+        and post_high[0].kind == "L"
+        and post_high[1].kind == "H"
+        and post_high[2].kind == "L"
+    )
     return {
         "market": instrument.market,
         "symbol": instrument.symbol,
         "name": instrument.name,
-        "pattern": "大2浪/ABC末端候选",
+        "pattern": "ABC/C浪末端候选" if is_abc else "2浪回撤候选",
+        "wave_level": wave_level,
+        "structure_fit": round(fib_score(retrace, 0.618, 0.22), 6),
         "score": round(score, 1),
         "last_date": pd.Timestamp(prices["date"].iloc[-1]).date().isoformat(),
         "last_close": round(last_close, 4),
@@ -193,21 +226,27 @@ def latest_high_pullback(
     }
 
 
-def wave4_candidate(instrument: Instrument, prices: pd.DataFrame, pivots: list[Pivot]) -> dict | None:
+def wave4_candidate(
+    instrument: Instrument,
+    prices: pd.DataFrame,
+    pivots: list[Pivot],
+    wave_level: str,
+) -> dict | None:
     if len(pivots) < 4:
         return None
     last_close = float(prices["close"].iloc[-1])
     candidates = []
-    for i in range(len(pivots) - 4):
+    for i in range(len(pivots) - 3):
         a, b, c, d = pivots[i : i + 4]
         if not (a.kind == "L" and b.kind == "H" and c.kind == "L" and d.kind == "H"):
             continue
-        if d.idx < len(pivots) - 8:
+        max_age = 52 if wave_level == "大级别" else 120
+        if pivots[-1].idx - d.idx > max_age:
             continue
         if not (d.price > b.price and c.price > a.price):
             continue
         gain3 = d.price / c.price - 1
-        if gain3 < MIN_GAIN.get(instrument.market, 0.20):
+        if gain3 < min_gain_for(instrument.market, wave_level):
             continue
         retrace = (d.price - last_close) / (d.price - c.price)
         if WAVE4_RETRACE[0] <= retrace <= WAVE4_RETRACE[1] and last_close > b.price:
@@ -224,6 +263,8 @@ def wave4_candidate(instrument: Instrument, prices: pd.DataFrame, pivots: list[P
         "symbol": instrument.symbol,
         "name": instrument.name,
         "pattern": "4浪回踩候选",
+        "wave_level": wave_level,
+        "structure_fit": round(fib_score(retrace, 0.382, 0.16), 6),
         "score": round(score, 1),
         "last_date": pd.Timestamp(prices["date"].iloc[-1]).date().isoformat(),
         "last_close": round(last_close, 4),
@@ -242,7 +283,12 @@ def wave4_candidate(instrument: Instrument, prices: pd.DataFrame, pivots: list[P
     }
 
 
-def breakout_candidate(instrument: Instrument, prices: pd.DataFrame, pivots: list[Pivot]) -> dict | None:
+def breakout_candidate(
+    instrument: Instrument,
+    prices: pd.DataFrame,
+    pivots: list[Pivot],
+    wave_level: str,
+) -> dict | None:
     if len(pivots) < 3:
         return None
     last_close = float(prices["close"].iloc[-1])
@@ -251,11 +297,12 @@ def breakout_candidate(instrument: Instrument, prices: pd.DataFrame, pivots: lis
         a, b, c = pivots[i : i + 3]
         if not (a.kind == "L" and b.kind == "H" and c.kind == "L"):
             continue
-        if c.idx < len(pivots) - 8:
+        max_age = 52 if wave_level == "大级别" else 120
+        if pivots[-1].idx - c.idx > max_age:
             continue
         gain = b.price / a.price - 1
         retrace = (b.price - c.price) / (b.price - a.price)
-        if gain < MIN_GAIN.get(instrument.market, 0.20) or not (0.382 <= retrace <= 0.786):
+        if gain < min_gain_for(instrument.market, wave_level) or not (0.382 <= retrace <= 0.786):
             continue
         if last_close <= b.price:
             continue
@@ -269,11 +316,14 @@ def breakout_candidate(instrument: Instrument, prices: pd.DataFrame, pivots: lis
     a, b, c, retrace, extension_target, extension_progress = matches[-1]
     mas = rolling_mas(prices)
     score = 42 * (1 - min(1, extension_progress)) + 25 * fib_score(retrace, 0.618, 0.24) + trend_points(last_close, mas)
+    structure_fit = 0.55 * fib_score(retrace, 0.618, 0.24) + 0.45 * (1 - min(1, extension_progress))
     return {
         "market": instrument.market,
         "symbol": instrument.symbol,
         "name": instrument.name,
         "pattern": "疑似3浪突破",
+        "wave_level": wave_level,
+        "structure_fit": round(structure_fit, 6),
         "score": round(score, 1),
         "last_date": pd.Timestamp(prices["date"].iloc[-1]).date().isoformat(),
         "last_close": round(last_close, 4),
@@ -292,7 +342,13 @@ def breakout_candidate(instrument: Instrument, prices: pd.DataFrame, pivots: lis
     }
 
 
-def threshold_for_market(market: str) -> float:
+def threshold_for_market(market: str, wave_level: str = "大级别") -> float:
+    if wave_level == "中级别":
+        if market == "CN":
+            return 0.12
+        if market == "GOLD":
+            return 0.05
+        return 0.08
     if market == "CN":
         return 0.25
     if market == "GOLD":
@@ -300,24 +356,209 @@ def threshold_for_market(market: str) -> float:
     return 0.14
 
 
+def volume_ratio_at(prices: pd.DataFrame, index: int) -> float | None:
+    volumes = pd.to_numeric(prices["volume"], errors="coerce")
+    if index < 0:
+        index += len(volumes)
+    if index <= 0 or index >= len(volumes):
+        return None
+    current = volumes.iloc[index]
+    baseline = volumes.iloc[max(0, index - 20) : index].replace(0, np.nan).mean()
+    if not np.isfinite(current) or not np.isfinite(baseline) or baseline <= 0:
+        return None
+    return float(current / baseline)
+
+
+def recent_breakout_index(prices: pd.DataFrame, support: float, lookback: int = 5) -> int | None:
+    closes = pd.to_numeric(prices["close"], errors="coerce").to_numpy(float)
+    for index in range(len(closes) - 1, max(0, len(closes) - lookback - 1), -1):
+        if np.isfinite(closes[index]) and np.isfinite(closes[index - 1]):
+            if closes[index] > support and closes[index - 1] <= support:
+                return index
+    return None
+
+
+def trend_score_v2(prices: pd.DataFrame) -> float:
+    closes = pd.to_numeric(prices["close"], errors="coerce")
+    ma144 = closes.rolling(144).mean()
+    ma249 = closes.rolling(249).mean()
+    score = 0.0
+    if pd.notna(ma249.iloc[-1]) and closes.iloc[-1] > ma249.iloc[-1]:
+        score += 2.5
+    if pd.notna(ma144.iloc[-1]) and pd.notna(ma249.iloc[-1]) and ma144.iloc[-1] > ma249.iloc[-1]:
+        score += 2.5
+    if len(ma144) >= 21 and pd.notna(ma144.iloc[-21]) and ma144.iloc[-1] > ma144.iloc[-21]:
+        score += 2.5
+    if len(ma249) >= 21 and pd.notna(ma249.iloc[-21]) and ma249.iloc[-1] > ma249.iloc[-21]:
+        score += 2.5
+    return score
+
+
+def score_candidate_v2(
+    row: dict,
+    prices: pd.DataFrame,
+    multi_level_alignment: bool,
+) -> dict | None:
+    close = float(row["last_close"])
+    support = float(row["support"])
+    invalid = float(row["invalid_below"])
+    target = float(row["target_1"])
+    if support <= 0 or close <= invalid or target <= close:
+        return None
+
+    pattern = str(row["pattern"])
+    is_breakout = pattern == "疑似3浪突破"
+    distance = close / support - 1
+    if is_breakout:
+        if not (-0.01 <= distance <= 0.10):
+            return None
+        position_distance = max(0.0, distance)
+    else:
+        if not (-0.05 <= distance <= 0.12):
+            return None
+        position_distance = abs(distance)
+
+    if position_distance <= 0.02:
+        position_score = 25.0
+    elif position_distance <= 0.04:
+        position_score = 22.0
+    elif position_distance <= 0.08:
+        position_score = 16.0
+    else:
+        position_score = 8.0
+
+    risk = close - invalid
+    reward = target - close
+    if risk <= 0:
+        return None
+    risk_reward = reward / risk
+    if risk_reward < 1.5:
+        return None
+    if risk_reward >= 3.0:
+        risk_score = 10.0
+    elif risk_reward >= 2.0:
+        risk_score = 8.0
+    else:
+        risk_score = 6.0
+
+    structure_fit = float(row.get("structure_fit") or 0.0)
+    structure_score = min(35.0, 22.0 + 8.0 * structure_fit + (5.0 if multi_level_alignment else 0.0))
+    trend_score = trend_score_v2(prices)
+
+    opens = pd.to_numeric(prices["open"], errors="coerce")
+    highs = pd.to_numeric(prices["high"], errors="coerce")
+    lows = pd.to_numeric(prices["low"], errors="coerce")
+    closes = pd.to_numeric(prices["close"], errors="coerce")
+    latest_volume_ratio = volume_ratio_at(prices, -1)
+    confirmation_score = 0.0
+    confirmation: list[str] = []
+    trigger = False
+
+    if is_breakout:
+        cross_index = recent_breakout_index(prices, support)
+        breakout_volume_ratio = volume_ratio_at(prices, cross_index) if cross_index is not None else None
+        if cross_index is not None:
+            confirmation_score += 10.0
+            confirmation.append("近5日突破")
+        if breakout_volume_ratio is not None and breakout_volume_ratio >= 1.2:
+            confirmation_score += 6.0
+            confirmation.append("突破放量")
+        if cross_index is not None and closes.iloc[cross_index:].min() >= support:
+            confirmation_score += 4.0
+            confirmation.append("突破后守位")
+        trigger = bool(
+            cross_index is not None
+            and breakout_volume_ratio is not None
+            and breakout_volume_ratio >= 1.2
+            and 0 <= distance <= 0.08
+        )
+        volume_ratio = breakout_volume_ratio
+    else:
+        bullish_reclaim = bool(
+            lows.iloc[-1] <= support * 1.03
+            and closes.iloc[-1] >= support
+            and closes.iloc[-1] > opens.iloc[-1]
+        )
+        higher_low = bool(lows.iloc[-1] > lows.iloc[-2] and closes.iloc[-1] > closes.iloc[-2])
+        breaks_recent_high = bool(closes.iloc[-1] > highs.iloc[-4:-1].max())
+        if bullish_reclaim:
+            confirmation_score += 8.0
+            confirmation.append("支撑收复")
+        if higher_low:
+            confirmation_score += 5.0
+            confirmation.append("更高低点")
+        if breaks_recent_high:
+            confirmation_score += 5.0
+            confirmation.append("突破3日高点")
+        if latest_volume_ratio is not None and latest_volume_ratio >= 1.2:
+            confirmation_score += 2.0
+            confirmation.append("成交放量")
+        trigger = bool(
+            (bullish_reclaim or (higher_low and breaks_recent_high))
+            and -0.02 <= distance <= 0.08
+        )
+        volume_ratio = latest_volume_ratio
+
+    total_score = round(
+        structure_score + position_score + confirmation_score + trend_score + risk_score,
+        1,
+    )
+    if total_score < 65:
+        return None
+    signal_stage = "trigger" if trigger and total_score >= 75 else "watch"
+    row.update(
+        {
+            "score": total_score,
+            "signal_stage": signal_stage,
+            "stage_label": "今日触发" if signal_stage == "trigger" else "观察候选",
+            "structure_score": round(structure_score, 1),
+            "position_score": round(position_score, 1),
+            "confirmation_score": round(confirmation_score, 1),
+            "trend_score": round(trend_score, 1),
+            "risk_score": round(risk_score, 1),
+            "risk_reward": round(risk_reward, 3),
+            "volume_ratio": round(volume_ratio, 3) if volume_ratio is not None else np.nan,
+            "confirmation_detail": "、".join(confirmation) if confirmation else "等待右侧确认",
+            "multi_level_alignment": multi_level_alignment,
+        }
+    )
+    return row
+
+
 def scan_instrument(instrument: Instrument, prices: pd.DataFrame) -> list[dict]:
     if len(prices) < 260:
         return []
-    weekly = resample_weekly(prices)
-    threshold = threshold_for_market(instrument.market)
-    pivots = zigzag(weekly, threshold)
-    if len(pivots) < 6:
-        pivots = zigzag(weekly, threshold * 0.75)
+    prices = prices.reset_index(drop=True)
+    structures = [
+        ("大级别", resample_weekly(prices).reset_index(drop=True)),
+        ("中级别", prices),
+    ]
+    setups: list[dict] = []
+    for wave_level, structure in structures:
+        threshold = threshold_for_market(instrument.market, wave_level)
+        pivots = zigzag(structure, threshold)
+        if len(pivots) < 6:
+            pivots = zigzag(structure, threshold * 0.75)
+        for fn in [latest_high_pullback, wave4_candidate, breakout_candidate]:
+            if fn is latest_high_pullback:
+                row = fn(instrument, prices, structure, pivots, wave_level)
+            else:
+                row = fn(instrument, prices, pivots, wave_level)
+            if row:
+                row["zigzag_threshold"] = threshold
+                setups.append(row)
+
+    pattern_levels: dict[str, set[str]] = {}
+    for row in setups:
+        pattern_levels.setdefault(str(row["pattern"]), set()).add(str(row["wave_level"]))
+
     rows = []
-    for fn in [latest_high_pullback, wave4_candidate, breakout_candidate]:
-        if fn is latest_high_pullback:
-            row = fn(instrument, prices, weekly, pivots)
-        else:
-            row = fn(instrument, prices, pivots)
-        if row:
-            row["zigzag_threshold"] = threshold
-            rows.append(row)
-    return rows
+    for row in setups:
+        aligned = len(pattern_levels.get(str(row["pattern"]), set())) > 1
+        scored = score_candidate_v2(row, prices, aligned)
+        if scored:
+            rows.append(scored)
+    return sorted(rows, key=lambda item: (item["signal_stage"] == "trigger", item["score"]), reverse=True)
 
 
 def yyyymmdd_to_date(value: str) -> date | None:

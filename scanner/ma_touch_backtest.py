@@ -225,6 +225,41 @@ def load_a_share_pool(top_n: int) -> list[Instrument]:
     import akshare as ak
 
     try:
+        df = ak.stock_zh_a_spot_em().copy()
+        df["代码"] = df["代码"].astype(str).str.zfill(6)
+        empty_numeric = pd.Series(np.nan, index=df.index, dtype=float)
+        df["总市值"] = pd.to_numeric(df.get("总市值", empty_numeric), errors="coerce")
+        df["成交额"] = pd.to_numeric(df.get("成交额", empty_numeric), errors="coerce")
+        df["最新价"] = pd.to_numeric(df.get("最新价", empty_numeric), errors="coerce")
+        df = df[
+            df["代码"].str.startswith(("0", "3", "6"))
+            & ~df["名称"].astype(str).str.upper().str.contains("ST|退", regex=True)
+        ]
+        if df["最新价"].notna().any():
+            df = df[df["最新价"] >= 3]
+        if df["总市值"].notna().any():
+            df = df[df["总市值"] >= 3_000_000_000]
+        if df["成交额"].notna().any():
+            df = df[df["成交额"] >= 50_000_000]
+
+        amount_rank = df["成交额"].rank(pct=True).fillna(0)
+        cap_rank = df["总市值"].rank(pct=True).fillna(0)
+        df["扫描优先级"] = amount_rank * 0.7 + cap_rank * 0.3
+        df = df.sort_values(["扫描优先级", "总市值"], ascending=False).head(top_n)
+        return [
+            Instrument(
+                market="CN",
+                symbol=str(row["代码"]),
+                name=str(row["名称"]),
+                source="Eastmoney liquid A-share universe",
+                weight=float(row["扫描优先级"]),
+            )
+            for _, row in df.iterrows()
+        ]
+    except Exception as exc:
+        print(f"Warning: failed to load Eastmoney liquid A-share pool: {exc}")
+
+    try:
         df = ak.index_stock_cons_weight_csindex(symbol="000300")
         df = df.sort_values("权重", ascending=False).head(top_n)
         return [
@@ -232,35 +267,13 @@ def load_a_share_pool(top_n: int) -> list[Instrument]:
                 market="CN",
                 symbol=str(row["成分券代码"]).zfill(6),
                 name=str(row["成分券名称"]),
-                source="CSI300 current top weights",
+                source="CSI300 current top weights fallback",
                 weight=float(row["权重"]),
             )
             for _, row in df.iterrows()
         ]
     except Exception as exc:
-        print(f"Warning: failed to load CSI300 weights: {exc}")
-
-    try:
-        df = ak.stock_zh_a_spot_em().copy()
-        df["代码"] = df["代码"].astype(str).str.zfill(6)
-        df["总市值"] = pd.to_numeric(df["总市值"], errors="coerce")
-        df = df[
-            df["代码"].str.startswith(("0", "3", "6"))
-            & ~df["名称"].astype(str).str.upper().str.contains("ST|退", regex=True)
-        ]
-        df = df.sort_values("总市值", ascending=False).head(top_n)
-        return [
-            Instrument(
-                market="CN",
-                symbol=str(row["代码"]),
-                name=str(row["名称"]),
-                source="Eastmoney A-share market-cap fallback",
-                weight=None,
-            )
-            for _, row in df.iterrows()
-        ]
-    except Exception as exc:
-        print(f"Warning: failed to load Eastmoney A-share pool: {exc}")
+        print(f"Warning: failed to load CSI300 fallback pool: {exc}")
 
     return [
         Instrument(market="CN", symbol=symbol, name=name, source="Static A-share fallback")
@@ -286,12 +299,70 @@ def load_sp100_from_wikipedia(timeout: int = 20) -> list[Instrument]:
     raise RuntimeError("Could not find S&P 100 table on Wikipedia")
 
 
+def load_us_broad_pool_from_wikipedia(timeout: int = 20) -> list[Instrument]:
+    sources = [
+        (
+            "https://en.wikipedia.org/wiki/Nasdaq-100",
+            ("Ticker", "Symbol"),
+            ("Company", "Security", "Name"),
+            "Nasdaq-100 current constituents",
+        ),
+        (
+            "https://en.wikipedia.org/wiki/List_of_S%26P_500_companies",
+            ("Symbol", "Ticker"),
+            ("Security", "Company", "Name"),
+            "S&P 500 current constituents",
+        ),
+    ]
+    instruments: list[Instrument] = []
+    seen: set[str] = set()
+    for url, symbol_names, company_names, source_name in sources:
+        response = request_get_with_retries(url, timeout=timeout, headers={"User-Agent": "Mozilla/5.0"})
+        for table in pd.read_html(io.StringIO(response.text)):
+            table = table.copy()
+            table.columns = [str(column[-1] if isinstance(column, tuple) else column) for column in table.columns]
+            symbol_column = next((name for name in symbol_names if name in table.columns), None)
+            company_column = next((name for name in company_names if name in table.columns), None)
+            if symbol_column is None or company_column is None:
+                continue
+            for _, row in table.iterrows():
+                symbol = str(row[symbol_column]).strip().upper().replace(".", "-")
+                if not symbol or symbol == "NAN" or symbol in seen:
+                    continue
+                seen.add(symbol)
+                instruments.append(
+                    Instrument(
+                        market="US",
+                        symbol=symbol,
+                        name=str(row[company_column]).strip(),
+                        source=source_name,
+                    )
+                )
+            break
+    if not instruments:
+        raise RuntimeError("Could not load Nasdaq-100 or S&P 500 constituents")
+    return instruments
+
+
 def load_us_pool(top_n: int, refresh: bool) -> list[Instrument]:
-    if refresh:
+    if refresh or top_n > len(SP100_FALLBACK):
         try:
-            return load_sp100_from_wikipedia()[:top_n]
+            broad = load_us_broad_pool_from_wikipedia()
+            fallback = [
+                Instrument(market="US", symbol=symbol, name=symbol, source="S&P 100 fallback list")
+                for symbol in SP100_FALLBACK
+            ]
+            combined = fallback + broad
+            seen: set[str] = set()
+            unique = []
+            for instrument in combined:
+                if instrument.symbol in seen:
+                    continue
+                seen.add(instrument.symbol)
+                unique.append(instrument)
+            return unique[:top_n]
         except Exception as exc:
-            print(f"Warning: failed to refresh S&P 100 from Wikipedia: {exc}")
+            print(f"Warning: failed to refresh broad US pool from Wikipedia: {exc}")
     return [
         Instrument(market="US", symbol=symbol, name=symbol, source="S&P 100 fallback list")
         for symbol in SP100_FALLBACK[:top_n]

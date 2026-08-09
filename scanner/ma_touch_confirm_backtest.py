@@ -25,19 +25,34 @@ from typing import Iterable
 import numpy as np
 import pandas as pd
 
-from ma_touch_backtest import (
-    Instrument,
-    SP100_FALLBACK,
-    default_start,
-    ensure_dir,
-    fetch_a_share_daily,
-    fetch_a_share_yahoo_daily,
-    fetch_start_for_warmup,
-    fetch_yahoo_daily,
-    load_a_share_pool,
-    load_us_pool,
-    parse_date,
-)
+try:
+    from .ma_touch_backtest import (
+        Instrument,
+        SP100_FALLBACK,
+        default_start,
+        ensure_dir,
+        fetch_a_share_daily,
+        fetch_a_share_yahoo_daily,
+        fetch_start_for_warmup,
+        fetch_yahoo_daily,
+        load_a_share_pool,
+        load_us_pool,
+        parse_date,
+    )
+except ImportError:
+    from ma_touch_backtest import (
+        Instrument,
+        SP100_FALLBACK,
+        default_start,
+        ensure_dir,
+        fetch_a_share_daily,
+        fetch_a_share_yahoo_daily,
+        fetch_start_for_warmup,
+        fetch_yahoo_daily,
+        load_a_share_pool,
+        load_us_pool,
+        parse_date,
+    )
 
 
 def load_pool_from_metadata(path: Path, a_top_n: int, us_top_n: int) -> list[Instrument]:
