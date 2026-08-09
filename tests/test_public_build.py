@@ -82,7 +82,54 @@ class PublicBuildTests(unittest.TestCase):
             with self.assertRaises(RuntimeError):
                 build_payload(candidates, metadata)
 
+    def test_trigger_wins_symbol_deduplication_over_higher_scored_watch(self) -> None:
+        with tempfile.TemporaryDirectory() as tmp:
+            root = Path(tmp)
+            candidates = root / "candidates.csv"
+            metadata = root / "metadata.json"
+            rows = [
+                {
+                    "market": "US",
+                    "symbol": "AAA",
+                    "name": "Alpha",
+                    "pattern": "4浪回踩候选",
+                    "wave_level": "大级别",
+                    "signal_stage": "watch",
+                    "stage_label": "观察候选",
+                    "score": "90",
+                    "last_close": "105",
+                    "support": "100",
+                    "invalid_below": "95",
+                    "target_1": "125",
+                },
+                {
+                    "market": "US",
+                    "symbol": "AAA",
+                    "name": "Alpha",
+                    "pattern": "疑似3浪突破",
+                    "wave_level": "中级别",
+                    "signal_stage": "trigger",
+                    "stage_label": "今日触发",
+                    "score": "80",
+                    "last_close": "105",
+                    "support": "103",
+                    "invalid_below": "98",
+                    "target_1": "125",
+                },
+            ]
+            with candidates.open("w", encoding="utf-8", newline="") as handle:
+                writer = csv.DictWriter(handle, fieldnames=list(rows[0]))
+                writer.writeheader()
+                writer.writerows(rows)
+            metadata.write_text('{"failure_rate": 0}', encoding="utf-8")
+
+            payload = build_payload(candidates, metadata)
+
+            self.assertEqual(len(payload["candidates"]), 1)
+            self.assertEqual(payload["candidates"][0]["signal_stage"], "trigger")
+            self.assertEqual(payload["metadata"]["trigger_count"], 1)
+            self.assertEqual(payload["metadata"]["deduped_candidate_count"], 1)
+
 
 if __name__ == "__main__":
     unittest.main()
-
