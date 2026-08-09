@@ -4,19 +4,23 @@ const state = {
   payload: null,
   rows: [],
   market: "",
+  stage: "",
 };
 
 const els = {
+  methodGuide: $("#methodGuide"),
   searchBox: $("#searchBox"),
   minPrice: $("#minPrice"),
   maxPrice: $("#maxPrice"),
   minScore: $("#minScore"),
   sortBy: $("#sortBy"),
   marketTabs: $("#marketTabs"),
+  stageTabs: $("#stageTabs"),
   clearFilters: $("#clearFilters"),
   candidateRows: $("#candidateRows"),
   candidateCards: $("#candidateCards"),
   candidateCount: $("#candidateCount"),
+  triggerCount: $("#triggerCount"),
   priorityCount: $("#priorityCount"),
   instrumentCount: $("#instrumentCount"),
   marketCount: $("#marketCount"),
@@ -27,6 +31,10 @@ const els = {
   publishState: $("#publishState"),
   publishStateText: $("#publishStateText"),
 };
+
+if (window.matchMedia("(max-width: 760px)").matches) {
+  els.methodGuide.removeAttribute("open");
+}
 
 function escapeHtml(value) {
   return String(value ?? "")
@@ -96,6 +104,7 @@ function filteredRows() {
     const close = number(item.last_close);
     const score = number(item.recommend_score);
     if (state.market && item.market !== state.market) return false;
+    if (state.stage && item.signal_stage !== state.stage) return false;
     if (query) {
       const haystack = `${item.symbol || ""} ${item.monitor_symbol || ""} ${item.name || ""}`.toLowerCase();
       if (!haystack.includes(query)) return false;
@@ -119,6 +128,7 @@ function filteredRows() {
 function tableRow(item) {
   const targets = [item.target_1, item.target_2].filter((value) => number(value) !== null);
   const invalidClass = item.position_label === "低于失效位" ? " invalid" : "";
+  const stage = item.signal_stage === "trigger" ? "trigger" : "watch";
   return `
     <tr>
       <td><span class="badge ${escapeHtml(String(item.market || "").toLowerCase())}">${escapeHtml(marketLabel(item.market))}</span></td>
@@ -128,22 +138,27 @@ function tableRow(item) {
           <small>${escapeHtml(item.name || "")}</small>
         </div>
       </td>
+      <td><span class="stage-badge ${stage}">${escapeHtml(item.stage_label || "观察候选")}</span></td>
       <td class="pattern-cell">
-        ${escapeHtml(item.pattern || "")}
+        ${escapeHtml(item.wave_level || "")}${item.wave_level ? " · " : ""}${escapeHtml(item.pattern || "")}
         <div class="position-label${invalidClass}">${escapeHtml(item.position_label || "")}</div>
-        <div class="muted">回撤 ${pct(item.retracement)}</div>
+        <div class="muted">${escapeHtml(item.confirmation_detail || "等待右侧确认")}</div>
       </td>
-      <td><div class="score">${fmt(item.recommend_score)}<small>${escapeHtml(item.recommend_label || "")}</small></div></td>
+      <td>
+        <div class="score">${fmt(item.recommend_score)}<small>${escapeHtml(item.recommend_label || "")}</small></div>
+        <div class="score-breakdown">结${fmt(item.structure_score)} 位${fmt(item.position_score)} 确${fmt(item.confirmation_score)}</div>
+      </td>
       <td>${fmt(item.last_close)}<div class="muted">${escapeHtml(item.last_date || "")}</div></td>
       <td>${fmt(item.support)}<div class="muted">距离 ${pct(item.distance_to_support, true)}</div></td>
       <td>${fmt(item.invalid_below)}</td>
       <td>${targets.map(fmt).join(" / ") || "-"}</td>
-      <td class="${number(item.target_1_upside) >= 0 ? "positive" : "negative"}">${pct(item.target_1_upside, true)}</td>
+      <td class="${number(item.target_1_upside) >= 0 ? "positive" : "negative"}">${pct(item.target_1_upside, true)}<div class="muted">盈亏比 ${fmt(item.risk_reward)}</div></td>
     </tr>`;
 }
 
 function candidateCard(item) {
   const invalidClass = item.position_label === "低于失效位" ? " invalid" : "";
+  const stage = item.signal_stage === "trigger" ? "trigger" : "watch";
   return `
     <article class="candidate-card">
       <div class="card-head">
@@ -154,9 +169,13 @@ function candidateCard(item) {
         </div>
         <div class="card-score">${fmt(item.recommend_score)}<small>${escapeHtml(item.recommend_label || "")}</small></div>
       </div>
+      <div class="card-stage-row">
+        <span class="stage-badge ${stage}">${escapeHtml(item.stage_label || "观察候选")}</span>
+        <span>${escapeHtml(item.wave_level || "")}${item.multi_level_alignment ? " · 双级别共振" : ""}</span>
+      </div>
       <div class="card-pattern">
         ${escapeHtml(item.pattern || "")} · <span class="position-label${invalidClass}">${escapeHtml(item.position_label || "")}</span>
-        <div class="muted">${escapeHtml(item.scenario || "")}</div>
+        <div class="muted">${escapeHtml(item.confirmation_detail || "等待右侧确认")}</div>
       </div>
       <div class="price-grid">
         <div><span>最新价</span><strong>${fmt(item.last_close)}</strong></div>
@@ -165,22 +184,24 @@ function candidateCard(item) {
         <div><span>目标</span><strong>${fmt(item.target_1)}</strong></div>
       </div>
       <div class="card-foot">
-        <span>${escapeHtml(item.last_date || "日期未知")}</span>
-        <span>目标空间 ${pct(item.target_1_upside, true)}</span>
+        <span>结${fmt(item.structure_score)} · 位${fmt(item.position_score)} · 确${fmt(item.confirmation_score)}</span>
+        <span>盈亏比 ${fmt(item.risk_reward)}</span>
       </div>
     </article>`;
 }
 
 function render() {
   const rows = filteredRows();
-  const priority = rows.filter((item) => number(item.recommend_score) >= 88).length;
+  const triggers = rows.filter((item) => item.signal_stage === "trigger").length;
+  const priority = rows.filter((item) => number(item.recommend_score) >= 85).length;
   els.candidateCount.textContent = rows.length.toLocaleString("zh-CN");
+  els.triggerCount.textContent = triggers.toLocaleString("zh-CN");
   els.priorityCount.textContent = priority.toLocaleString("zh-CN");
   els.resultCount.textContent = `${rows.length} 条`;
 
   if (!rows.length) {
     const empty = "没有符合当前筛选条件的候选。";
-    els.candidateRows.innerHTML = `<tr><td class="empty" colspan="9">${empty}</td></tr>`;
+    els.candidateRows.innerHTML = `<tr><td class="empty" colspan="10">${empty}</td></tr>`;
     els.candidateCards.innerHTML = `<div class="empty">${empty}</div>`;
     return;
   }
@@ -203,7 +224,11 @@ function renderMetadata(payload) {
     return;
   }
 
-  const details = [`更新于 ${dateTime(payload.published_at)}`, `原始候选 ${meta.raw_candidate_count || 0} 条`];
+  const details = [
+    `更新于 ${dateTime(payload.published_at)}`,
+    `触发 ${meta.trigger_count || 0} 条`,
+    `观察 ${meta.watch_count || 0} 条`,
+  ];
   if (meta.duration_seconds !== null && meta.duration_seconds !== undefined) details.push(`耗时 ${Math.round(meta.duration_seconds)} 秒`);
   els.candidateMeta.textContent = details.join(" · ");
 
@@ -225,7 +250,7 @@ async function loadData() {
     els.publishState.classList.add("error");
     els.publishStateText.textContent = "数据读取失败";
     els.candidateMeta.textContent = "暂时无法读取最新扫描结果";
-    els.candidateRows.innerHTML = `<tr><td class="empty" colspan="9">数据读取失败，请稍后刷新。</td></tr>`;
+    els.candidateRows.innerHTML = `<tr><td class="empty" colspan="10">数据读取失败，请稍后刷新。</td></tr>`;
     els.candidateCards.innerHTML = `<div class="empty">数据读取失败，请稍后刷新。</div>`;
     console.error(error);
   }
@@ -245,17 +270,27 @@ els.marketTabs.addEventListener("click", (event) => {
   render();
 });
 
+els.stageTabs.addEventListener("click", (event) => {
+  const button = event.target.closest("button[data-stage]");
+  if (!button) return;
+  state.stage = button.dataset.stage || "";
+  els.stageTabs.querySelectorAll("button").forEach((item) => item.classList.toggle("active", item === button));
+  render();
+});
+
 [els.searchBox, els.minPrice, els.maxPrice, els.minScore].forEach((input) => input.addEventListener("input", queueRender));
 els.sortBy.addEventListener("change", render);
 
 els.clearFilters.addEventListener("click", () => {
   state.market = "";
+  state.stage = "";
   els.searchBox.value = "";
   els.minPrice.value = "";
   els.maxPrice.value = "";
   els.minScore.value = "60";
   els.sortBy.value = "recommend";
   els.marketTabs.querySelectorAll("button").forEach((button) => button.classList.toggle("active", !button.dataset.market));
+  els.stageTabs.querySelectorAll("button").forEach((button) => button.classList.toggle("active", !button.dataset.stage));
   render();
 });
 
