@@ -4,8 +4,8 @@
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <meta name="color-scheme" content="light" />
-    <meta name="description" content="A股、美股与黄金波浪形态候选的公开只读扫描结果。" />
-    <title>波浪候选扫描</title>
+    <meta name="description" content="A股、美股与黄金波浪形态候选的公开只读扫描结果。Public read-only Elliott Wave candidates for A-shares, US stocks and gold." />
+    <title>波浪候选扫描 | Wave Candidate Scanner</title>
     <link rel="icon" href="./favicon.svg" type="image/svg+xml" />
     <link rel="stylesheet" href="./styles.css" />
   </head>
@@ -15,131 +15,159 @@
         <div class="brand-mark" aria-hidden="true"><span></span><span></span><span></span></div>
         <div>
           <div class="eyebrow">PUBLIC MARKET SCAN</div>
-          <h1>波浪候选扫描</h1>
+          <h1>波浪候选扫描 <small>Wave Candidate Scanner</small></h1>
         </div>
       </div>
       <div class="publish-state" id="publishState">
         <span class="status-dot" aria-hidden="true"></span>
-        <span id="publishStateText">读取数据</span>
+        <span id="publishStateText">读取数据<small>Loading data</small></span>
       </div>
     </header>
 
     <main class="workspace">
-      <details class="method-band" id="methodGuide" open>
-        <summary class="method-summary">
-          <div class="method-intro">
-            <div class="method-kicker">均衡型 V2 规则</div>
-            <h2 id="methodTitle">先观察浪形，再等待触发</h2>
-            <p>周线判断大级别，日线判断中级别；结构、位置、确认、趋势和盈亏比共同组成100分。</p>
-          </div>
-          <span class="method-toggle" aria-hidden="true"></span>
-        </summary>
-        <div class="method-body">
-          <ol class="method-steps">
-            <li><strong>看阶段</strong><span>“今日触发”已出现右侧确认，“观察候选”仍在等信号。</span></li>
-            <li><strong>看位置</strong><span>优先关注支撑附近，距离关键位过远的候选不会发布。</span></li>
-            <li><strong>看风险</strong><span>目标一与失效位的盈亏比不足1.5:1会被淘汰。</span></li>
-          </ol>
-          <p class="method-note">85分以上优先 · 75-84分较强 · 65-74分观察</p>
+      <section class="intro-band" aria-label="工具说明 About this tool">
+        <div class="intro-copy">
+          <div class="method-kicker">工具逻辑 <small>Method</small></div>
+          <h2>基于艾略特波浪、关键支撑、趋势确认和盈亏比筛选交易机会 <small>Signals are screened with Elliott Wave structure, key support, trend confirmation and reward-to-risk.</small></h2>
         </div>
-      </details>
+        <div class="intro-notes">
+          <p><strong>作者 Astrid</strong><small>Created by Astrid</small></p>
+          <p id="disclaimer">仅供研究参考，不构成投资建议。<small>For research only. Not investment advice.</small></p>
+          <p>公开只读数据 · 不保存访客信息<small>Public read-only data · No visitor information is stored</small></p>
+        </div>
+      </section>
 
-      <section class="filter-band" aria-label="候选筛选">
+      <section class="index-panel" aria-label="大盘环境 Market context">
+        <div class="section-head">
+          <div>
+            <h2>大盘环境 <small>Market Context</small></h2>
+            <p>个股到位，也要看市场是否顺风。<small>A valid setup is stronger when the broader market is supportive.</small></p>
+          </div>
+          <span class="index-note">强势 80+ · 偏强 60+ · 震荡 40+<small>Strong 80+ · Constructive 60+ · Mixed 40+</small></span>
+        </div>
+        <div class="index-grid" id="indexCards">
+          <div class="index-empty">等待指数数据<small>Waiting for index data</small></div>
+        </div>
+      </section>
+
+      <section class="filter-band" aria-label="候选筛选 Candidate filters">
         <label class="search-field">
-          <span>搜索</span>
-          <input id="searchBox" type="search" placeholder="代码 / 名称" autocomplete="off" />
+          <span class="bi-label">搜索<small>Search</small></span>
+          <input id="searchBox" type="search" placeholder="代码 / 名称 · Ticker / Name" autocomplete="off" />
         </label>
 
         <div class="market-filter">
-          <span class="field-label">市场</span>
-          <div class="segmented" id="marketTabs" role="group" aria-label="市场">
-            <button class="active" type="button" data-market="">全部</button>
-            <button type="button" data-market="CN">A股</button>
-            <button type="button" data-market="US">美股</button>
-            <button type="button" data-market="GOLD">黄金</button>
+          <span class="field-label bi-label">市场<small>Market</small></span>
+          <div class="segmented" id="marketTabs" role="group" aria-label="市场 Market">
+            <button class="active" type="button" data-market="">全部<small>All</small></button>
+            <button type="button" data-market="CN">A股<small>A-share</small></button>
+            <button type="button" data-market="US">美股<small>US</small></button>
+            <button type="button" data-market="GOLD">黄金<small>Gold</small></button>
           </div>
         </div>
 
         <div class="stage-filter">
-          <span class="field-label">阶段</span>
-          <div class="segmented" id="stageTabs" role="group" aria-label="信号阶段">
-            <button class="active" type="button" data-stage="">全部</button>
-            <button type="button" data-stage="trigger">今日触发</button>
-            <button type="button" data-stage="watch">观察候选</button>
+          <span class="field-label bi-label">阶段<small>Stage</small></span>
+          <div class="segmented" id="stageTabs" role="group" aria-label="信号阶段 Signal stage">
+            <button class="active" type="button" data-stage="">全部<small>All</small></button>
+            <button type="button" data-stage="alert">买入提醒<small>Alerts</small></button>
+            <button type="button" data-stage="watch">观察候选<small>Watch</small></button>
           </div>
         </div>
 
         <label>
-          <span>最低价</span>
-          <input id="minPrice" type="number" min="0" step="0.01" placeholder="不限" inputmode="decimal" />
+          <span class="bi-label">最低价<small>Min price</small></span>
+          <input id="minPrice" type="number" min="0" step="0.01" placeholder="不限 / Any" inputmode="decimal" />
         </label>
         <label>
-          <span>最高价</span>
-          <input id="maxPrice" type="number" min="0" step="0.01" placeholder="不限" inputmode="decimal" />
+          <span class="bi-label">最高价<small>Max price</small></span>
+          <input id="maxPrice" type="number" min="0" step="0.01" placeholder="不限 / Any" inputmode="decimal" />
         </label>
         <label>
-          <span>最低推荐</span>
+          <span class="bi-label">最低推荐<small>Min score</small></span>
           <input id="minScore" type="number" min="0" max="120" step="1" value="60" inputmode="numeric" />
         </label>
         <label>
-          <span>排序</span>
+          <span class="bi-label">排序<small>Sort</small></span>
           <select id="sortBy">
-            <option value="recommend">推荐优先</option>
-            <option value="upside">目标空间</option>
-            <option value="price-asc">价格从低到高</option>
-            <option value="price-desc">价格从高到低</option>
+            <option value="recommend">推荐优先 / Score</option>
+            <option value="upside">目标空间 / Upside</option>
+            <option value="price-asc">价格升序 / Price low</option>
+            <option value="price-desc">价格降序 / Price high</option>
           </select>
         </label>
-        <button class="clear-button" id="clearFilters" type="button">清空</button>
+        <button class="clear-button" id="clearFilters" type="button">清空<small>Reset</small></button>
       </section>
 
-      <section class="summary-strip" aria-label="扫描摘要">
-        <div><strong id="candidateCount">-</strong><span>当前候选</span></div>
-        <div><strong id="triggerCount">-</strong><span>今日触发</span></div>
-        <div><strong id="priorityCount">-</strong><span>优先关注</span></div>
-        <div><strong id="instrumentCount">-</strong><span>扫描标的</span></div>
-        <div><strong id="marketCount">-</strong><span>覆盖市场</span></div>
-        <div><strong id="failureRate">-</strong><span>数据失败率</span></div>
+      <section class="summary-strip" aria-label="扫描摘要 Scan summary">
+        <div><strong id="candidateCount">-</strong><span>当前候选<small>Matches</small></span></div>
+        <div><strong id="alertCount">-</strong><span>买入提醒<small>Entry alerts</small></span></div>
+        <div><strong id="priorityCount">-</strong><span>优先关注<small>Priority</small></span></div>
+        <div><strong id="instrumentCount">-</strong><span>扫描标的<small>Instruments</small></span></div>
+        <div><strong id="marketCount">-</strong><span>覆盖市场<small>Markets</small></span></div>
+        <div><strong id="failureRate">-</strong><span>数据失败率<small>Data failures</small></span></div>
       </section>
 
       <section class="candidate-panel">
         <div class="panel-head">
           <div>
-            <h2>扫描候选</h2>
-            <p id="candidateMeta">等待扫描数据</p>
+            <h2>扫描候选 <small>Candidate Signals</small></h2>
+            <p id="candidateMeta">等待扫描数据<small>Waiting for scan data</small></p>
           </div>
-          <div class="result-count" id="resultCount">0 条</div>
+          <div class="result-count" id="resultCount">0 条<small>0 results</small></div>
         </div>
 
         <div class="table-wrap">
           <table>
             <thead>
               <tr>
-                <th>市场</th>
-                <th>标的</th>
-                <th>阶段</th>
-                <th>浪形 / 位置</th>
-                <th>推荐</th>
-                <th>最新价</th>
-                <th>支撑</th>
-                <th>失效</th>
-                <th>目标</th>
-                <th>潜在空间</th>
+                <th>市场<small>Market</small></th>
+                <th>标的<small>Instrument</small></th>
+                <th>阶段<small>Stage</small></th>
+                <th>浪形 / 位置<small>Wave / Position</small></th>
+                <th>推荐<small>Score</small></th>
+                <th>最新价<small>Last</small></th>
+                <th>支撑<small>Support</small></th>
+                <th>失效<small>Invalid</small></th>
+                <th>目标<small>Targets</small></th>
+                <th>潜在空间<small>Upside</small></th>
               </tr>
             </thead>
             <tbody id="candidateRows">
-              <tr><td class="empty" colspan="10">正在读取候选数据...</td></tr>
+              <tr><td class="empty" colspan="10">正在读取候选数据...<small>Loading candidate data...</small></td></tr>
             </tbody>
           </table>
         </div>
 
         <div class="mobile-list" id="candidateCards" aria-live="polite"></div>
-      </section>
 
-      <footer>
-        <p id="disclaimer">仅供研究参考，不构成投资建议。</p>
-        <p>公开只读数据 · 不保存访客信息</p>
-      </footer>
+        <details class="other-candidates" id="otherCandidates" hidden>
+          <summary>
+            <span>展开85分以下候选<small>Show candidates below 85</small></span>
+            <strong id="otherCount">0</strong>
+          </summary>
+          <div class="table-wrap">
+            <table>
+              <thead>
+                <tr>
+                  <th>市场<small>Market</small></th>
+                  <th>标的<small>Instrument</small></th>
+                  <th>阶段<small>Stage</small></th>
+                  <th>浪形 / 位置<small>Wave / Position</small></th>
+                  <th>推荐<small>Score</small></th>
+                  <th>最新价<small>Last</small></th>
+                  <th>支撑<small>Support</small></th>
+                  <th>失效<small>Invalid</small></th>
+                  <th>目标<small>Targets</small></th>
+                  <th>潜在空间<small>Upside</small></th>
+                </tr>
+              </thead>
+              <tbody id="otherRows"></tbody>
+            </table>
+          </div>
+          <div class="mobile-list" id="otherCards"></div>
+        </details>
+      </section>
     </main>
 
     <script src="./app.js"></script>
