@@ -2,6 +2,7 @@ const $ = (selector, root = document) => root.querySelector(selector);
 
 const state = {
   payload: null,
+  history: null,
   rows: [],
   market: "",
   stage: "",
@@ -34,6 +35,15 @@ const els = {
   disclaimer: $("#disclaimer"),
   publishState: $("#publishState"),
   publishStateText: $("#publishStateText"),
+  historyMeta: $("#historyMeta"),
+  historyMetrics: $("#historyMetrics"),
+  historySignalCount: $("#historySignalCount"),
+  historyRows: $("#historyRows"),
+  historyCards: $("#historyCards"),
+  snapshotCount: $("#snapshotCount"),
+  snapshotSelect: $("#snapshotSelect"),
+  snapshotMeta: $("#snapshotMeta"),
+  snapshotRuns: $("#snapshotRuns"),
 };
 
 function escapeHtml(value) {
@@ -73,6 +83,12 @@ function pct(value, signed = false) {
   if (parsed === null) return "-";
   const sign = signed && parsed > 0 ? "+" : "";
   return `${sign}${(parsed * 100).toFixed(1)}%`;
+}
+
+function returnClass(value) {
+  const parsed = number(value);
+  if (parsed === null || parsed === 0) return "neutral";
+  return parsed > 0 ? "positive" : "negative";
 }
 
 function marketLabel(value) {
@@ -331,6 +347,183 @@ function renderIndices(items) {
   els.indexCards.innerHTML = items.map(indexCard).join("");
 }
 
+function historyMetric(item) {
+  const sampleCount = Number(item.sample_count || 0);
+  const hasSamples = sampleCount > 0;
+  return `
+    <article class="history-metric${hasSamples ? "" : " waiting"}">
+      <div class="history-period">
+        <strong>${escapeHtml(item.label || "-")}</strong>
+        <small>${escapeHtml(item.label_en || "")} · ${Number(item.sessions || 0)} sessions</small>
+      </div>
+      <div class="history-result">
+        <div><span>胜率<small>Win rate</small></span><strong>${hasSamples ? pct(item.win_rate) : "-"}</strong></div>
+        <div><span>平均收益<small>Avg return</small></span><strong class="${returnClass(item.average_return)}">${hasSamples ? pct(item.average_return, true) : "-"}</strong></div>
+      </div>
+      <p>${hasSamples ? `${sampleCount} 笔成熟样本 · 中位 ${pct(item.median_return, true)}` : "样本积累中"}<small>${hasSamples ? `${sampleCount} mature samples · Median ${pct(item.median_return, true)}` : "Collecting forward samples"}</small></p>
+    </article>`;
+}
+
+function outcomeReturn(signal, key) {
+  const outcome = signal.outcomes && signal.outcomes[key];
+  return outcome ? number(outcome.return) : null;
+}
+
+function historyOutcomeCell(signal, key) {
+  const value = outcomeReturn(signal, key);
+  if (value === null) return `<span class="pending-return">积累中<small>Pending</small></span>`;
+  const outcome = signal.outcomes[key];
+  return `<span class="history-return ${returnClass(value)}">${pct(value, true)}<small>${escapeHtml(outcome.date || "")}</small></span>`;
+}
+
+function historyTableRow(signal) {
+  const stageText = stageCopy({ signal_stage: signal.entry_stage });
+  return `
+    <tr>
+      <td>${escapeHtml(signal.entry_date || "-")}<div class="muted">${bilingualHtml(stageText.zh, stageText.en)}</div></td>
+      <td><span class="badge ${escapeHtml(String(signal.market || "").toLowerCase())}">${bilingualHtml(marketLabel(signal.market), marketEnglish(signal.market))}</span></td>
+      <td><div class="symbol"><strong>${escapeHtml(signal.monitor_symbol || signal.symbol || "-")}</strong><small>${escapeHtml(signal.name || "")}</small></div></td>
+      <td>${fmt(signal.entry_price)} / ${fmt(signal.latest_price)}<div class="muted">${escapeHtml(signal.latest_date || "")}</div></td>
+      <td><div class="score compact">${fmt(signal.entry_score)}<small>${escapeHtml(signal.entry_pattern || "")}</small></div></td>
+      <td><span class="history-return ${returnClass(signal.current_return)}">${pct(signal.current_return, true)}</span></td>
+      <td>${historyOutcomeCell(signal, "d5")}</td>
+      <td>${historyOutcomeCell(signal, "d21")}</td>
+      <td>${historyOutcomeCell(signal, "d63")}</td>
+      <td>${historyOutcomeCell(signal, "d126")}</td>
+    </tr>`;
+}
+
+function compactOutcome(signal, key, zh, en) {
+  const value = outcomeReturn(signal, key);
+  return `<div><span>${escapeHtml(zh)}<small>${escapeHtml(en)}</small></span><strong class="${returnClass(value)}">${value === null ? "-" : pct(value, true)}</strong></div>`;
+}
+
+function historyCard(signal) {
+  const stageText = stageCopy({ signal_stage: signal.entry_stage });
+  return `
+    <article class="history-signal-card">
+      <div class="history-signal-head">
+        <span class="badge ${escapeHtml(String(signal.market || "").toLowerCase())}">${bilingualHtml(marketLabel(signal.market), marketEnglish(signal.market))}</span>
+        <div><strong>${escapeHtml(signal.monitor_symbol || signal.symbol || "-")}</strong><small>${escapeHtml(signal.name || "")}</small></div>
+        <div class="card-score">${fmt(signal.entry_score)}<small>${escapeHtml(stageText.zh)} · ${escapeHtml(stageText.en)}</small></div>
+      </div>
+      <div class="history-price-line">
+        <span>入场 ${escapeHtml(signal.entry_date || "-")} · ${fmt(signal.entry_price)}<small>Entry</small></span>
+        <span>最新 ${fmt(signal.latest_price)} · <strong class="${returnClass(signal.current_return)}">${pct(signal.current_return, true)}</strong><small>Latest · Current return</small></span>
+      </div>
+      <div class="history-return-grid">
+        ${compactOutcome(signal, "d5", "一周", "1 week")}
+        ${compactOutcome(signal, "d21", "一月", "1 month")}
+        ${compactOutcome(signal, "d63", "三月", "3 months")}
+        ${compactOutcome(signal, "d126", "六月", "6 months")}
+      </div>
+    </article>`;
+}
+
+function renderHistory(summary) {
+  state.history = summary;
+  const horizons = Array.isArray(summary.horizons) ? summary.horizons : [];
+  const signals = Array.isArray(summary.signals) ? summary.signals : [];
+  const snapshots = Array.isArray(summary.snapshots) ? summary.snapshots : [];
+  els.historyMetrics.innerHTML = horizons.length
+    ? horizons.map(historyMetric).join("")
+    : `<div class="history-empty">${bilingualHtml("历史样本开始积累后显示", "Metrics appear as forward samples mature")}</div>`;
+
+  const since = summary.tracking_since ? ` · 自 ${summary.tracking_since}` : "";
+  setBilingual(
+    els.historyMeta,
+    `${Number(summary.snapshot_day_count || 0)} 天快照 · ${Number(summary.signal_count || 0)} 笔独立信号${since}`,
+    `${Number(summary.snapshot_day_count || 0)} snapshot days · ${Number(summary.signal_count || 0)} independent signals`
+  );
+  setBilingual(els.historySignalCount, `${signals.length} 笔`, `${signals.length} signals`);
+  setBilingual(els.snapshotCount, `${snapshots.length} 天`, `${snapshots.length} days`);
+
+  if (signals.length) {
+    els.historyRows.innerHTML = signals.map(historyTableRow).join("");
+    els.historyCards.innerHTML = signals.map(historyCard).join("");
+  } else {
+    const empty = bilingualHtml("尚无历史信号", "No tracked signals yet");
+    els.historyRows.innerHTML = `<tr><td class="empty" colspan="10">${empty}</td></tr>`;
+    els.historyCards.innerHTML = `<div class="history-empty">${empty}</div>`;
+  }
+
+  if (!snapshots.length) {
+    els.snapshotSelect.disabled = true;
+    els.snapshotSelect.innerHTML = `<option value="">暂无快照 / No snapshots</option>`;
+    return;
+  }
+  els.snapshotSelect.disabled = false;
+  els.snapshotSelect.innerHTML = snapshots
+    .map((item) => `<option value="${escapeHtml(item.path || "")}">${escapeHtml(item.date || "-")} · ${Number(item.recommendation_count || 0)} 条</option>`)
+    .join("");
+  loadSnapshot(els.snapshotSelect.value);
+}
+
+function snapshotRecommendation(item) {
+  const stageText = stageCopy(item);
+  return `
+    <div class="snapshot-item">
+      <span class="badge ${escapeHtml(String(item.market || "").toLowerCase())}">${escapeHtml(marketLabel(item.market))}</span>
+      <div><strong>${escapeHtml(item.monitor_symbol || item.symbol || "-")}</strong><small>${escapeHtml(item.name || "")}</small></div>
+      <span>${fmt(item.last_close)}<small>Entry</small></span>
+      <span class="snapshot-score">${fmt(item.recommend_score)}<small>${escapeHtml(stageText.zh)}</small></span>
+    </div>`;
+}
+
+function renderSnapshot(snapshot) {
+  const runs = Array.isArray(snapshot.runs) ? snapshot.runs : [];
+  setBilingual(
+    els.snapshotMeta,
+    `${escapeHtml(snapshot.date || "-")} · ${runs.length} 次扫描记录`,
+    `${runs.length} archived scan${runs.length === 1 ? "" : "s"}`
+  );
+  if (!runs.length) {
+    els.snapshotRuns.innerHTML = `<div class="history-empty">${bilingualHtml("当天没有快照记录", "No archived runs for this date")}</div>`;
+    return;
+  }
+  els.snapshotRuns.innerHTML = runs
+    .slice()
+    .reverse()
+    .map((run) => {
+      const recommendations = Array.isArray(run.recommendations) ? run.recommendations : [];
+      return `
+        <section class="snapshot-run">
+          <div class="snapshot-run-head">
+            <strong>${dateTime(run.published_at)}</strong>
+            <span>${recommendations.length} 条<small>${recommendations.length} entries</small></span>
+          </div>
+          <div class="snapshot-list">
+            ${recommendations.length ? recommendations.map(snapshotRecommendation).join("") : `<div class="snapshot-empty">${bilingualHtml("本次没有85分以上买入提醒", "No 85+ entry alerts in this run")}</div>`}
+          </div>
+        </section>`;
+    })
+    .join("");
+}
+
+async function loadSnapshot(path) {
+  if (!path) return;
+  try {
+    const response = await fetch(`${path}?v=${Date.now()}`, { cache: "no-store" });
+    if (!response.ok) throw new Error(`HTTP ${response.status}`);
+    renderSnapshot(await response.json());
+  } catch (error) {
+    els.snapshotRuns.innerHTML = `<div class="history-empty">${bilingualHtml("快照读取失败", "Unable to load this snapshot")}</div>`;
+    console.error(error);
+  }
+}
+
+async function loadHistory() {
+  try {
+    const response = await fetch(`./data/history/summary.json?v=${Date.now()}`, { cache: "no-store" });
+    if (!response.ok) throw new Error(`HTTP ${response.status}`);
+    renderHistory(await response.json());
+  } catch (error) {
+    setBilingual(els.historyMeta, "历史数据暂不可用", "History unavailable");
+    els.historyMetrics.innerHTML = `<div class="history-empty">${bilingualHtml("暂时无法读取历史统计", "Unable to load track record")}</div>`;
+    console.error(error);
+  }
+}
+
 function render() {
   const rows = filteredRows();
   const alerts = rows.filter((item) => ["trigger", "probe"].includes(item.signal_stage)).length;
@@ -458,6 +651,7 @@ els.stageTabs.addEventListener("click", (event) => {
 
 [els.searchBox, els.minPrice, els.maxPrice, els.minScore].forEach((input) => input.addEventListener("input", queueRender));
 els.sortBy.addEventListener("change", render);
+els.snapshotSelect.addEventListener("change", () => loadSnapshot(els.snapshotSelect.value));
 
 els.clearFilters.addEventListener("click", () => {
   state.market = "";
@@ -473,3 +667,4 @@ els.clearFilters.addEventListener("click", () => {
 });
 
 loadData();
+loadHistory();

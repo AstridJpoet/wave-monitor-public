@@ -50,6 +50,70 @@
         </div>
       </section>
 
+      <section class="history-panel" aria-label="历史验证 Forward track record">
+        <div class="section-head history-head">
+          <div>
+            <h2>历史验证 <small>Forward Track Record</small></h2>
+            <p>只跟踪85分以上的买入提醒；连续信号按首次进入记录，周期未走完不计入胜率。<small>Tracks 85+ entry alerts from first appearance; incomplete horizons are excluded.</small></p>
+          </div>
+          <span class="history-meta" id="historyMeta">等待历史数据<small>Waiting for history</small></span>
+        </div>
+
+        <div class="history-metrics" id="historyMetrics">
+          <div class="history-empty">历史样本开始积累后显示<small>Metrics appear as forward samples mature</small></div>
+        </div>
+
+        <div class="history-explorers">
+          <details class="history-detail" id="signalHistory">
+            <summary>
+              <span>逐笔信号与收益<small>Signal-level returns</small></span>
+              <strong id="historySignalCount">0 笔<small>0 signals</small></strong>
+            </summary>
+            <div class="history-table-wrap">
+              <table class="history-table">
+                <thead>
+                  <tr>
+                    <th>入场日<small>Entry date</small></th>
+                    <th>市场<small>Market</small></th>
+                    <th>标的<small>Instrument</small></th>
+                    <th>入场 / 最新<small>Entry / Latest</small></th>
+                    <th>推荐<small>Score</small></th>
+                    <th>当前<small>Current</small></th>
+                    <th>一周<small>1 week</small></th>
+                    <th>一月<small>1 month</small></th>
+                    <th>三月<small>3 months</small></th>
+                    <th>六月<small>6 months</small></th>
+                  </tr>
+                </thead>
+                <tbody id="historyRows">
+                  <tr><td class="empty" colspan="10">尚无历史信号<small>No tracked signals yet</small></td></tr>
+                </tbody>
+              </table>
+            </div>
+            <div class="history-mobile-list" id="historyCards"></div>
+          </details>
+
+          <details class="history-detail" id="snapshotHistory">
+            <summary>
+              <span>每日推荐快照<small>Daily recommendation snapshots</small></span>
+              <strong id="snapshotCount">0 天<small>0 days</small></strong>
+            </summary>
+            <div class="snapshot-toolbar">
+              <label>
+                <span class="bi-label">快照日期<small>Snapshot date</small></span>
+                <select id="snapshotSelect" disabled>
+                  <option value="">暂无快照 / No snapshots</option>
+                </select>
+              </label>
+              <p id="snapshotMeta">每天只保存85分以上的买入提醒。<small>Only 85+ entry alerts are archived.</small></p>
+            </div>
+            <div class="snapshot-runs" id="snapshotRuns">
+              <div class="history-empty">尚无每日快照<small>No daily snapshots yet</small></div>
+            </div>
+          </details>
+        </div>
+      </section>
+
       <section class="filter-band" aria-label="候选筛选 Candidate filters">
         <label class="search-field">
           <span class="bi-label">搜索<small>Search</small></span>
