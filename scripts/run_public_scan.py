@@ -65,6 +65,18 @@ def main() -> int:
         str(args.limit_per_market),
     ]
     subprocess.run(build_command, cwd=ROOT, check=True)
+
+    history_command = [
+        sys.executable,
+        str(ROOT / "scripts" / "update_history.py"),
+        "--payload",
+        str(ROOT / "site" / "data" / "candidates.json"),
+        "--history-dir",
+        str(ROOT / "site" / "data" / "history"),
+        "--cache-dir",
+        str(ROOT / "data" / "scan_cache"),
+    ]
+    subprocess.run(history_command, cwd=ROOT, check=True)
     return 0
 
 

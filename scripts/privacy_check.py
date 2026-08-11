@@ -8,7 +8,7 @@ from pathlib import Path
 
 
 ROOT = Path(__file__).resolve().parents[1]
-SKIP_DIRS = {".git", ".venv", "__pycache__", "data"}
+SKIP_DIRS = {".git", ".venv", "__pycache__"}
 PRIVATE_NAMES = {
     ".env",
     "watchlist.yaml",
@@ -34,7 +34,8 @@ def forbidden_patterns() -> list[tuple[str, re.Pattern[str]]]:
 def iter_public_files() -> list[Path]:
     files: list[Path] = []
     for path in ROOT.rglob("*"):
-        if not path.is_file() or any(part in SKIP_DIRS for part in path.relative_to(ROOT).parts):
+        relative = path.relative_to(ROOT)
+        if not path.is_file() or relative.parts[0] == "data" or any(part in SKIP_DIRS for part in relative.parts):
             continue
         files.append(path)
     return files
