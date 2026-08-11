@@ -7,7 +7,7 @@ on:
     - cron: "30 22 * * 1-5"
 
 permissions:
-  contents: read
+  contents: write
   pages: write
   id-token: write
 
@@ -55,6 +55,18 @@ jobs:
 
       - name: Check privacy before publish
         run: python scripts/privacy_check.py
+
+      - name: Persist public recommendation history
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add -- site/data/history
+          if git diff --cached --quiet; then
+            echo "No history changes to persist."
+          else
+            git commit -m "chore: update public recommendation history [skip ci]"
+            git push origin "HEAD:${{ github.event.repository.default_branch }}"
+          fi
 
       - name: Configure Pages
         uses: actions/configure-pages@v5
