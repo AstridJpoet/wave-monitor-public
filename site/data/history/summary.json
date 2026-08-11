@@ -1,0 +1,73 @@
+{
+  "schema_version": 1,
+  "updated_at": null,
+  "methodology": {
+    "minimum_score": 85.0,
+    "eligible_stages": [
+      "probe",
+      "trigger"
+    ],
+    "episode_gap_days": 7,
+    "win_definition": "forward close return > 0"
+  },
+  "snapshot_day_count": 0,
+  "snapshot_run_count": 0,
+  "signal_count": 0,
+  "tracking_since": null,
+  "horizons": [
+    {
+      "key": "d5",
+      "label": "一周",
+      "label_en": "1 week",
+      "sessions": 5,
+      "sample_count": 0,
+      "win_count": 0,
+      "win_rate": null,
+      "average_return": null,
+      "median_return": null,
+      "best_return": null,
+      "worst_return": null
+    },
+    {
+      "key": "d21",
+      "label": "一个月",
+      "label_en": "1 month",
+      "sessions": 21,
+      "sample_count": 0,
+      "win_count": 0,
+      "win_rate": null,
+      "average_return": null,
+      "median_return": null,
+      "best_return": null,
+      "worst_return": null
+    },
+    {
+      "key": "d63",
+      "label": "三个月",
+      "label_en": "3 months",
+      "sessions": 63,
+      "sample_count": 0,
+      "win_count": 0,
+      "win_rate": null,
+      "average_return": null,
+      "median_return": null,
+      "best_return": null,
+      "worst_return": null
+    },
+    {
+      "key": "d126",
+      "label": "六个月",
+      "label_en": "6 months",
+      "sessions": 126,
+      "sample_count": 0,
+      "win_count": 0,
+      "win_rate": null,
+      "average_return": null,
+      "median_return": null,
+      "best_return": null,
+      "worst_return": null
+    }
+  ],
+  "snapshots": [],
+  "signals": []
+}
