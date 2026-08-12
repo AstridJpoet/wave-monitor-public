@@ -1,6 +1,6 @@
 {
   "schema_version": 1,
-  "updated_at": "2026-08-12T07:14:10+08:00",
+  "updated_at": "2026-08-12T16:49:29+08:00",
   "methodology": {
     "minimum_score": 85.0,
     "eligible_stages": [
@@ -11,8 +11,8 @@
     "win_definition": "forward close return > 0"
   },
   "snapshot_day_count": 2,
-  "snapshot_run_count": 3,
-  "signal_count": 3,
+  "snapshot_run_count": 4,
+  "signal_count": 5,
   "tracking_since": "2026-08-10",
   "horizons": [
     {
@@ -71,8 +71,8 @@
   "snapshots": [
     {
       "date": "2026-08-12",
-      "run_count": 1,
-      "latest_published_at": "2026-08-12T07:14:10+08:00",
+      "run_count": 2,
+      "latest_published_at": "2026-08-12T16:49:29+08:00",
       "recommendation_count": 3,
       "path": "./data/history/snapshots/2026-08-12.json"
     },
@@ -85,6 +85,60 @@
     }
   ],
   "signals": [
+    {
+      "id": "US:BKR:2026-08-12T164929p0800",
+      "market": "US",
+      "symbol": "BKR",
+      "monitor_symbol": "BKR",
+      "name": "Baker Hughes",
+      "entry_published_at": "2026-08-12T16:49:29+08:00",
+      "entry_date": "2026-08-11",
+      "entry_price": 64.81,
+      "entry_score": 90.2,
+      "entry_stage": "trigger",
+      "entry_pattern": "4浪回踩候选",
+      "wave_level": "中级别",
+      "support": 63.3378,
+      "invalid_below": 64.8041,
+      "target_1": 69.1833,
+      "target_2": 78.6401,
+      "risk_reward": 741.237,
+      "last_seen_at": "2026-08-12T16:49:29+08:00",
+      "latest_score": 90.2,
+      "latest_stage": "trigger",
+      "latest_date": "2026-08-11",
+      "latest_price": 64.80999756,
+      "current_return": -4e-08,
+      "outcomes": {},
+      "pricing_status": "ready"
+    },
+    {
+      "id": "US:FANG:2026-08-12T164929p0800",
+      "market": "US",
+      "symbol": "FANG",
+      "monitor_symbol": "FANG",
+      "name": "Diamondback Energy",
+      "entry_published_at": "2026-08-12T16:49:29+08:00",
+      "entry_date": "2026-08-11",
+      "entry_price": 201.71,
+      "entry_score": 90.2,
+      "entry_stage": "trigger",
+      "entry_pattern": "4浪回踩候选",
+      "wave_level": "中级别",
+      "support": 199.8245,
+      "invalid_below": 201.084,
+      "target_1": 212.5211,
+      "target_2": 233.0617,
+      "risk_reward": 17.27,
+      "last_seen_at": "2026-08-12T16:49:29+08:00",
+      "latest_score": 90.2,
+      "latest_stage": "trigger",
+      "latest_date": "2026-08-11",
+      "latest_price": 201.71000671,
+      "current_return": 3e-08,
+      "outcomes": {},
+      "pricing_status": "ready"
+    },
     {
       "id": "US:NVDA:2026-08-11T125800p0800",
       "market": "US",
@@ -103,12 +157,12 @@
       "target_1": 279.4043,
       "target_2": 299.0315,
       "risk_reward": 2.907,
-      "last_seen_at": "2026-08-12T07:14:10+08:00",
+      "last_seen_at": "2026-08-12T16:49:29+08:00",
       "latest_score": 88.8,
       "latest_stage": "trigger",
-      "latest_date": "2026-08-10",
-      "latest_price": 217.55000305,
-      "current_return": 1e-08,
+      "latest_date": "2026-08-11",
+      "latest_price": 217.5,
+      "current_return": -0.00022983,
       "outcomes": {},
       "pricing_status": "ready"
     },
@@ -133,9 +187,9 @@
       "last_seen_at": "2026-08-12T07:14:10+08:00",
       "latest_score": 86.0,
       "latest_stage": "trigger",
-      "latest_date": "2026-08-10",
-      "latest_price": 355.83999634,
-      "current_return": -1e-08,
+      "latest_date": "2026-08-11",
+      "latest_price": 343.0,
+      "current_return": -0.03608363,
       "outcomes": {},
       "pricing_status": "ready"
     },
@@ -160,9 +214,9 @@
       "last_seen_at": "2026-08-12T07:14:10+08:00",
       "latest_score": 85.9,
       "latest_stage": "trigger",
-      "latest_date": "2026-08-10",
-      "latest_price": 135.22000122,
-      "current_return": 1e-08,
+      "latest_date": "2026-08-11",
+      "latest_price": 135.77000427,
+      "current_return": 0.00406748,
       "outcomes": {},
       "pricing_status": "ready"
     }

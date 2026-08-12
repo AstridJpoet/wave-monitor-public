@@ -71,6 +71,76 @@
           "market_context_label": "大盘强势"
         }
       ]
+    },
+    {
+      "published_at": "2026-08-12T16:49:29+08:00",
+      "scan_generated_at": "2026-08-12T08:49:29.623731",
+      "recommendation_count": 3,
+      "recommendations": [
+        {
+          "market": "US",
+          "symbol": "BKR",
+          "monitor_symbol": "BKR",
+          "name": "Baker Hughes",
+          "signal_stage": "trigger",
+          "stage_label": "右侧触发",
+          "recommend_score": 90.2,
+          "recommend_label": "优先",
+          "last_date": "2026-08-11",
+          "last_close": 64.81,
+          "pattern": "4浪回踩候选",
+          "wave_level": "中级别",
+          "support": 63.3378,
+          "invalid_below": 64.8041,
+          "target_1": 69.1833,
+          "target_2": 78.6401,
+          "risk_reward": 741.237,
+          "market_context_score": 80.0,
+          "market_context_label": "大盘强势"
+        },
+        {
+          "market": "US",
+          "symbol": "FANG",
+          "monitor_symbol": "FANG",
+          "name": "Diamondback Energy",
+          "signal_stage": "trigger",
+          "stage_label": "右侧触发",
+          "recommend_score": 90.2,
+          "recommend_label": "优先",
+          "last_date": "2026-08-11",
+          "last_close": 201.71,
+          "pattern": "4浪回踩候选",
+          "wave_level": "中级别",
+          "support": 199.8245,
+          "invalid_below": 201.084,
+          "target_1": 212.5211,
+          "target_2": 233.0617,
+          "risk_reward": 17.27,
+          "market_context_score": 80.0,
+          "market_context_label": "大盘强势"
+        },
+        {
+          "market": "US",
+          "symbol": "NVDA",
+          "monitor_symbol": "NVDA",
+          "name": "NVDA",
+          "signal_stage": "trigger",
+          "stage_label": "右侧触发",
+          "recommend_score": 88.8,
+          "recommend_label": "优先",
+          "last_date": "2026-08-11",
+          "last_close": 217.5,
+          "pattern": "疑似3浪突破",
+          "wave_level": "中级别",
+          "support": 216.3578,
+          "invalid_below": 196.2712,
+          "target_1": 279.4043,
+          "target_2": 299.0315,
+          "risk_reward": 2.916,
+          "market_context_score": 80.0,
+          "market_context_label": "大盘强势"
+        }
+      ]
     }
   ]
 }
