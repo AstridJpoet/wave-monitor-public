@@ -71,6 +71,34 @@
           "market_context_label": "大盘强势"
         }
       ]
+    },
+    {
+      "published_at": "2026-08-13T16:53:55+08:00",
+      "scan_generated_at": "2026-08-13T08:53:55.731414",
+      "recommendation_count": 1,
+      "recommendations": [
+        {
+          "market": "CN",
+          "symbol": "000977",
+          "monitor_symbol": "000977.SZ",
+          "name": "浪潮信息",
+          "signal_stage": "trigger",
+          "stage_label": "右侧触发",
+          "recommend_score": 85.8,
+          "recommend_label": "优先",
+          "last_date": "2026-08-13",
+          "last_close": 79.46,
+          "pattern": "4浪回踩候选",
+          "wave_level": "中级别",
+          "support": 77.4182,
+          "invalid_below": 77.3371,
+          "target_1": 89.52,
+          "target_2": 109.0982,
+          "risk_reward": 4.739,
+          "market_context_score": 22.5,
+          "market_context_label": "大盘偏弱"
+        }
+      ]
     }
   ]
 }
