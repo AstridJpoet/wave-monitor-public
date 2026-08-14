@@ -1,6 +1,6 @@
 {
   "schema_version": 1,
-  "updated_at": "2026-08-14T16:47:40+08:00",
+  "updated_at": "2026-08-15T06:50:48+08:00",
   "methodology": {
     "minimum_score": 85.0,
     "eligible_stages": [
@@ -10,8 +10,8 @@
     "episode_gap_days": 7,
     "win_definition": "forward close return > 0"
   },
-  "snapshot_day_count": 4,
-  "snapshot_run_count": 8,
+  "snapshot_day_count": 5,
+  "snapshot_run_count": 9,
   "signal_count": 7,
   "tracking_since": "2026-08-10",
   "horizons": [
@@ -70,6 +70,13 @@
   ],
   "snapshots": [
     {
+      "date": "2026-08-15",
+      "run_count": 1,
+      "latest_published_at": "2026-08-15T06:50:48+08:00",
+      "recommendation_count": 1,
+      "path": "./data/history/snapshots/2026-08-15.json"
+    },
+    {
       "date": "2026-08-14",
       "run_count": 2,
       "latest_published_at": "2026-08-14T16:47:40+08:00",
@@ -117,7 +124,7 @@
       "target_1": 597.2315,
       "target_2": 652.06,
       "risk_reward": 1.985,
-      "last_seen_at": "2026-08-14T16:47:40+08:00",
+      "last_seen_at": "2026-08-15T06:50:48+08:00",
       "latest_score": 88.8,
       "latest_stage": "trigger",
       "latest_date": "2026-08-13",
