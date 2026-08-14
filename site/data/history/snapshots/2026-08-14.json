@@ -29,6 +29,34 @@
           "market_context_label": "大盘偏弱"
         }
       ]
+    },
+    {
+      "published_at": "2026-08-14T16:47:40+08:00",
+      "scan_generated_at": "2026-08-14T08:47:40.473639",
+      "recommendation_count": 1,
+      "recommendations": [
+        {
+          "market": "US",
+          "symbol": "CIEN",
+          "monitor_symbol": "CIEN",
+          "name": "Ciena",
+          "signal_stage": "trigger",
+          "stage_label": "右侧触发",
+          "recommend_score": 88.8,
+          "recommend_label": "优先",
+          "last_date": "2026-08-13",
+          "last_close": 442.79,
+          "pattern": "疑似3浪突破",
+          "wave_level": "中级别",
+          "support": 437.7,
+          "invalid_below": 365.0,
+          "target_1": 597.2315,
+          "target_2": 652.06,
+          "risk_reward": 1.985,
+          "market_context_score": 90.0,
+          "market_context_label": "大盘强势"
+        }
+      ]
     }
   ]
 }

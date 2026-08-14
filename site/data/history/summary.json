@@ -1,6 +1,6 @@
 {
   "schema_version": 1,
-  "updated_at": "2026-08-14T07:13:51+08:00",
+  "updated_at": "2026-08-14T16:47:40+08:00",
   "methodology": {
     "minimum_score": 85.0,
     "eligible_stages": [
@@ -11,8 +11,8 @@
     "win_definition": "forward close return > 0"
   },
   "snapshot_day_count": 4,
-  "snapshot_run_count": 7,
-  "signal_count": 6,
+  "snapshot_run_count": 8,
+  "signal_count": 7,
   "tracking_since": "2026-08-10",
   "horizons": [
     {
@@ -71,8 +71,8 @@
   "snapshots": [
     {
       "date": "2026-08-14",
-      "run_count": 1,
-      "latest_published_at": "2026-08-14T07:13:51+08:00",
+      "run_count": 2,
+      "latest_published_at": "2026-08-14T16:47:40+08:00",
       "recommendation_count": 1,
       "path": "./data/history/snapshots/2026-08-14.json"
     },
@@ -100,6 +100,33 @@
   ],
   "signals": [
     {
+      "id": "US:CIEN:2026-08-14T164740p0800",
+      "market": "US",
+      "symbol": "CIEN",
+      "monitor_symbol": "CIEN",
+      "name": "Ciena",
+      "entry_published_at": "2026-08-14T16:47:40+08:00",
+      "entry_date": "2026-08-13",
+      "entry_price": 442.79,
+      "entry_score": 88.8,
+      "entry_stage": "trigger",
+      "entry_pattern": "疑似3浪突破",
+      "wave_level": "中级别",
+      "support": 437.7,
+      "invalid_below": 365.0,
+      "target_1": 597.2315,
+      "target_2": 652.06,
+      "risk_reward": 1.985,
+      "last_seen_at": "2026-08-14T16:47:40+08:00",
+      "latest_score": 88.8,
+      "latest_stage": "trigger",
+      "latest_date": "2026-08-13",
+      "latest_price": 442.79000854,
+      "current_return": 2e-08,
+      "outcomes": {},
+      "pricing_status": "ready"
+    },
+    {
       "id": "CN:000977.SZ:2026-08-13T165355p0800",
       "market": "CN",
       "symbol": "000977",
@@ -120,9 +147,9 @@
       "last_seen_at": "2026-08-14T07:13:51+08:00",
       "latest_score": 85.8,
       "latest_stage": "trigger",
-      "latest_date": "2026-08-13",
-      "latest_price": 79.45999908,
-      "current_return": -1e-08,
+      "latest_date": "2026-08-14",
+      "latest_price": 78.80000305,
+      "current_return": -0.00830603,
       "outcomes": {},
       "pricing_status": "ready"
     },
@@ -147,9 +174,9 @@
       "last_seen_at": "2026-08-13T07:12:21+08:00",
       "latest_score": 90.2,
       "latest_stage": "trigger",
-      "latest_date": "2026-08-12",
-      "latest_price": 64.27999878,
-      "current_return": -0.00817777,
+      "latest_date": "2026-08-13",
+      "latest_price": 63.43999863,
+      "current_return": -0.02113873,
       "outcomes": {},
       "pricing_status": "ready"
     },
@@ -174,9 +201,9 @@
       "last_seen_at": "2026-08-13T07:12:21+08:00",
       "latest_score": 90.2,
       "latest_stage": "trigger",
-      "latest_date": "2026-08-12",
-      "latest_price": 200.83999634,
-      "current_return": -0.00431314,
+      "latest_date": "2026-08-13",
+      "latest_price": 199.50999451,
+      "current_return": -0.01090677,
       "outcomes": {},
       "pricing_status": "ready"
     },
@@ -201,9 +228,9 @@
       "last_seen_at": "2026-08-13T07:12:21+08:00",
       "latest_score": 88.8,
       "latest_stage": "trigger",
-      "latest_date": "2026-08-12",
-      "latest_price": 224.08999634,
-      "current_return": 0.03006204,
+      "latest_date": "2026-08-13",
+      "latest_price": 225.30000305,
+      "current_return": 0.03562401,
       "outcomes": {},
       "pricing_status": "ready"
     },
@@ -228,9 +255,9 @@
       "last_seen_at": "2026-08-12T07:14:10+08:00",
       "latest_score": 86.0,
       "latest_stage": "trigger",
-      "latest_date": "2026-08-12",
-      "latest_price": 342.36999512,
-      "current_return": -0.03785411,
+      "latest_date": "2026-08-13",
+      "latest_price": 343.94000244,
+      "current_return": -0.03344199,
       "outcomes": {},
       "pricing_status": "ready"
     },
@@ -255,9 +282,9 @@
       "last_seen_at": "2026-08-12T07:14:10+08:00",
       "latest_score": 85.9,
       "latest_stage": "trigger",
-      "latest_date": "2026-08-12",
-      "latest_price": 137.58000183,
-      "current_return": 0.01745305,
+      "latest_date": "2026-08-13",
+      "latest_price": 138.72999573,
+      "current_return": 0.02595767,
       "outcomes": {},
       "pricing_status": "ready"
     }
