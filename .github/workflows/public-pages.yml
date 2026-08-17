@@ -18,6 +18,9 @@ concurrency:
 jobs:
   scan-and-deploy:
     runs-on: ubuntu-latest
+    timeout-minutes: 35
+    env:
+      PYTHONUNBUFFERED: "1"
     environment:
       name: github-pages
       url: ${{ steps.deployment.outputs.page_url }}
