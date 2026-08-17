@@ -6,6 +6,8 @@ from __future__ import annotations
 import argparse
 import json
 import math
+import signal
+from contextlib import contextmanager
 from dataclasses import asdict, dataclass
 from datetime import date, timedelta
 from pathlib import Path
@@ -15,6 +17,7 @@ import pandas as pd
 
 try:
     from .ma_touch_backtest import (
+        A_SHARE_FALLBACK,
         Instrument,
         SP100_FALLBACK,
         fetch_a_share_daily,
@@ -30,6 +33,7 @@ try:
     from .ma_touch_confirm_backtest import load_pool_from_metadata
 except ImportError:
     from ma_touch_backtest import (
+        A_SHARE_FALLBACK,
         Instrument,
         SP100_FALLBACK,
         fetch_a_share_daily,
@@ -70,6 +74,33 @@ INDEX_DEFINITIONS = [
     {"market": "US", "symbol": "^GSPC", "name": "标普500"},
     {"market": "US", "symbol": "^IXIC", "name": "纳斯达克综合"},
 ]
+
+
+class _HardTimeout(BaseException):
+    """Escape third-party code that catches every regular Exception."""
+
+
+@contextmanager
+def hard_timeout(seconds: int, label: str):
+    """Bound blocking provider calls on Unix without changing their APIs."""
+    if seconds <= 0 or not hasattr(signal, "SIGALRM"):
+        yield
+        return
+
+    previous_handler = signal.getsignal(signal.SIGALRM)
+
+    def handle_timeout(_signum, _frame):
+        raise _HardTimeout()
+
+    signal.signal(signal.SIGALRM, handle_timeout)
+    signal.alarm(seconds)
+    try:
+        yield
+    except _HardTimeout as exc:
+        raise TimeoutError(f"{label} exceeded {seconds}s") from exc
+    finally:
+        signal.alarm(0)
+        signal.signal(signal.SIGALRM, previous_handler)
 
 
 def zigzag(frame: pd.DataFrame, pct: float, col: str = "close") -> list[Pivot]:
@@ -953,6 +984,9 @@ def main() -> int:
     parser.add_argument("--recent-cache-days", type=int, default=0, help="Reuse cached histories ending within this many days.")
     parser.add_argument("--protect-existing", action="store_true", help="Do not overwrite existing candidates when failure rate is high.")
     parser.add_argument("--max-failure-rate", type=float, default=0.35)
+    parser.add_argument("--pool-timeout-seconds", type=int, default=90)
+    parser.add_argument("--instrument-timeout-seconds", type=int, default=75)
+    parser.add_argument("--max-consecutive-failures", type=int, default=8)
     args = parser.parse_args()
 
     start = parse_date(args.start)
@@ -960,30 +994,72 @@ def main() -> int:
     cache_dir = Path(args.cache_dir)
     out_dir = Path(args.out_dir)
     out_dir.mkdir(parents=True, exist_ok=True)
-    instruments = build_pool(args)
+    try:
+        with hard_timeout(args.pool_timeout_seconds, "market pool loading"):
+            instruments = build_pool(args)
+    except TimeoutError as exc:
+        print(f"Warning: {exc}; using bundled fallback pools", flush=True)
+        instruments = [
+            Instrument("CN", symbol, name, "Static A-share fallback")
+            for symbol, name in A_SHARE_FALLBACK[: args.a_top_n]
+        ]
+        instruments.extend(
+            Instrument("US", symbol, symbol, "S&P 100 fallback list")
+            for symbol in SP100_FALLBACK[: args.us_top_n]
+        )
+        instruments.extend(
+            [
+                Instrument("GOLD", "GC=F", "COMEX黄金期货", "Yahoo Finance"),
+                Instrument("GOLD", "GLD", "SPDR Gold Shares", "Yahoo Finance"),
+            ]
+        )
     scan_started_at = pd.Timestamp.now()
     index_snapshots, index_failures = scan_market_indices(start, end, cache_dir)
     context_scores = market_context_scores(index_snapshots)
 
     results = []
     failures = []
-    print(f"Scanning {len(instruments)} instruments from {start} to {end}")
-    print(f"Market indices: {len(index_snapshots)} ready, {len(index_failures)} failed")
+    print(f"Scanning {len(instruments)} instruments from {start} to {end}", flush=True)
+    print(f"Market indices: {len(index_snapshots)} ready, {len(index_failures)} failed", flush=True)
     for snapshot in index_snapshots:
         print(
             f"  {snapshot['symbol']} {snapshot['status']} "
             f"score={snapshot['score']:.0f} close={snapshot['last_close']}"
         )
-    print("A-share sources: Eastmoney history/realtime -> Sina realtime -> Yahoo history fallback")
+    print("A-share sources: Eastmoney history/realtime -> Sina realtime -> Yahoo history fallback", flush=True)
+    consecutive_failures: dict[str, int] = {}
+    disabled_markets: set[str] = set()
     for idx, instrument in enumerate(instruments, start=1):
+        if instrument.market in disabled_markets:
+            failures.append({**asdict(instrument), "error": "Skipped: market data source circuit breaker is open"})
+            continue
         try:
-            prices = fetch_prices(instrument, start, end, cache_dir, args.recent_cache_days)
+            with hard_timeout(
+                args.instrument_timeout_seconds,
+                f"{instrument.market} {instrument.symbol}",
+            ):
+                prices = fetch_prices(instrument, start, end, cache_dir, args.recent_cache_days)
             rows = scan_instrument(instrument, prices, context_scores.get(instrument.market))
             results.extend(rows)
-            print(f"[{idx:03d}/{len(instruments)}] {instrument.market} {instrument.symbol}: {len(rows)} setups")
+            consecutive_failures[instrument.market] = 0
+            print(
+                f"[{idx:03d}/{len(instruments)}] {instrument.market} {instrument.symbol}: {len(rows)} setups",
+                flush=True,
+            )
         except Exception as exc:
             failures.append({**asdict(instrument), "error": f"{type(exc).__name__}: {exc}"})
-            print(f"[{idx:03d}/{len(instruments)}] {instrument.market} {instrument.symbol}: FAILED {exc}")
+            consecutive_failures[instrument.market] = consecutive_failures.get(instrument.market, 0) + 1
+            print(
+                f"[{idx:03d}/{len(instruments)}] {instrument.market} {instrument.symbol}: FAILED {exc}",
+                flush=True,
+            )
+            if consecutive_failures[instrument.market] >= args.max_consecutive_failures:
+                disabled_markets.add(instrument.market)
+                print(
+                    f"Circuit breaker opened for {instrument.market} after "
+                    f"{consecutive_failures[instrument.market]} consecutive failures",
+                    flush=True,
+                )
 
     df = pd.DataFrame(results)
     if not df.empty:
