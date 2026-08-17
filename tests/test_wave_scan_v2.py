@@ -1,11 +1,13 @@
 from __future__ import annotations
 
+import signal
+import time
 import unittest
 
 import numpy as np
 import pandas as pd
 
-from scanner.wave_scan import market_index_snapshot, score_candidate_v2
+from scanner.wave_scan import hard_timeout, market_index_snapshot, score_candidate_v2
 
 
 def confirmed_pullback_prices() -> pd.DataFrame:
@@ -36,6 +38,16 @@ def left_probe_prices() -> pd.DataFrame:
 
 
 class WaveScanV2Tests(unittest.TestCase):
+    @unittest.skipUnless(hasattr(signal, "SIGALRM"), "requires Unix alarm signals")
+    def test_hard_timeout_escapes_provider_exception_handlers(self) -> None:
+        with self.assertRaisesRegex(TimeoutError, "provider call exceeded 1s"):
+            with hard_timeout(1, "provider call"):
+                while True:
+                    try:
+                        time.sleep(2)
+                    except Exception:
+                        continue
+
     def test_confirmed_pullback_becomes_trigger_with_component_scores(self) -> None:
         row = {
             "pattern": "4浪回踩候选",
