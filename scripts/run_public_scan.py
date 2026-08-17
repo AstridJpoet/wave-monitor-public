@@ -25,6 +25,7 @@ def main() -> int:
     parser.add_argument("--a-top-n", type=int, default=800)
     parser.add_argument("--us-top-n", type=int, default=300)
     parser.add_argument("--limit-per-market", type=int, default=30)
+    parser.add_argument("--scan-timeout-seconds", type=int, default=1800)
     args = parser.parse_args()
 
     today = date.today()
@@ -50,7 +51,12 @@ def main() -> int:
         "--max-failure-rate",
         "0.35",
     ]
-    subprocess.run(scan_command, cwd=ROOT, check=True)
+    try:
+        subprocess.run(scan_command, cwd=ROOT, check=True, timeout=args.scan_timeout_seconds)
+    except subprocess.TimeoutExpired as exc:
+        raise RuntimeError(
+            f"market scan exceeded {args.scan_timeout_seconds}s; provider requests were stopped"
+        ) from exc
 
     build_command = [
         sys.executable,
