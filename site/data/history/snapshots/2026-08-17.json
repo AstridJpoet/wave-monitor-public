@@ -1,0 +1,76 @@
+{
+  "schema_version": 1,
+  "date": "2026-08-17",
+  "runs": [
+    {
+      "published_at": "2026-08-17T22:57:15+08:00",
+      "scan_generated_at": "2026-08-17T14:57:15.807201",
+      "recommendation_count": 3,
+      "recommendations": [
+        {
+          "market": "CN",
+          "symbol": "300433",
+          "monitor_symbol": "300433.SZ",
+          "name": "蓝思科技",
+          "signal_stage": "trigger",
+          "stage_label": "右侧触发",
+          "recommend_score": 90.8,
+          "recommend_label": "优先",
+          "last_date": "2026-08-17",
+          "last_close": 36.99,
+          "pattern": "2浪回撤候选",
+          "wave_level": "大级别",
+          "support": 36.8614,
+          "invalid_below": 25.4695,
+          "target_1": 55.2912,
+          "target_2": 66.8118,
+          "risk_reward": 1.589,
+          "market_context_score": 45.0,
+          "market_context_label": "大盘震荡"
+        },
+        {
+          "market": "GOLD",
+          "symbol": "GC=F",
+          "monitor_symbol": "GC=F",
+          "name": "COMEX黄金期货",
+          "signal_stage": "trigger",
+          "stage_label": "右侧触发",
+          "recommend_score": 88.5,
+          "recommend_label": "优先",
+          "last_date": "2026-08-17",
+          "last_close": 4471.8999,
+          "pattern": "ABC/C浪末端候选",
+          "wave_level": "中级别",
+          "support": 4471.3073,
+          "invalid_below": 3947.7,
+          "target_1": 5318.3999,
+          "target_2": 5842.5999,
+          "risk_reward": 1.615,
+          "market_context_score": null,
+          "market_context_label": "未取得大盘数据"
+        },
+        {
+          "market": "CN",
+          "symbol": "601100",
+          "monitor_symbol": "601100.SS",
+          "name": "恒立液压",
+          "signal_stage": "trigger",
+          "stage_label": "右侧触发",
+          "recommend_score": 85.4,
+          "recommend_label": "优先",
+          "last_date": "2026-08-17",
+          "last_close": 108.82,
+          "pattern": "4浪回踩候选",
+          "wave_level": "中级别",
+          "support": 108.7815,
+          "invalid_below": 103.1031,
+          "target_1": 123.0966,
+          "target_2": 146.2556,
+          "risk_reward": 2.497,
+          "market_context_score": 45.0,
+          "market_context_label": "大盘震荡"
+        }
+      ]
+    }
+  ]
+}
