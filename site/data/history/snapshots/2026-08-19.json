@@ -176,6 +176,34 @@
           "market_context_label": "大盘强势"
         }
       ]
+    },
+    {
+      "published_at": "2026-08-19T16:03:47+08:00",
+      "scan_generated_at": "2026-08-19T08:03:47.527471",
+      "recommendation_count": 1,
+      "recommendations": [
+        {
+          "market": "US",
+          "symbol": "CTVA",
+          "monitor_symbol": "CTVA",
+          "name": "Corteva",
+          "signal_stage": "trigger",
+          "stage_label": "右侧触发",
+          "recommend_score": 90.8,
+          "recommend_label": "优先",
+          "last_date": "2026-08-18",
+          "last_close": 77.91,
+          "pattern": "4浪回踩候选",
+          "wave_level": "中级别",
+          "support": 75.8271,
+          "invalid_below": 76.3792,
+          "target_1": 85.2635,
+          "target_2": 100.5296,
+          "risk_reward": 4.804,
+          "market_context_score": 80.0,
+          "market_context_label": "大盘强势"
+        }
+      ]
     }
   ]
 }
