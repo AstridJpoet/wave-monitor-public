@@ -1,6 +1,6 @@
 {
   "schema_version": 1,
-  "updated_at": "2026-08-19T16:03:47+08:00",
+  "updated_at": "2026-08-20T06:53:23+08:00",
   "signals": [
     {
       "id": "US:NVDA:2026-08-11T125800p0800",
@@ -325,7 +325,7 @@
       "target_1": 85.2635,
       "target_2": 100.5296,
       "risk_reward": 28.536,
-      "last_seen_at": "2026-08-19T16:03:47+08:00",
+      "last_seen_at": "2026-08-20T06:53:23+08:00",
       "latest_score": 90.8,
       "latest_stage": "trigger",
       "latest_date": "2026-08-18",
