@@ -1,6 +1,6 @@
 {
   "schema_version": 1,
-  "updated_at": "2026-08-27T11:32:58+08:00",
+  "updated_at": "2026-08-28T02:23:16+08:00",
   "methodology": {
     "minimum_score": 85.0,
     "eligible_stages": [
@@ -10,9 +10,9 @@
     "episode_gap_days": 7,
     "win_definition": "forward close return > 0"
   },
-  "snapshot_day_count": 15,
-  "snapshot_run_count": 25,
-  "signal_count": 39,
+  "snapshot_day_count": 16,
+  "snapshot_run_count": 26,
+  "signal_count": 40,
   "tracking_since": "2026-08-10",
   "horizons": [
     {
@@ -69,6 +69,13 @@
     }
   ],
   "snapshots": [
+    {
+      "date": "2026-08-28",
+      "run_count": 1,
+      "latest_published_at": "2026-08-28T02:23:16+08:00",
+      "recommendation_count": 7,
+      "path": "./data/history/snapshots/2026-08-28.json"
+    },
     {
       "date": "2026-08-27",
       "run_count": 1,
@@ -177,6 +184,33 @@
   ],
   "signals": [
     {
+      "id": "CN:688082.SS:2026-08-28T022316p0800",
+      "market": "CN",
+      "symbol": "688082",
+      "monitor_symbol": "688082.SS",
+      "name": "盛美上海",
+      "entry_published_at": "2026-08-28T02:23:16+08:00",
+      "entry_date": "2026-08-27",
+      "entry_price": 307.01,
+      "entry_score": 85.4,
+      "entry_stage": "trigger",
+      "entry_pattern": "ABC/C浪末端候选",
+      "wave_level": "中级别",
+      "support": 303.3602,
+      "invalid_below": 214.641,
+      "target_1": 446.8902,
+      "target_2": 539.2592,
+      "risk_reward": 1.514,
+      "last_seen_at": "2026-08-28T02:23:16+08:00",
+      "latest_score": 85.4,
+      "latest_stage": "trigger",
+      "latest_date": "2026-08-27",
+      "latest_price": 303.29998779,
+      "current_return": -0.01208434,
+      "outcomes": {},
+      "pricing_status": "ready"
+    },
+    {
       "id": "CN:000977.SZ:2026-08-27T113258p0800",
       "market": "CN",
       "symbol": "000977",
@@ -194,8 +228,8 @@
       "target_1": 89.52,
       "target_2": 109.0982,
       "risk_reward": 22.753,
-      "last_seen_at": "2026-08-27T11:32:58+08:00",
-      "latest_score": 94.3,
+      "last_seen_at": "2026-08-28T02:23:16+08:00",
+      "latest_score": 93.7,
       "latest_stage": "trigger",
       "latest_date": "2026-08-27",
       "latest_price": 77.29000092,
@@ -221,8 +255,8 @@
       "target_1": 161.1628,
       "target_2": 175.06,
       "risk_reward": 2.238,
-      "last_seen_at": "2026-08-27T11:32:58+08:00",
-      "latest_score": 91.8,
+      "last_seen_at": "2026-08-28T02:23:16+08:00",
+      "latest_score": 88.7,
       "latest_stage": "trigger",
       "latest_date": "2026-08-27",
       "latest_price": 118.41999817,
@@ -248,7 +282,7 @@
       "target_1": 232.2063,
       "target_2": 276.8609,
       "risk_reward": 1.75,
-      "last_seen_at": "2026-08-27T11:32:58+08:00",
+      "last_seen_at": "2026-08-28T02:23:16+08:00",
       "latest_score": 91.0,
       "latest_stage": "trigger",
       "latest_date": "2026-08-26",
@@ -275,8 +309,8 @@
       "target_1": 38.0261,
       "target_2": 43.2882,
       "risk_reward": 7.174,
-      "last_seen_at": "2026-08-27T11:32:58+08:00",
-      "latest_score": 86.9,
+      "last_seen_at": "2026-08-28T02:23:16+08:00",
+      "latest_score": 87.0,
       "latest_stage": "trigger",
       "latest_date": "2026-08-27",
       "latest_price": 35.15999985,
@@ -302,7 +336,7 @@
       "target_1": 274.279,
       "target_2": 286.8699,
       "risk_reward": 1.561,
-      "last_seen_at": "2026-08-27T11:32:58+08:00",
+      "last_seen_at": "2026-08-28T02:23:16+08:00",
       "latest_score": 86.6,
       "latest_stage": "trigger",
       "latest_date": "2026-08-26",
@@ -410,7 +444,7 @@
       "target_1": 363.5,
       "target_2": 397.2944,
       "risk_reward": 3.437,
-      "last_seen_at": "2026-08-27T11:32:58+08:00",
+      "last_seen_at": "2026-08-28T02:23:16+08:00",
       "latest_score": 86.9,
       "latest_stage": "trigger",
       "latest_date": "2026-08-26",
