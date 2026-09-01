@@ -1,0 +1,55 @@
+{
+  "schema_version": 1,
+  "date": "2026-09-01",
+  "runs": [
+    {
+      "published_at": "2026-09-01T09:26:32+08:00",
+      "scan_generated_at": "2026-09-01T01:26:32.784689",
+      "recommendation_count": 2,
+      "recommendations": [
+        {
+          "market": "US",
+          "symbol": "COP",
+          "monitor_symbol": "COP",
+          "name": "COP",
+          "signal_stage": "trigger",
+          "stage_label": "右侧触发",
+          "recommend_score": 89.9,
+          "recommend_label": "优先",
+          "last_date": "2026-08-31",
+          "last_close": 132.49,
+          "pattern": "疑似3浪突破",
+          "wave_level": "大级别",
+          "support": 131.933,
+          "invalid_below": 104.0361,
+          "target_1": 184.9723,
+          "target_2": 204.0809,
+          "risk_reward": 1.844,
+          "market_context_score": 75.0,
+          "market_context_label": "大盘偏强"
+        },
+        {
+          "market": "US",
+          "symbol": "NVDA",
+          "monitor_symbol": "NVDA",
+          "name": "NVDA",
+          "signal_stage": "trigger",
+          "stage_label": "右侧触发",
+          "recommend_score": 85.6,
+          "recommend_label": "优先",
+          "last_date": "2026-08-31",
+          "last_close": 220.78,
+          "pattern": "疑似3浪突破",
+          "wave_level": "中级别",
+          "support": 216.3578,
+          "invalid_below": 196.2712,
+          "target_1": 279.4043,
+          "target_2": 299.0315,
+          "risk_reward": 2.392,
+          "market_context_score": 75.0,
+          "market_context_label": "大盘偏强"
+        }
+      ]
+    }
+  ]
+}
