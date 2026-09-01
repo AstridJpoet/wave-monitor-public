@@ -1,6 +1,6 @@
 {
   "schema_version": 1,
-  "updated_at": "2026-09-01T09:26:32+08:00",
+  "updated_at": "2026-09-01T20:41:57+08:00",
   "signals": [
     {
       "id": "US:NVDA:2026-08-11T125800p0800",
@@ -734,7 +734,7 @@
       "target_1": 184.9723,
       "target_2": 204.0809,
       "risk_reward": 1.623,
-      "last_seen_at": "2026-09-01T09:26:32+08:00",
+      "last_seen_at": "2026-09-01T20:41:57+08:00",
       "latest_score": 89.9,
       "latest_stage": "trigger",
       "latest_date": "2026-08-31",
@@ -1331,7 +1331,7 @@
       "target_1": 285.9416,
       "target_2": 307.9955,
       "risk_reward": 1.635,
-      "last_seen_at": "2026-09-01T09:26:32+08:00",
+      "last_seen_at": "2026-09-01T20:41:57+08:00",
       "latest_score": 85.6,
       "latest_stage": "trigger",
       "latest_date": "2026-08-31",
