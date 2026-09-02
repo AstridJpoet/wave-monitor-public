@@ -92,6 +92,34 @@
           "market_context_label": "大盘震荡"
         }
       ]
+    },
+    {
+      "published_at": "2026-09-02T20:12:25+08:00",
+      "scan_generated_at": "2026-09-02T12:12:24.873345",
+      "recommendation_count": 1,
+      "recommendations": [
+        {
+          "market": "US",
+          "symbol": "NVDA",
+          "monitor_symbol": "NVDA",
+          "name": "NVDA",
+          "signal_stage": "trigger",
+          "stage_label": "右侧触发",
+          "recommend_score": 85.8,
+          "recommend_label": "优先",
+          "last_date": "2026-09-01",
+          "last_close": 217.44,
+          "pattern": "疑似3浪突破",
+          "wave_level": "中级别",
+          "support": 216.3578,
+          "invalid_below": 196.2712,
+          "target_1": 279.4043,
+          "target_2": 299.0315,
+          "risk_reward": 2.927,
+          "market_context_score": 55.0,
+          "market_context_label": "大盘震荡"
+        }
+      ]
     }
   ]
 }
