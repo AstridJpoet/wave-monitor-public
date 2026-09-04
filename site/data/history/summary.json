@@ -1,6 +1,6 @@
 {
   "schema_version": 1,
-  "updated_at": "2026-09-04T08:20:55+08:00",
+  "updated_at": "2026-09-04T20:14:32+08:00",
   "methodology": {
     "minimum_score": 85.0,
     "eligible_stages": [
@@ -11,7 +11,7 @@
     "win_definition": "forward close return > 0"
   },
   "snapshot_day_count": 22,
-  "snapshot_run_count": 37,
+  "snapshot_run_count": 38,
   "signal_count": 54,
   "tracking_since": "2026-08-10",
   "horizons": [
@@ -71,8 +71,8 @@
   "snapshots": [
     {
       "date": "2026-09-04",
-      "run_count": 1,
-      "latest_published_at": "2026-09-04T08:20:55+08:00",
+      "run_count": 2,
+      "latest_published_at": "2026-09-04T20:14:32+08:00",
       "recommendation_count": 7,
       "path": "./data/history/snapshots/2026-09-04.json"
     },
@@ -243,7 +243,7 @@
       "target_1": 549.7095,
       "target_2": 697.7433,
       "risk_reward": 24.069,
-      "last_seen_at": "2026-09-04T08:20:55+08:00",
+      "last_seen_at": "2026-09-04T20:14:32+08:00",
       "latest_score": 89.6,
       "latest_stage": "trigger",
       "latest_date": "2026-09-03",
@@ -270,7 +270,7 @@
       "target_1": 115.8318,
       "target_2": 128.9,
       "risk_reward": 1.518,
-      "last_seen_at": "2026-09-04T08:20:55+08:00",
+      "last_seen_at": "2026-09-04T20:14:32+08:00",
       "latest_score": 87.4,
       "latest_stage": "trigger",
       "latest_date": "2026-09-02",
@@ -297,7 +297,7 @@
       "target_1": 59.37,
       "target_2": 69.6668,
       "risk_reward": 25.139,
-      "last_seen_at": "2026-09-04T08:20:55+08:00",
+      "last_seen_at": "2026-09-04T20:14:32+08:00",
       "latest_score": 85.8,
       "latest_stage": "trigger",
       "latest_date": "2026-09-02",
@@ -324,7 +324,7 @@
       "target_1": 130.5866,
       "target_2": 142.1854,
       "risk_reward": 8.807,
-      "last_seen_at": "2026-09-04T08:20:55+08:00",
+      "last_seen_at": "2026-09-04T20:14:32+08:00",
       "latest_score": 85.5,
       "latest_stage": "trigger",
       "latest_date": "2026-09-02",
@@ -351,7 +351,7 @@
       "target_1": 114.4286,
       "target_2": 123.865,
       "risk_reward": 2.012,
-      "last_seen_at": "2026-09-04T08:20:55+08:00",
+      "last_seen_at": "2026-09-04T20:14:32+08:00",
       "latest_score": 94.7,
       "latest_stage": "trigger",
       "latest_date": "2026-09-02",
@@ -459,7 +459,7 @@
       "target_1": 227.68,
       "target_2": 248.8712,
       "risk_reward": 3.324,
-      "last_seen_at": "2026-09-04T08:20:55+08:00",
+      "last_seen_at": "2026-09-04T20:14:32+08:00",
       "latest_score": 90.0,
       "latest_stage": "trigger",
       "latest_date": "2026-09-02",
@@ -1131,7 +1131,7 @@
       "target_1": 154.2962,
       "target_2": 163.8657,
       "risk_reward": 1.559,
-      "last_seen_at": "2026-09-04T08:20:55+08:00",
+      "last_seen_at": "2026-09-04T20:14:32+08:00",
       "latest_score": 91.6,
       "latest_stage": "trigger",
       "latest_date": "2026-09-02",
