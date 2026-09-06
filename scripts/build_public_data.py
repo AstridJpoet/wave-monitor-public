@@ -37,6 +37,9 @@ NUMERIC_FIELDS = {
     "volume_ratio",
     "market_context_score",
     "market_adjustment",
+    "macro_context_score",
+    "macro_adjustment",
+    "combined_context_score",
 }
 
 PUBLIC_FIELDS = {
@@ -74,6 +77,12 @@ PUBLIC_FIELDS = {
     "market_context_score",
     "market_context_label",
     "market_adjustment",
+    "macro_context_score",
+    "macro_context_label",
+    "macro_adjustment",
+    "combined_context_score",
+    "context_guidance",
+    "context_guidance_en",
 }
 
 INDEX_PUBLIC_FIELDS = {
@@ -101,6 +110,30 @@ INDEX_NUMERIC_FIELDS = {
     "ma50",
     "ma144",
     "score",
+}
+
+MACRO_FIELDS = {
+    "market",
+    "score",
+    "regime",
+    "regime_en",
+    "adjustment",
+    "as_of",
+    "data_status",
+    "components",
+}
+
+MACRO_COMPONENT_FIELDS = {
+    "key",
+    "name",
+    "name_en",
+    "value",
+    "unit",
+    "change_20d",
+    "impact",
+    "status",
+    "status_en",
+    "as_of",
 }
 
 
@@ -202,6 +235,27 @@ def public_index_snapshot(raw: dict[str, Any]) -> dict[str, Any]:
     return {field: row.get(field) for field in INDEX_PUBLIC_FIELDS}
 
 
+def public_macro_snapshot(raw: dict[str, Any]) -> dict[str, Any]:
+    row = {field: raw.get(field) for field in MACRO_FIELDS}
+    row["market"] = str(row.get("market") or "").strip().upper()
+    row["score"] = to_float(row.get("score"))
+    row["adjustment"] = to_float(row.get("adjustment"))
+    row["regime"] = str(row.get("regime") or "").strip()
+    row["regime_en"] = str(row.get("regime_en") or "").strip()
+    row["as_of"] = str(row.get("as_of") or "").strip()
+    row["data_status"] = str(row.get("data_status") or "").strip()
+    components = []
+    for raw_component in raw.get("components", []):
+        if not isinstance(raw_component, dict):
+            continue
+        item = {field: raw_component.get(field) for field in MACRO_COMPONENT_FIELDS}
+        for field in ("value", "change_20d", "impact"):
+            item[field] = to_float(item.get(field))
+        components.append(item)
+    row["components"] = components
+    return row
+
+
 def read_rows(path: Path) -> list[dict[str, Any]]:
     if not path.exists():
         return []
@@ -271,10 +325,15 @@ def build_payload(
         for raw in metadata.get("index_snapshots", [])
         if isinstance(raw, dict)
     ]
+    macro_contexts = [
+        public_macro_snapshot(raw)
+        for raw in metadata.get("macro_contexts", [])
+        if isinstance(raw, dict)
+    ]
 
     published_at = datetime.now(ZoneInfo("Asia/Shanghai")).isoformat(timespec="seconds")
     return {
-        "schema_version": 3,
+        "schema_version": 4,
         "published_at": published_at,
         "metadata": {
             "scan_generated_at": metadata.get("generated_at"),
@@ -294,6 +353,9 @@ def build_payload(
             "market_counts": dict(market_counts),
             "index_count": len(index_snapshots),
             "index_snapshots": index_snapshots,
+            "macro_context_count": len(macro_contexts),
+            "macro_failure_count": int(to_float(metadata.get("macro_failure_count")) or 0),
+            "macro_contexts": macro_contexts,
         },
         "candidates": selected,
         "disclaimer": "仅供研究参考，不构成投资建议。波浪识别具有主观性，历史形态不代表未来表现。",

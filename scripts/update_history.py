@@ -46,6 +46,12 @@ SNAPSHOT_FIELDS = (
     "risk_reward",
     "market_context_score",
     "market_context_label",
+    "macro_context_score",
+    "macro_context_label",
+    "macro_adjustment",
+    "combined_context_score",
+    "context_guidance",
+    "context_guidance_en",
 )
 
 
@@ -130,6 +136,7 @@ def append_daily_snapshot(
         "scan_generated_at": (payload.get("metadata") or {}).get("scan_generated_at"),
         "recommendation_count": len(recommendations),
         "recommendations": recommendations,
+        "macro_contexts": (payload.get("metadata") or {}).get("macro_contexts", []),
     }
     runs = [item for item in runs if isinstance(item, dict) and item.get("published_at") != published_at]
     runs.append(run)
@@ -167,6 +174,13 @@ def new_signal(row: dict[str, Any], published_at: str) -> dict[str, Any]:
         "target_1": as_float(row.get("target_1")),
         "target_2": as_float(row.get("target_2")),
         "risk_reward": as_float(row.get("risk_reward")),
+        "market_context_score": as_float(row.get("market_context_score")),
+        "market_context_label": str(row.get("market_context_label") or ""),
+        "macro_context_score": as_float(row.get("macro_context_score")),
+        "macro_context_label": str(row.get("macro_context_label") or ""),
+        "combined_context_score": as_float(row.get("combined_context_score")),
+        "context_guidance": str(row.get("context_guidance") or ""),
+        "context_guidance_en": str(row.get("context_guidance_en") or ""),
         "last_seen_at": published_at,
         "latest_score": as_float(row.get("recommend_score")),
         "latest_stage": str(row.get("signal_stage") or ""),
@@ -200,6 +214,8 @@ def update_signal_ledger(
             existing["latest_stage"] = str(row.get("signal_stage") or "")
             existing["latest_date"] = str(row.get("last_date") or "")
             existing["latest_price"] = as_float(row.get("last_close"))
+            existing["latest_macro_context_score"] = as_float(row.get("macro_context_score"))
+            existing["latest_macro_context_label"] = str(row.get("macro_context_label") or "")
             entry_price = as_float(existing.get("entry_price"))
             if entry_price and existing["latest_price"] is not None:
                 existing["current_return"] = round(existing["latest_price"] / entry_price - 1, 8)
