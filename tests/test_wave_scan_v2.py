@@ -118,6 +118,65 @@ class WaveScanV2Tests(unittest.TestCase):
         self.assertEqual(strong["score"] - weak["score"], 8.0)
         self.assertEqual(weak["market_context_label"], "大盘偏弱")
 
+    def test_macro_context_does_not_distort_technical_score(self) -> None:
+        row = {
+            "pattern": "4浪回踩候选",
+            "last_close": 102.0,
+            "support": 100.0,
+            "invalid_below": 95.0,
+            "target_1": 120.0,
+            "structure_fit": 1.0,
+        }
+        macro = {"score": 20.0, "regime": "宏观压力", "adjustment": -12.0}
+
+        baseline = score_candidate_v2(dict(row), confirmed_pullback_prices(), True, 80.0)
+        result = score_candidate_v2(dict(row), confirmed_pullback_prices(), True, 80.0, macro)
+
+        self.assertIsNotNone(baseline)
+        self.assertIsNotNone(result)
+        assert baseline is not None and result is not None
+        self.assertEqual(result["signal_stage"], "trigger")
+        self.assertEqual(result["score"], baseline["score"])
+        self.assertEqual(result["macro_adjustment"], -12.0)
+        self.assertEqual(result["combined_context_score"], 56.0)
+        self.assertEqual(result["context_guidance"], "环境中性·控制试错")
+
+    def test_breakout_without_market_macro_alignment_is_watch_only(self) -> None:
+        row = {
+            "pattern": "疑似3浪突破",
+            "last_close": 102.0,
+            "support": 100.0,
+            "invalid_below": 95.0,
+            "target_1": 120.0,
+            "structure_fit": 1.0,
+        }
+        macro = {"score": 20.0, "regime": "宏观压力", "adjustment": -12.0}
+
+        result = score_candidate_v2(dict(row), confirmed_pullback_prices(), True, 70.0, macro)
+
+        self.assertIsNotNone(result)
+        assert result is not None
+        self.assertEqual(result["signal_stage"], "watch")
+        self.assertEqual(result["stage_label"], "环境未共振·观察")
+        self.assertEqual(result["combined_context_score"], 50.0)
+
+    def test_two_wave_setup_is_watch_only_after_historical_recalibration(self) -> None:
+        row = {
+            "pattern": "2浪回撤候选",
+            "last_close": 102.0,
+            "support": 100.0,
+            "invalid_below": 95.0,
+            "target_1": 120.0,
+            "structure_fit": 1.0,
+        }
+
+        result = score_candidate_v2(dict(row), confirmed_pullback_prices(), True, 80.0)
+
+        self.assertIsNotNone(result)
+        assert result is not None
+        self.assertEqual(result["signal_stage"], "watch")
+        self.assertEqual(result["stage_label"], "2浪模型待重校准")
+
     def test_market_index_snapshot_classifies_uptrend(self) -> None:
         closes = np.linspace(100.0, 180.0, 220)
         prices = pd.DataFrame(
