@@ -16,6 +16,7 @@ import numpy as np
 import pandas as pd
 
 try:
+    from .macro_context import build_macro_context, context_by_market
     from .ma_touch_backtest import (
         A_SHARE_FALLBACK,
         Instrument,
@@ -32,6 +33,7 @@ try:
     )
     from .ma_touch_confirm_backtest import load_pool_from_metadata
 except ImportError:
+    from macro_context import build_macro_context, context_by_market
     from ma_touch_backtest import (
         A_SHARE_FALLBACK,
         Instrument,
@@ -537,6 +539,7 @@ def score_candidate_v2(
     prices: pd.DataFrame,
     multi_level_alignment: bool,
     market_context_score: float | None = None,
+    macro_context: dict | None = None,
 ) -> dict | None:
     close = float(row["last_close"])
     support = float(row["support"])
@@ -639,8 +642,21 @@ def score_candidate_v2(
         volume_ratio = latest_volume_ratio
 
     market_adjustment = market_score_adjustment(market_context_score)
+    macro_score_raw = (macro_context or {}).get("score")
+    macro_score = float(macro_score_raw) if macro_score_raw is not None and np.isfinite(float(macro_score_raw)) else None
+    macro_adjustment = float((macro_context or {}).get("adjustment") or 0.0)
+    macro_label = str((macro_context or {}).get("regime") or "宏观数据缺失")
+    if market_context_score is not None and macro_score is not None:
+        combined_context_score = round(0.6 * market_context_score + 0.4 * macro_score, 1)
+    else:
+        combined_context_score = market_context_score if macro_score is None else macro_score
     total_score = round(
-        structure_score + position_score + confirmation_score + trend_score + risk_score + market_adjustment,
+        structure_score
+        + position_score
+        + confirmation_score
+        + trend_score
+        + risk_score
+        + market_adjustment,
         1,
     )
     if total_score < 65:
@@ -663,6 +679,30 @@ def score_candidate_v2(
     else:
         signal_stage = "watch"
         stage_label = "观察候选"
+    if pattern == "2浪回撤候选" and signal_stage in {"trigger", "probe"}:
+        signal_stage = "watch"
+        stage_label = "2浪模型待重校准"
+    elif (
+        is_breakout
+        and combined_context_score is not None
+        and combined_context_score < 55
+        and signal_stage in {"trigger", "probe"}
+    ):
+        signal_stage = "watch"
+        stage_label = "环境未共振·观察"
+
+    if combined_context_score is None:
+        context_guidance = "宏观待更新·谨慎确认"
+        context_guidance_en = "Macro pending · Require confirmation"
+    elif combined_context_score >= 65:
+        context_guidance = "环境配合·按技术位执行"
+        context_guidance_en = "Context aligned · Follow technical levels"
+    elif combined_context_score >= 55:
+        context_guidance = "环境中性·控制试错"
+        context_guidance_en = "Neutral context · Limit initial risk"
+    else:
+        context_guidance = "环境偏弱·等待强确认"
+        context_guidance_en = "Weak context · Wait for stronger confirmation"
     row.update(
         {
             "score": total_score,
@@ -680,6 +720,12 @@ def score_candidate_v2(
             "market_context_score": round(market_context_score, 1) if market_context_score is not None else np.nan,
             "market_context_label": market_context_label(market_context_score),
             "market_adjustment": market_adjustment,
+            "macro_context_score": round(macro_score, 1) if macro_score is not None else np.nan,
+            "macro_context_label": macro_label,
+            "macro_adjustment": macro_adjustment,
+            "combined_context_score": combined_context_score,
+            "context_guidance": context_guidance,
+            "context_guidance_en": context_guidance_en,
         }
     )
     return row
@@ -689,6 +735,7 @@ def scan_instrument(
     instrument: Instrument,
     prices: pd.DataFrame,
     market_context_score: float | None = None,
+    macro_context: dict | None = None,
 ) -> list[dict]:
     if len(prices) < 260:
         return []
@@ -719,7 +766,7 @@ def scan_instrument(
     rows = []
     for row in setups:
         aligned = len(pattern_levels.get(str(row["pattern"]), set())) > 1
-        scored = score_candidate_v2(row, prices, aligned, market_context_score)
+        scored = score_candidate_v2(row, prices, aligned, market_context_score, macro_context)
         if scored:
             rows.append(scored)
     stage_priority = {"trigger": 2, "probe": 1, "watch": 0}
@@ -1016,6 +1063,14 @@ def main() -> int:
     scan_started_at = pd.Timestamp.now()
     index_snapshots, index_failures = scan_market_indices(start, end, cache_dir)
     context_scores = market_context_scores(index_snapshots)
+    try:
+        with hard_timeout(100, "macro context loading"):
+            macro_snapshots, macro_failures = build_macro_context(cache_dir, end)
+    except TimeoutError as exc:
+        print(f"Warning: {exc}; macro context is unavailable", flush=True)
+        macro_snapshots = []
+        macro_failures = [{"series": "ALL", "error": str(exc)}]
+    macro_contexts = context_by_market(macro_snapshots)
 
     results = []
     failures = []
@@ -1025,6 +1080,12 @@ def main() -> int:
         print(
             f"  {snapshot['symbol']} {snapshot['status']} "
             f"score={snapshot['score']:.0f} close={snapshot['last_close']}"
+        )
+    for snapshot in macro_snapshots:
+        print(
+            f"  {snapshot['market']} {snapshot['regime']} "
+            f"score={snapshot.get('score')} as_of={snapshot.get('as_of')}",
+            flush=True,
         )
     print("A-share sources: Eastmoney history/realtime -> Sina realtime -> Yahoo history fallback", flush=True)
     consecutive_failures: dict[str, int] = {}
@@ -1039,7 +1100,12 @@ def main() -> int:
                 f"{instrument.market} {instrument.symbol}",
             ):
                 prices = fetch_prices(instrument, start, end, cache_dir, args.recent_cache_days)
-            rows = scan_instrument(instrument, prices, context_scores.get(instrument.market))
+            rows = scan_instrument(
+                instrument,
+                prices,
+                context_scores.get(instrument.market),
+                macro_contexts.get(instrument.market),
+            )
             results.extend(rows)
             consecutive_failures[instrument.market] = 0
             print(
@@ -1092,6 +1158,9 @@ def main() -> int:
         "index_snapshots": index_snapshots,
         "index_failures": index_failures,
         "market_context_scores": context_scores,
+        "macro_contexts": macro_snapshots,
+        "macro_failure_count": len(macro_failures),
+        "macro_failures": macro_failures,
         "protected_existing": protected_existing,
         "failures": failures,
     }
