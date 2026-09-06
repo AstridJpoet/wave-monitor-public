@@ -24,6 +24,7 @@ const els = {
   otherCards: $("#otherCards"),
   otherCount: $("#otherCount"),
   indexCards: $("#indexCards"),
+  macroCards: $("#macroCards"),
   candidateCount: $("#candidateCount"),
   alertCount: $("#alertCount"),
   priorityCount: $("#priorityCount"),
@@ -176,6 +177,14 @@ function indexNameEnglish(value) {
   return value || "";
 }
 
+function macroChange(item) {
+  const value = number(item.change_20d);
+  if (value === null) return "-";
+  if (["DTWEXBGS", "DEXCHUS"].includes(item.key)) return pct(value, true);
+  const sign = value > 0 ? "+" : "";
+  return `${sign}${value.toFixed(2)}pp`;
+}
+
 function confirmationTranslation(value) {
   const source = value || "等待右侧确认";
   return source
@@ -266,6 +275,7 @@ function tableRow(item) {
         <div class="score">${fmt(item.recommend_score)}<small>${escapeHtml(item.recommend_label || "")}<span class="en-inline">${escapeHtml(recommendationEn)}</span></small></div>
         <div class="score-breakdown">结构 ${fmt(item.structure_score)} · 位置 ${fmt(item.position_score)} · 确认 ${fmt(item.confirmation_score)}<small>Structure ${fmt(item.structure_score)} · Position ${fmt(item.position_score)} · Confirmation ${fmt(item.confirmation_score)}</small></div>
         <div class="market-context ${number(item.market_adjustment) < 0 ? "weak" : ""}">${escapeHtml(item.market_context_label || "")}${number(item.market_adjustment) < 0 ? ` ${fmt(item.market_adjustment)}` : ""}<small>${escapeHtml(marketContextEnglish(item.market_context_label))}</small></div>
+        <div class="market-context ${number(item.combined_context_score) < 55 ? "weak" : ""}">${escapeHtml(item.context_guidance || item.macro_context_label || "宏观数据缺失")}<small>${escapeHtml(item.context_guidance_en || "Macro context")} · 综合 ${fmt(item.combined_context_score)}</small></div>
       </td>
       <td>${fmt(item.last_close)}<div class="muted">${escapeHtml(item.last_date || "")}</div></td>
       <td>${fmt(item.support)}<div class="muted">距离 ${pct(item.distance_to_support, true)}<small class="en-copy">From support</small></div></td>
@@ -311,6 +321,7 @@ function candidateCard(item) {
       <div class="card-foot">
         <span>结构 ${fmt(item.structure_score)} · 位置 ${fmt(item.position_score)} · 确认 ${fmt(item.confirmation_score)}<small>Structure · Position · Confirmation</small></span>
         <span>盈亏比 ${fmt(item.risk_reward)} · ${escapeHtml(item.market_context_label || "")}<small>Reward / risk · ${escapeHtml(marketContextEnglish(item.market_context_label))}</small></span>
+        <span>${escapeHtml(item.context_guidance || item.macro_context_label || "宏观数据缺失")} · 综合 ${fmt(item.combined_context_score)}<small>${escapeHtml(item.context_guidance_en || "Macro context")} · Combined score</small></span>
       </div>
     </article>`;
 }
@@ -345,6 +356,43 @@ function renderIndices(items) {
     return;
   }
   els.indexCards.innerHTML = items.map(indexCard).join("");
+}
+
+function macroCard(item) {
+  const score = number(item.score);
+  const statusClass = score === null ? "unavailable" : score >= 65 ? "strong" : score >= 45 ? "mixed" : "weak";
+  const components = Array.isArray(item.components) ? item.components : [];
+  const highlights = components
+    .slice()
+    .sort((a, b) => Math.abs(number(b.impact) || 0) - Math.abs(number(a.impact) || 0))
+    .slice(0, 3);
+  return `
+    <article class="macro-card ${statusClass}">
+      <div class="macro-card-head">
+        <div>
+          <span class="badge ${escapeHtml(String(item.market || "").toLowerCase())}">${bilingualHtml(marketLabel(item.market), marketEnglish(item.market))}</span>
+          <strong>${escapeHtml(item.regime || "宏观数据缺失")}</strong>
+          <small>${escapeHtml(item.regime_en || "Macro data unavailable")}</small>
+        </div>
+        <div class="macro-score">${score === null ? "-" : fmt(score)}<small>Macro score</small></div>
+      </div>
+      <div class="macro-components">
+        ${highlights.length ? highlights.map((component) => `
+          <div>
+            <span>${escapeHtml(component.status || "-")}<small>${escapeHtml(component.status_en || "")}</small></span>
+            <strong>${fmt(component.value)}<small>${macroChange(component)} · 20日</small></strong>
+          </div>`).join("") : `<div class="index-empty">${bilingualHtml("宏观数据暂不可用", "Macro data unavailable")}</div>`}
+      </div>
+      <div class="macro-foot">数据截至 ${escapeHtml(item.as_of || "-")}<small>Data through ${escapeHtml(item.as_of || "-")}</small></div>
+    </article>`;
+}
+
+function renderMacros(items) {
+  if (!items.length) {
+    els.macroCards.innerHTML = `<div class="index-empty">${bilingualHtml("暂未取得宏观数据", "Macro data is currently unavailable")}</div>`;
+    return;
+  }
+  els.macroCards.innerHTML = items.map(macroCard).join("");
 }
 
 function historyMetric(item) {
@@ -564,6 +612,7 @@ function renderMetadata(payload) {
   const meta = payload.metadata || {};
   const markets = Object.values(meta.market_counts || {}).filter((count) => Number(count) > 0).length;
   renderIndices(Array.isArray(meta.index_snapshots) ? meta.index_snapshots : []);
+  renderMacros(Array.isArray(meta.macro_contexts) ? meta.macro_contexts : []);
   els.instrumentCount.textContent = Number(meta.instrument_count || 0).toLocaleString("zh-CN");
   els.marketCount.textContent = markets || "-";
   els.failureRate.textContent = pct(meta.failure_rate);
