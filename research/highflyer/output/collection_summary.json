@@ -1,0 +1,20 @@
+{
+  "schema_version": 1,
+  "generated_at": "2026-09-06T11:47:25.797520+00:00",
+  "source": "CNINFO public full-text search",
+  "source_url": "https://www.cninfo.com.cn/new/fulltextSearch",
+  "start": "2019-01-01",
+  "end": "2026-09-06",
+  "search_terms": [
+    "宁波幻方",
+    "九章幻方"
+  ],
+  "raw_result_count": 6386,
+  "periodic_footprint_count": 55,
+  "unique_company_count": 51,
+  "limitations": [
+    "Quarter-end top-shareholder snapshots are not transaction records.",
+    "Positions below the disclosure threshold and hedge positions are absent.",
+    "Publication dates lag the underlying report periods."
+  ]
+}

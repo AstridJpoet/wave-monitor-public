@@ -60,3 +60,15 @@ python3 scripts/run_public_scan.py
 - 原本地应用地址
 
 扫描缓存与原始失败日志只存在于 GitHub Actions 缓存中，不会进入 Pages 网站。
+
+## 幻方公开足迹研究
+
+`research/highflyer/` 是独立研究模块，只分析巨潮资讯公开定期报告。流程包括公告索引、PDF 股东表核验、报告期特征，以及从首次公告后下一交易日开始的 21/63 日跟随回测。
+
+```bash
+python3 -m research.highflyer.collect_public_footprints --start 2019-01-01
+python3 -m research.highflyer.verify_public_footprints
+python3 -m research.highflyer.analyze_public_footprints
+```
+
+研究报告位于 `research/highflyer/output/report.md`。原始接口响应、PDF 和行情缓存均被忽略，不会发布到 GitHub Pages。公开股东快照不是完整交易记录，也不能还原幻方的私有模型、实际成本或对冲仓位。

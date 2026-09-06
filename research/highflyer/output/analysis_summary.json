@@ -1,0 +1,224 @@
+{
+  "schema_version": 1,
+  "generated_at": "2026-09-06T11:55:02.952736+00:00",
+  "verified_rows": 34,
+  "unique_companies": 34,
+  "priced_rows": 34,
+  "price_error_rows": 0,
+  "price_sources": {
+    "yahoo": 32,
+    "sina_unadjusted": 2
+  },
+  "period_start": "2019-12-31",
+  "period_end": "2021-06-30",
+  "outcomes": {
+    "snapshot_return_21d": {
+      "n": 34,
+      "mean": -0.11264926,
+      "median": -0.13552835,
+      "win_rate": 0.23529412,
+      "mean_ex_best": -0.12239098,
+      "mean_ex_top2": -0.13225589,
+      "trimmed_mean": -0.11349356
+    },
+    "return_21d": {
+      "n": 34,
+      "mean": 0.01607101,
+      "median": 0.01363441,
+      "win_rate": 0.52941176,
+      "mean_ex_best": 0.00626241,
+      "mean_ex_top2": -0.00399238,
+      "trimmed_mean": 0.01535617
+    },
+    "excess_21d": {
+      "n": 34,
+      "mean": -0.0170065,
+      "median": -0.02853057,
+      "win_rate": 0.38235294,
+      "mean_ex_best": -0.02842692,
+      "mean_ex_top2": -0.03907279,
+      "trimmed_mean": -0.01872251
+    },
+    "mfe_21d": {
+      "n": 34,
+      "mean": 0.17929797,
+      "median": 0.11618893,
+      "win_rate": 1.0,
+      "mean_ex_best": 0.16456667,
+      "mean_ex_top2": 0.15156179,
+      "trimmed_mean": 0.16970937
+    },
+    "mae_21d": {
+      "n": 34,
+      "mean": -0.0861721,
+      "median": -0.06789806,
+      "win_rate": 0.0,
+      "mean_ex_best": -0.08878338,
+      "mean_ex_top2": -0.09155786,
+      "trimmed_mean": -0.08152084
+    },
+    "snapshot_return_63d": {
+      "n": 34,
+      "mean": -0.08103923,
+      "median": -0.15226371,
+      "win_rate": 0.17647059,
+      "mean_ex_best": -0.10556414,
+      "mean_ex_top2": -0.12901578,
+      "trimmed_mean": -0.09583798
+    },
+    "return_63d": {
+      "n": 34,
+      "mean": 0.02224204,
+      "median": -0.01764483,
+      "win_rate": 0.47058824,
+      "mean_ex_best": -0.01026718,
+      "mean_ex_top2": -0.03558803,
+      "trimmed_mean": 0.00258828
+    },
+    "excess_63d": {
+      "n": 34,
+      "mean": -0.0095335,
+      "median": -0.09157719,
+      "win_rate": 0.44117647,
+      "mean_ex_best": -0.04204533,
+      "mean_ex_top2": -0.06045291,
+      "trimmed_mean": -0.02820087
+    },
+    "mfe_63d": {
+      "n": 34,
+      "mean": 0.29237796,
+      "median": 0.21231111,
+      "win_rate": 1.0,
+      "mean_ex_best": 0.26770254,
+      "mean_ex_top2": 0.24184805,
+      "trimmed_mean": 0.27540058
+    },
+    "mae_63d": {
+      "n": 34,
+      "mean": -0.14825148,
+      "median": -0.12655937,
+      "win_rate": 0.0,
+      "mean_ex_best": -0.15274394,
+      "mean_ex_top2": -0.15731427,
+      "trimmed_mean": -0.14431174
+    }
+  },
+  "disclosure_lag_days": {
+    "n": 34,
+    "mean": 87.23529412,
+    "median": 97.0,
+    "win_rate": 1.0,
+    "mean_ex_best": 83.90909091,
+    "mean_ex_top2": 81.875,
+    "trimmed_mean": 85.9375
+  },
+  "report_to_publication_return": {
+    "n": 34,
+    "mean": -0.07504187,
+    "median": -0.11984368,
+    "win_rate": 0.20588235,
+    "mean_ex_best": -0.09756131,
+    "mean_ex_top2": -0.11923991,
+    "trimmed_mean": -0.088337
+  },
+  "features": {
+    "ret_20d": {
+      "n": 34,
+      "mean": 0.04231423,
+      "median": 0.0139588,
+      "win_rate": 0.52941176,
+      "mean_ex_best": 0.02036121,
+      "mean_ex_top2": 0.00134367,
+      "trimmed_mean": 0.04003199
+    },
+    "ret_60d": {
+      "n": 34,
+      "mean": 0.17960012,
+      "median": 0.11012731,
+      "win_rate": 0.70588235,
+      "mean_ex_best": 0.15493889,
+      "mean_ex_top2": 0.13339018,
+      "trimmed_mean": 0.1847885
+    },
+    "ret_120d": {
+      "n": 28,
+      "mean": 0.29546222,
+      "median": 0.22910467,
+      "win_rate": 0.71428571,
+      "mean_ex_best": 0.26813999,
+      "mean_ex_top2": 0.24084188,
+      "trimmed_mean": 0.30520439
+    },
+    "ret_252d": {
+      "n": 22,
+      "mean": 0.38922642,
+      "median": 0.37403512,
+      "win_rate": 0.72727273,
+      "mean_ex_best": 0.324385,
+      "mean_ex_top2": 0.28088728,
+      "trimmed_mean": 0.37578821
+    },
+    "volatility_60d": {
+      "n": 34,
+      "mean": 0.72647234,
+      "median": 0.7428903,
+      "win_rate": 1.0,
+      "mean_ex_best": 0.71663511,
+      "mean_ex_top2": 0.70721327,
+      "trimmed_mean": 0.72723734
+    },
+    "drawdown_252d": {
+      "n": 34,
+      "mean": -0.28729638,
+      "median": -0.28343791,
+      "win_rate": 0.0,
+      "mean_ex_best": -0.29600233,
+      "mean_ex_top2": -0.3052524,
+      "trimmed_mean": -0.27947419
+    },
+    "ma_50_gap": {
+      "n": 34,
+      "mean": 0.04328593,
+      "median": 0.03044516,
+      "win_rate": 0.55882353,
+      "mean_ex_best": 0.02666922,
+      "mean_ex_top2": 0.0105169,
+      "trimmed_mean": 0.04977454
+    },
+    "ma_200_gap": {
+      "n": 24,
+      "mean": 0.17072132,
+      "median": 0.15206327,
+      "win_rate": 0.625,
+      "mean_ex_best": 0.14238311,
+      "mean_ex_top2": 0.1116553,
+      "trimmed_mean": 0.18109969
+    },
+    "atr_20_pct": {
+      "n": 34,
+      "mean": 0.07024036,
+      "median": 0.06152171,
+      "win_rate": 1.0,
+      "mean_ex_best": 0.06778703,
+      "mean_ex_top2": 0.06595651,
+      "trimmed_mean": 0.06899494
+    },
+    "volume_ratio_20_120": {
+      "n": 34,
+      "mean": 1.54216047,
+      "median": 1.32821959,
+      "win_rate": 1.0,
+      "mean_ex_best": 1.45098365,
+      "mean_ex_top2": 1.38823983,
+      "trimmed_mean": 1.48555629
+    }
+  },
+  "errors": {},
+  "methodology": {
+    "feature_date": "last trading session on or before report period end",
+    "entry": "first trading session open after first public filing date",
+    "exit": "adjusted close after 21 or 63 trading sessions",
+    "price_adjustment": "Yahoo and Eastmoney are adjusted; Sina delisted-stock fallback is unadjusted",
+    "default_benchmark": "CSI300 ETF proxy when product benchmark cannot be identified"
+  }
+}

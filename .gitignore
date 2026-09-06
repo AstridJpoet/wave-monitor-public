@@ -3,3 +3,5 @@
 __pycache__/
 *.pyc
 /data/
+/research/highflyer/cache/
+/research/highflyer/output/raw/
