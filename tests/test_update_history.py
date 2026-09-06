@@ -29,6 +29,11 @@ def candidate(symbol: str, score: float, stage: str, close: float, last_date: st
         "invalid_below": close * 0.9,
         "target_1": close * 1.2,
         "risk_reward": 2,
+        "market_context_score": 80,
+        "market_context_label": "大盘强势",
+        "macro_context_score": 68,
+        "macro_context_label": "宏观顺风",
+        "combined_context_score": 75.2,
     }
 
 
@@ -66,7 +71,10 @@ class UpdateHistoryTests(unittest.TestCase):
                 json.dumps(
                     {
                         "published_at": "2026-01-02T16:00:00+08:00",
-                        "metadata": {"scan_generated_at": "2026-01-02T15:59:00"},
+                        "metadata": {
+                            "scan_generated_at": "2026-01-02T15:59:00",
+                            "macro_contexts": [{"market": "US", "score": 68}],
+                        },
                         "candidates": [candidate("HIGH", 88, "probe", 100, entry_date.isoformat())],
                     }
                 ),
@@ -94,9 +102,11 @@ class UpdateHistoryTests(unittest.TestCase):
             signal = second["signals"][0]
             self.assertEqual(signal["entry_stage"], "probe")
             self.assertEqual(signal["latest_stage"], "trigger")
+            self.assertEqual(signal["macro_context_score"], 68)
 
             snapshot = json.loads((history_dir / "snapshots" / "2026-01-02.json").read_text(encoding="utf-8"))
             self.assertEqual(snapshot["runs"][0]["recommendation_count"], 1)
+            self.assertEqual(snapshot["runs"][0]["macro_contexts"][0]["score"], 68)
 
 
 if __name__ == "__main__":

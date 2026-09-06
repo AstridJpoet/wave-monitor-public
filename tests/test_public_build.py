@@ -75,6 +75,31 @@ class PublicBuildTests(unittest.TestCase):
                                 "private_note": "must stay private",
                             }
                         ],
+                        "macro_contexts": [
+                            {
+                                "market": "US",
+                                "score": 68,
+                                "regime": "宏观顺风",
+                                "regime_en": "Supportive",
+                                "adjustment": 0,
+                                "as_of": "2026-08-08",
+                                "data_status": "ready",
+                                "components": [
+                                    {
+                                        "key": "DGS10",
+                                        "name": "美国10年期国债",
+                                        "name_en": "US 10Y yield",
+                                        "value": 4.2,
+                                        "change_20d": -0.1,
+                                        "impact": 5,
+                                        "status": "长端利率回落",
+                                        "status_en": "Long yield falling",
+                                        "private_note": "must stay private",
+                                    }
+                                ],
+                                "private_note": "must stay private",
+                            }
+                        ],
                         "failures": [{"error": "must stay private"}],
                         "args": {"cache_dir": "/private/path"},
                     }
@@ -91,6 +116,9 @@ class PublicBuildTests(unittest.TestCase):
             self.assertEqual(payload["metadata"]["instrument_count"], 262)
             self.assertEqual(payload["metadata"]["index_count"], 1)
             self.assertNotIn("private_note", payload["metadata"]["index_snapshots"][0])
+            self.assertEqual(payload["metadata"]["macro_context_count"], 1)
+            self.assertNotIn("private_note", payload["metadata"]["macro_contexts"][0])
+            self.assertNotIn("private_note", payload["metadata"]["macro_contexts"][0]["components"][0])
 
     def test_high_failure_rate_stops_publication(self) -> None:
         with tempfile.TemporaryDirectory() as tmp:
