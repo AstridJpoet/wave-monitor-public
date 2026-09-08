@@ -1,6 +1,6 @@
 {
   "schema_version": 1,
-  "updated_at": "2026-09-08T08:41:47+08:00",
+  "updated_at": "2026-09-08T20:18:47+08:00",
   "methodology": {
     "minimum_score": 85.0,
     "eligible_stages": [
@@ -11,7 +11,7 @@
     "win_definition": "forward close return > 0"
   },
   "snapshot_day_count": 26,
-  "snapshot_run_count": 42,
+  "snapshot_run_count": 43,
   "signal_count": 64,
   "tracking_since": "2026-08-10",
   "horizons": [
@@ -71,8 +71,8 @@
   "snapshots": [
     {
       "date": "2026-09-08",
-      "run_count": 1,
-      "latest_published_at": "2026-09-08T08:41:47+08:00",
+      "run_count": 2,
+      "latest_published_at": "2026-09-08T20:18:47+08:00",
       "recommendation_count": 6,
       "path": "./data/history/snapshots/2026-09-08.json"
     },
@@ -278,7 +278,7 @@
       "combined_context_score": 90.0,
       "context_guidance": "环境配合·按技术位执行",
       "context_guidance_en": "Context aligned · Follow technical levels",
-      "last_seen_at": "2026-09-08T08:41:47+08:00",
+      "last_seen_at": "2026-09-08T20:18:47+08:00",
       "latest_score": 92.9,
       "latest_stage": "trigger",
       "latest_date": "2026-09-04",
@@ -314,7 +314,7 @@
       "combined_context_score": 90.0,
       "context_guidance": "环境配合·按技术位执行",
       "context_guidance_en": "Context aligned · Follow technical levels",
-      "last_seen_at": "2026-09-08T08:41:47+08:00",
+      "last_seen_at": "2026-09-08T20:18:47+08:00",
       "latest_score": 90.0,
       "latest_stage": "trigger",
       "latest_date": "2026-09-04",
@@ -350,7 +350,7 @@
       "combined_context_score": 90.0,
       "context_guidance": "环境配合·按技术位执行",
       "context_guidance_en": "Context aligned · Follow technical levels",
-      "last_seen_at": "2026-09-08T08:41:47+08:00",
+      "last_seen_at": "2026-09-08T20:18:47+08:00",
       "latest_score": 88.5,
       "latest_stage": "trigger",
       "latest_date": "2026-09-04",
@@ -460,7 +460,7 @@
       "target_1": 363.5,
       "target_2": 397.2944,
       "risk_reward": 2.017,
-      "last_seen_at": "2026-09-08T08:41:47+08:00",
+      "last_seen_at": "2026-09-08T20:18:47+08:00",
       "latest_score": 89.3,
       "latest_stage": "trigger",
       "latest_date": "2026-09-04",
@@ -678,7 +678,7 @@
       "target_1": 114.4286,
       "target_2": 123.865,
       "risk_reward": 2.012,
-      "last_seen_at": "2026-09-08T08:41:47+08:00",
+      "last_seen_at": "2026-09-08T20:18:47+08:00",
       "latest_score": 89.3,
       "latest_stage": "trigger",
       "latest_date": "2026-09-04",
@@ -1584,7 +1584,7 @@
       "target_1": 184.9723,
       "target_2": 204.0809,
       "risk_reward": 1.623,
-      "last_seen_at": "2026-09-08T08:41:47+08:00",
+      "last_seen_at": "2026-09-08T20:18:47+08:00",
       "latest_score": 89.7,
       "latest_stage": "trigger",
       "latest_date": "2026-09-04",
