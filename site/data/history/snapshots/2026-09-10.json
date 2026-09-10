@@ -144,6 +144,68 @@
         }
       ],
       "macro_contexts": []
+    },
+    {
+      "published_at": "2026-09-10T20:24:43+08:00",
+      "scan_generated_at": "2026-09-10T12:24:42.860823",
+      "recommendation_count": 2,
+      "recommendations": [
+        {
+          "market": "US",
+          "symbol": "CF",
+          "monitor_symbol": "CF",
+          "name": "CF Industries",
+          "signal_stage": "trigger",
+          "stage_label": "右侧触发",
+          "recommend_score": 91.7,
+          "recommend_label": "优先",
+          "last_date": "2026-09-09",
+          "last_close": 138.11,
+          "pattern": "疑似3浪突破",
+          "wave_level": "大级别",
+          "support": 135.1986,
+          "invalid_below": 102.4024,
+          "target_1": 197.6482,
+          "target_2": 220.1352,
+          "risk_reward": 1.667,
+          "market_context_score": 65.0,
+          "market_context_label": "大盘偏强",
+          "macro_context_score": null,
+          "macro_context_label": "宏观数据缺失",
+          "macro_adjustment": 0.0,
+          "combined_context_score": 65.0,
+          "context_guidance": "环境配合·按技术位执行",
+          "context_guidance_en": "Context aligned · Follow technical levels"
+        },
+        {
+          "market": "US",
+          "symbol": "AMD",
+          "monitor_symbol": "AMD",
+          "name": "AMD",
+          "signal_stage": "trigger",
+          "stage_label": "右侧触发",
+          "recommend_score": 89.7,
+          "recommend_label": "优先",
+          "last_date": "2026-09-09",
+          "last_close": 521.1,
+          "pattern": "疑似3浪突破",
+          "wave_level": "中级别",
+          "support": 518.58,
+          "invalid_below": 469.56,
+          "target_1": 613.5944,
+          "target_2": 647.6,
+          "risk_reward": 1.795,
+          "market_context_score": 65.0,
+          "market_context_label": "大盘偏强",
+          "macro_context_score": null,
+          "macro_context_label": "宏观数据缺失",
+          "macro_adjustment": 0.0,
+          "combined_context_score": 65.0,
+          "context_guidance": "环境配合·按技术位执行",
+          "context_guidance_en": "Context aligned · Follow technical levels"
+        }
+      ],
+      "macro_contexts": []
     }
   ]
 }
