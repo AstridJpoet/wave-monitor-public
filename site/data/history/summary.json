@@ -1,6 +1,6 @@
 {
   "schema_version": 1,
-  "updated_at": "2026-09-10T20:24:43+08:00",
+  "updated_at": "2026-09-11T08:26:01+08:00",
   "methodology": {
     "minimum_score": 85.0,
     "eligible_stages": [
@@ -10,8 +10,8 @@
     "episode_gap_days": 7,
     "win_definition": "forward close return > 0"
   },
-  "snapshot_day_count": 28,
-  "snapshot_run_count": 47,
+  "snapshot_day_count": 29,
+  "snapshot_run_count": 48,
   "signal_count": 67,
   "tracking_since": "2026-08-10",
   "horizons": [
@@ -69,6 +69,13 @@
     }
   ],
   "snapshots": [
+    {
+      "date": "2026-09-11",
+      "run_count": 1,
+      "latest_published_at": "2026-09-11T08:26:01+08:00",
+      "recommendation_count": 0,
+      "path": "./data/history/snapshots/2026-09-11.json"
+    },
     {
       "date": "2026-09-10",
       "run_count": 2,
@@ -691,9 +698,9 @@
       "last_seen_at": "2026-09-05T08:19:30+08:00",
       "latest_score": 89.6,
       "latest_stage": "trigger",
-      "latest_date": "2026-09-09",
-      "latest_price": 454.97000122,
-      "current_return": -0.0112572,
+      "latest_date": "2026-09-10",
+      "latest_price": 452.41000366,
+      "current_return": -0.01682059,
       "outcomes": {},
       "pricing_status": "ready"
     },
@@ -2201,9 +2208,9 @@
       "last_seen_at": "2026-08-18T06:52:02+08:00",
       "latest_score": 88.5,
       "latest_stage": "trigger",
-      "latest_date": "2026-09-10",
-      "latest_price": 4416.70019531,
-      "current_return": -0.01234368,
+      "latest_date": "2026-09-11",
+      "latest_price": 4360.0,
+      "current_return": -0.0250229,
       "outcomes": {
         "d5": {
           "sessions": 5,

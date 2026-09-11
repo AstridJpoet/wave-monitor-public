@@ -1,6 +1,6 @@
 {
   "schema_version": 1,
-  "updated_at": "2026-09-10T20:24:43+08:00",
+  "updated_at": "2026-09-11T08:26:01+08:00",
   "signals": [
     {
       "id": "US:NVDA:2026-08-11T125800p0800",
@@ -313,9 +313,9 @@
       "last_seen_at": "2026-08-18T06:52:02+08:00",
       "latest_score": 88.5,
       "latest_stage": "trigger",
-      "latest_date": "2026-09-10",
-      "latest_price": 4416.70019531,
-      "current_return": -0.01234368,
+      "latest_date": "2026-09-11",
+      "latest_price": 4360.0,
+      "current_return": -0.0250229,
       "outcomes": {
         "d5": {
           "sessions": 5,
@@ -1747,9 +1747,9 @@
       "last_seen_at": "2026-09-05T08:19:30+08:00",
       "latest_score": 89.6,
       "latest_stage": "trigger",
-      "latest_date": "2026-09-09",
-      "latest_price": 454.97000122,
-      "current_return": -0.0112572,
+      "latest_date": "2026-09-10",
+      "latest_price": 452.41000366,
+      "current_return": -0.01682059,
       "outcomes": {},
       "pricing_status": "ready"
     },
