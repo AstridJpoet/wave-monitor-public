@@ -1,0 +1,41 @@
+{
+  "schema_version": 1,
+  "date": "2026-09-12",
+  "runs": [
+    {
+      "published_at": "2026-09-12T08:33:11+08:00",
+      "scan_generated_at": "2026-09-12T00:33:10.940326",
+      "recommendation_count": 1,
+      "recommendations": [
+        {
+          "market": "US",
+          "symbol": "DELL",
+          "monitor_symbol": "DELL",
+          "name": "Dell Technologies",
+          "signal_stage": "trigger",
+          "stage_label": "右侧触发",
+          "recommend_score": 85.4,
+          "recommend_label": "优先",
+          "last_date": "2026-09-10",
+          "last_close": 506.62,
+          "pattern": "疑似3浪突破",
+          "wave_level": "中级别",
+          "support": 494.51,
+          "invalid_below": 433.19,
+          "target_1": 635.2297,
+          "target_2": 682.93,
+          "risk_reward": 1.751,
+          "market_context_score": 67.5,
+          "market_context_label": "大盘偏强",
+          "macro_context_score": null,
+          "macro_context_label": "宏观数据缺失",
+          "macro_adjustment": 0.0,
+          "combined_context_score": 67.5,
+          "context_guidance": "环境配合·按技术位执行",
+          "context_guidance_en": "Context aligned · Follow technical levels"
+        }
+      ],
+      "macro_contexts": []
+    }
+  ]
+}
