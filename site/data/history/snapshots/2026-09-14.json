@@ -1,0 +1,68 @@
+{
+  "schema_version": 1,
+  "date": "2026-09-14",
+  "runs": [
+    {
+      "published_at": "2026-09-14T22:24:11+08:00",
+      "scan_generated_at": "2026-09-14T14:24:11.539803",
+      "recommendation_count": 2,
+      "recommendations": [
+        {
+          "market": "CN",
+          "symbol": "002422",
+          "monitor_symbol": "002422.SZ",
+          "name": "科伦药业",
+          "signal_stage": "trigger",
+          "stage_label": "右侧触发",
+          "recommend_score": 88.2,
+          "recommend_label": "优先",
+          "last_date": "2026-09-14",
+          "last_close": 41.38,
+          "pattern": "4浪回踩候选",
+          "wave_level": "大级别",
+          "support": 40.681,
+          "invalid_below": 39.6512,
+          "target_1": 47.98,
+          "target_2": 59.7883,
+          "risk_reward": 3.818,
+          "market_context_score": 10.0,
+          "market_context_label": "大盘偏弱",
+          "macro_context_score": null,
+          "macro_context_label": "宏观数据缺失",
+          "macro_adjustment": 0.0,
+          "combined_context_score": 10.0,
+          "context_guidance": "环境偏弱·等待强确认",
+          "context_guidance_en": "Weak context · Wait for stronger confirmation"
+        },
+        {
+          "market": "US",
+          "symbol": "PM",
+          "monitor_symbol": "PM",
+          "name": "PM",
+          "signal_stage": "trigger",
+          "stage_label": "右侧触发",
+          "recommend_score": 87.4,
+          "recommend_label": "优先",
+          "last_date": "2026-09-14",
+          "last_close": 194.41,
+          "pattern": "疑似3浪突破",
+          "wave_level": "中级别",
+          "support": 190.2825,
+          "invalid_below": 171.2403,
+          "target_1": 233.1977,
+          "target_2": 247.8254,
+          "risk_reward": 1.674,
+          "market_context_score": 55.0,
+          "market_context_label": "大盘震荡",
+          "macro_context_score": null,
+          "macro_context_label": "宏观数据缺失",
+          "macro_adjustment": 0.0,
+          "combined_context_score": 55.0,
+          "context_guidance": "环境中性·控制试错",
+          "context_guidance_en": "Neutral context · Limit initial risk"
+        }
+      ],
+      "macro_contexts": []
+    }
+  ]
+}
