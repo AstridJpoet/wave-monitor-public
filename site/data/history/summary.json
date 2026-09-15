@@ -1,6 +1,6 @@
 {
   "schema_version": 1,
-  "updated_at": "2026-09-15T08:52:46+08:00",
+  "updated_at": "2026-09-15T20:50:54+08:00",
   "methodology": {
     "minimum_score": 85.0,
     "eligible_stages": [
@@ -11,7 +11,7 @@
     "win_definition": "forward close return > 0"
   },
   "snapshot_day_count": 32,
-  "snapshot_run_count": 52,
+  "snapshot_run_count": 53,
   "signal_count": 70,
   "tracking_since": "2026-08-10",
   "horizons": [
@@ -71,9 +71,9 @@
   "snapshots": [
     {
       "date": "2026-09-15",
-      "run_count": 1,
-      "latest_published_at": "2026-09-15T08:52:46+08:00",
-      "recommendation_count": 2,
+      "run_count": 2,
+      "latest_published_at": "2026-09-15T20:50:54+08:00",
+      "recommendation_count": 1,
       "path": "./data/history/snapshots/2026-09-15.json"
     },
     {
@@ -356,7 +356,7 @@
       "combined_context_score": 55.0,
       "context_guidance": "环境中性·控制试错",
       "context_guidance_en": "Neutral context · Limit initial risk",
-      "last_seen_at": "2026-09-15T08:52:46+08:00",
+      "last_seen_at": "2026-09-15T20:50:54+08:00",
       "latest_score": 92.7,
       "latest_stage": "trigger",
       "latest_date": "2026-09-11",

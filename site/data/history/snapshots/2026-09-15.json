@@ -63,6 +63,41 @@
         }
       ],
       "macro_contexts": []
+    },
+    {
+      "published_at": "2026-09-15T20:50:54+08:00",
+      "scan_generated_at": "2026-09-15T12:50:54.352854",
+      "recommendation_count": 1,
+      "recommendations": [
+        {
+          "market": "US",
+          "symbol": "PM",
+          "monitor_symbol": "PM",
+          "name": "PM",
+          "signal_stage": "trigger",
+          "stage_label": "右侧触发",
+          "recommend_score": 92.7,
+          "recommend_label": "优先",
+          "last_date": "2026-09-11",
+          "last_close": 191.06,
+          "pattern": "疑似3浪突破",
+          "wave_level": "中级别",
+          "support": 190.2825,
+          "invalid_below": 171.2403,
+          "target_1": 233.1977,
+          "target_2": 247.8254,
+          "risk_reward": 2.126,
+          "market_context_score": 55.0,
+          "market_context_label": "大盘震荡",
+          "macro_context_score": null,
+          "macro_context_label": "宏观数据缺失",
+          "macro_adjustment": 0.0,
+          "combined_context_score": 55.0,
+          "context_guidance": "环境中性·控制试错",
+          "context_guidance_en": "Neutral context · Limit initial risk"
+        }
+      ],
+      "macro_contexts": []
     }
   ]
 }
