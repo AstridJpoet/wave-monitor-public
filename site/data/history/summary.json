@@ -1,6 +1,6 @@
 {
   "schema_version": 1,
-  "updated_at": "2026-09-18T08:41:09+08:00",
+  "updated_at": "2026-09-18T20:22:35+08:00",
   "methodology": {
     "minimum_score": 85.0,
     "eligible_stages": [
@@ -11,7 +11,7 @@
     "win_definition": "forward close return > 0"
   },
   "snapshot_day_count": 35,
-  "snapshot_run_count": 58,
+  "snapshot_run_count": 59,
   "signal_count": 72,
   "tracking_since": "2026-08-10",
   "horizons": [
@@ -71,8 +71,8 @@
   "snapshots": [
     {
       "date": "2026-09-18",
-      "run_count": 1,
-      "latest_published_at": "2026-09-18T08:41:09+08:00",
+      "run_count": 2,
+      "latest_published_at": "2026-09-18T20:22:35+08:00",
       "recommendation_count": 3,
       "path": "./data/history/snapshots/2026-09-18.json"
     },
@@ -341,14 +341,16 @@
       "combined_context_score": 82.5,
       "context_guidance": "环境配合·按技术位执行",
       "context_guidance_en": "Context aligned · Follow technical levels",
-      "last_seen_at": "2026-09-18T08:41:09+08:00",
+      "last_seen_at": "2026-09-18T20:22:35+08:00",
       "latest_score": 87.3,
       "latest_stage": "trigger",
       "latest_date": "2026-09-16",
       "latest_price": 181.07000732,
       "current_return": 4e-08,
       "outcomes": {},
-      "pricing_status": "ready"
+      "pricing_status": "ready",
+      "latest_macro_context_score": null,
+      "latest_macro_context_label": "宏观数据缺失"
     },
     {
       "id": "US:DVA:2026-09-18T084109p0800",
@@ -375,14 +377,16 @@
       "combined_context_score": 82.5,
       "context_guidance": "环境配合·按技术位执行",
       "context_guidance_en": "Context aligned · Follow technical levels",
-      "last_seen_at": "2026-09-18T08:41:09+08:00",
+      "last_seen_at": "2026-09-18T20:22:35+08:00",
       "latest_score": 86.0,
       "latest_stage": "trigger",
       "latest_date": "2026-09-16",
       "latest_price": 193.86000061,
       "current_return": 0.0,
       "outcomes": {},
-      "pricing_status": "ready"
+      "pricing_status": "ready",
+      "latest_macro_context_score": null,
+      "latest_macro_context_label": "宏观数据缺失"
     },
     {
       "id": "CN:002422.SZ:2026-09-14T222411p0800",
@@ -445,7 +449,7 @@
       "combined_context_score": 55.0,
       "context_guidance": "环境中性·控制试错",
       "context_guidance_en": "Neutral context · Limit initial risk",
-      "last_seen_at": "2026-09-18T08:41:09+08:00",
+      "last_seen_at": "2026-09-18T20:22:35+08:00",
       "latest_score": 95.7,
       "latest_stage": "trigger",
       "latest_date": "2026-09-16",
