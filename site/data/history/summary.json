@@ -1,6 +1,6 @@
 {
   "schema_version": 1,
-  "updated_at": "2026-09-30T09:32:15+08:00",
+  "updated_at": "2026-09-30T22:02:36+08:00",
   "methodology": {
     "minimum_score": 85.0,
     "eligible_stages": [
@@ -11,8 +11,8 @@
     "win_definition": "forward close return > 0"
   },
   "snapshot_day_count": 45,
-  "snapshot_run_count": 74,
-  "signal_count": 99,
+  "snapshot_run_count": 75,
+  "signal_count": 100,
   "tracking_since": "2026-08-10",
   "horizons": [
     {
@@ -71,9 +71,9 @@
   "snapshots": [
     {
       "date": "2026-09-30",
-      "run_count": 1,
-      "latest_published_at": "2026-09-30T09:32:15+08:00",
-      "recommendation_count": 1,
+      "run_count": 2,
+      "latest_published_at": "2026-09-30T22:02:36+08:00",
+      "recommendation_count": 2,
       "path": "./data/history/snapshots/2026-09-30.json"
     },
     {
@@ -386,6 +386,40 @@
     }
   ],
   "signals": [
+    {
+      "id": "CN:002422.SZ:2026-09-30T220236p0800",
+      "market": "CN",
+      "symbol": "002422",
+      "monitor_symbol": "002422.SZ",
+      "name": "科伦药业",
+      "entry_published_at": "2026-09-30T22:02:36+08:00",
+      "entry_date": "2026-09-30",
+      "entry_price": 40.85,
+      "entry_score": 86.6,
+      "entry_stage": "trigger",
+      "entry_pattern": "4浪回踩候选",
+      "wave_level": "大级别",
+      "support": 40.681,
+      "invalid_below": 39.6512,
+      "target_1": 47.98,
+      "target_2": 59.7883,
+      "risk_reward": 5.948,
+      "market_context_score": 20.0,
+      "market_context_label": "大盘偏弱",
+      "macro_context_score": null,
+      "macro_context_label": "宏观数据缺失",
+      "combined_context_score": 20.0,
+      "context_guidance": "环境偏弱·等待强确认",
+      "context_guidance_en": "Weak context · Wait for stronger confirmation",
+      "last_seen_at": "2026-09-30T22:02:36+08:00",
+      "latest_score": 86.6,
+      "latest_stage": "trigger",
+      "latest_date": "2026-09-29",
+      "latest_price": 39.22000122,
+      "current_return": -0.03990205,
+      "outcomes": {},
+      "pricing_status": "ready"
+    },
     {
       "id": "US:FRT:2026-09-26T085201p0800",
       "market": "US",
@@ -1635,7 +1669,7 @@
       "combined_context_score": 55.0,
       "context_guidance": "环境中性·控制试错",
       "context_guidance_en": "Neutral context · Limit initial risk",
-      "last_seen_at": "2026-09-30T09:32:15+08:00",
+      "last_seen_at": "2026-09-30T22:02:36+08:00",
       "latest_score": 93.5,
       "latest_stage": "trigger",
       "latest_date": "2026-09-29",
