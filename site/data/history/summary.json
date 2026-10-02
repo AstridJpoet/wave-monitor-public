@@ -1,6 +1,6 @@
 {
   "schema_version": 1,
-  "updated_at": "2026-10-02T09:51:34+08:00",
+  "updated_at": "2026-10-02T22:03:06+08:00",
   "methodology": {
     "minimum_score": 85.0,
     "eligible_stages": [
@@ -11,7 +11,7 @@
     "win_definition": "forward close return > 0"
   },
   "snapshot_day_count": 47,
-  "snapshot_run_count": 78,
+  "snapshot_run_count": 79,
   "signal_count": 104,
   "tracking_since": "2026-08-10",
   "horizons": [
@@ -71,8 +71,8 @@
   "snapshots": [
     {
       "date": "2026-10-02",
-      "run_count": 1,
-      "latest_published_at": "2026-10-02T09:51:34+08:00",
+      "run_count": 2,
+      "latest_published_at": "2026-10-02T22:03:06+08:00",
       "recommendation_count": 5,
       "path": "./data/history/snapshots/2026-10-02.json"
     },
@@ -425,14 +425,16 @@
       "combined_context_score": 72.5,
       "context_guidance": "环境配合·按技术位执行",
       "context_guidance_en": "Context aligned · Follow technical levels",
-      "last_seen_at": "2026-10-02T09:51:34+08:00",
+      "last_seen_at": "2026-10-02T22:03:06+08:00",
       "latest_score": 89.7,
       "latest_stage": "trigger",
       "latest_date": "2026-10-01",
       "latest_price": 224.41000366,
       "current_return": 2e-08,
       "outcomes": {},
-      "pricing_status": "ready"
+      "pricing_status": "ready",
+      "latest_macro_context_score": null,
+      "latest_macro_context_label": "宏观数据缺失"
     },
     {
       "id": "US:CAH:2026-10-02T095134p0800",
@@ -459,14 +461,16 @@
       "combined_context_score": 72.5,
       "context_guidance": "环境配合·按技术位执行",
       "context_guidance_en": "Context aligned · Follow technical levels",
-      "last_seen_at": "2026-10-02T09:51:34+08:00",
+      "last_seen_at": "2026-10-02T22:03:06+08:00",
       "latest_score": 89.4,
       "latest_stage": "trigger",
       "latest_date": "2026-10-01",
       "latest_price": 230.08999634,
       "current_return": -2e-08,
       "outcomes": {},
-      "pricing_status": "ready"
+      "pricing_status": "ready",
+      "latest_macro_context_score": null,
+      "latest_macro_context_label": "宏观数据缺失"
     },
     {
       "id": "US:MU:2026-10-02T095134p0800",
@@ -493,14 +497,16 @@
       "combined_context_score": 72.5,
       "context_guidance": "环境配合·按技术位执行",
       "context_guidance_en": "Context aligned · Follow technical levels",
-      "last_seen_at": "2026-10-02T09:51:34+08:00",
+      "last_seen_at": "2026-10-02T22:03:06+08:00",
       "latest_score": 89.4,
       "latest_stage": "trigger",
       "latest_date": "2026-10-01",
       "latest_price": 1097.39001465,
       "current_return": 1e-08,
       "outcomes": {},
-      "pricing_status": "ready"
+      "pricing_status": "ready",
+      "latest_macro_context_score": null,
+      "latest_macro_context_label": "宏观数据缺失"
     },
     {
       "id": "US:FDS:2026-10-02T095134p0800",
@@ -527,14 +533,16 @@
       "combined_context_score": 72.5,
       "context_guidance": "环境配合·按技术位执行",
       "context_guidance_en": "Context aligned · Follow technical levels",
-      "last_seen_at": "2026-10-02T09:51:34+08:00",
+      "last_seen_at": "2026-10-02T22:03:06+08:00",
       "latest_score": 87.9,
       "latest_stage": "trigger",
       "latest_date": "2026-10-01",
       "latest_price": 277.60998535,
       "current_return": -5e-08,
       "outcomes": {},
-      "pricing_status": "ready"
+      "pricing_status": "ready",
+      "latest_macro_context_score": null,
+      "latest_macro_context_label": "宏观数据缺失"
     },
     {
       "id": "CN:002422.SZ:2026-09-30T220236p0800",
@@ -561,7 +569,7 @@
       "combined_context_score": 20.0,
       "context_guidance": "环境偏弱·等待强确认",
       "context_guidance_en": "Weak context · Wait for stronger confirmation",
-      "last_seen_at": "2026-10-02T09:51:34+08:00",
+      "last_seen_at": "2026-10-02T22:03:06+08:00",
       "latest_score": 86.6,
       "latest_stage": "trigger",
       "latest_date": "2026-09-30",
