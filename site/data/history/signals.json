@@ -1,6 +1,6 @@
 {
   "schema_version": 1,
-  "updated_at": "2026-10-02T22:03:06+08:00",
+  "updated_at": "2026-10-03T09:23:53+08:00",
   "signals": [
     {
       "id": "US:NVDA:2026-08-11T125800p0800",
@@ -344,8 +344,8 @@
       "latest_score": 88.5,
       "latest_stage": "trigger",
       "latest_date": "2026-10-02",
-      "latest_price": 4180.60009766,
-      "current_return": -0.06514005,
+      "latest_price": 4172.10009766,
+      "current_return": -0.06704081,
       "outcomes": {
         "d5": {
           "sessions": 5,
@@ -4022,7 +4022,7 @@
       "combined_context_score": 20.0,
       "context_guidance": "环境偏弱·等待强确认",
       "context_guidance_en": "Weak context · Wait for stronger confirmation",
-      "last_seen_at": "2026-10-02T22:03:06+08:00",
+      "last_seen_at": "2026-10-03T09:23:53+08:00",
       "latest_score": 86.6,
       "latest_stage": "trigger",
       "latest_date": "2026-09-30",
@@ -4058,7 +4058,7 @@
       "combined_context_score": 72.5,
       "context_guidance": "环境配合·按技术位执行",
       "context_guidance_en": "Context aligned · Follow technical levels",
-      "last_seen_at": "2026-10-02T22:03:06+08:00",
+      "last_seen_at": "2026-10-03T09:23:53+08:00",
       "latest_score": 89.7,
       "latest_stage": "trigger",
       "latest_date": "2026-10-01",
@@ -4094,7 +4094,7 @@
       "combined_context_score": 72.5,
       "context_guidance": "环境配合·按技术位执行",
       "context_guidance_en": "Context aligned · Follow technical levels",
-      "last_seen_at": "2026-10-02T22:03:06+08:00",
+      "last_seen_at": "2026-10-03T09:23:53+08:00",
       "latest_score": 89.4,
       "latest_stage": "trigger",
       "latest_date": "2026-10-01",
@@ -4130,7 +4130,7 @@
       "combined_context_score": 72.5,
       "context_guidance": "环境配合·按技术位执行",
       "context_guidance_en": "Context aligned · Follow technical levels",
-      "last_seen_at": "2026-10-02T22:03:06+08:00",
+      "last_seen_at": "2026-10-03T09:23:53+08:00",
       "latest_score": 89.4,
       "latest_stage": "trigger",
       "latest_date": "2026-10-01",
@@ -4166,7 +4166,7 @@
       "combined_context_score": 72.5,
       "context_guidance": "环境配合·按技术位执行",
       "context_guidance_en": "Context aligned · Follow technical levels",
-      "last_seen_at": "2026-10-02T22:03:06+08:00",
+      "last_seen_at": "2026-10-03T09:23:53+08:00",
       "latest_score": 87.9,
       "latest_stage": "trigger",
       "latest_date": "2026-10-01",
