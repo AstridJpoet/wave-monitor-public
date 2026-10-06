@@ -179,6 +179,68 @@
         }
       ],
       "macro_contexts": []
+    },
+    {
+      "published_at": "2026-10-06T22:23:28+08:00",
+      "scan_generated_at": "2026-10-06T14:23:28.424920",
+      "recommendation_count": 2,
+      "recommendations": [
+        {
+          "market": "US",
+          "symbol": "ALL",
+          "monitor_symbol": "ALL",
+          "name": "Allstate",
+          "signal_stage": "trigger",
+          "stage_label": "右侧触发",
+          "recommend_score": 89.6,
+          "recommend_label": "优先",
+          "last_date": "2026-10-05",
+          "last_close": 224.71,
+          "pattern": "疑似3浪突破",
+          "wave_level": "中级别",
+          "support": 222.4772,
+          "invalid_below": 204.1603,
+          "target_1": 257.4839,
+          "target_2": 270.0733,
+          "risk_reward": 1.595,
+          "market_context_score": 100.0,
+          "market_context_label": "大盘强势",
+          "macro_context_score": null,
+          "macro_context_label": "宏观数据缺失",
+          "macro_adjustment": 0.0,
+          "combined_context_score": 100.0,
+          "context_guidance": "环境配合·按技术位执行",
+          "context_guidance_en": "Context aligned · Follow technical levels"
+        },
+        {
+          "market": "CN",
+          "symbol": "002422",
+          "monitor_symbol": "002422.SZ",
+          "name": "科伦药业",
+          "signal_stage": "trigger",
+          "stage_label": "右侧触发",
+          "recommend_score": 86.6,
+          "recommend_label": "优先",
+          "last_date": "2026-09-30",
+          "last_close": 40.85,
+          "pattern": "4浪回踩候选",
+          "wave_level": "大级别",
+          "support": 40.681,
+          "invalid_below": 39.6512,
+          "target_1": 47.98,
+          "target_2": 59.7883,
+          "risk_reward": 5.948,
+          "market_context_score": 20.0,
+          "market_context_label": "大盘偏弱",
+          "macro_context_score": null,
+          "macro_context_label": "宏观数据缺失",
+          "macro_adjustment": 0.0,
+          "combined_context_score": 20.0,
+          "context_guidance": "环境偏弱·等待强确认",
+          "context_guidance_en": "Weak context · Wait for stronger confirmation"
+        }
+      ],
+      "macro_contexts": []
     }
   ]
 }
