@@ -1,6 +1,6 @@
 {
   "schema_version": 1,
-  "updated_at": "2026-10-09T10:30:31+08:00",
+  "updated_at": "2026-10-09T22:32:35+08:00",
   "signals": [
     {
       "id": "US:NVDA:2026-08-11T125800p0800",
@@ -4443,7 +4443,7 @@
       "combined_context_score": 100.0,
       "context_guidance": "环境配合·按技术位执行",
       "context_guidance_en": "Context aligned · Follow technical levels",
-      "last_seen_at": "2026-10-09T10:30:31+08:00",
+      "last_seen_at": "2026-10-09T22:32:35+08:00",
       "latest_score": 96.0,
       "latest_stage": "trigger",
       "latest_date": "2026-10-08",
@@ -4479,14 +4479,16 @@
       "combined_context_score": 100.0,
       "context_guidance": "环境配合·按技术位执行",
       "context_guidance_en": "Context aligned · Follow technical levels",
-      "last_seen_at": "2026-10-09T10:30:31+08:00",
+      "last_seen_at": "2026-10-09T22:32:35+08:00",
       "latest_score": 91.0,
       "latest_stage": "trigger",
       "latest_date": "2026-10-08",
       "latest_price": 343.77999878,
       "current_return": -0.0,
       "outcomes": {},
-      "pricing_status": "ready"
+      "pricing_status": "ready",
+      "latest_macro_context_score": null,
+      "latest_macro_context_label": "宏观数据缺失"
     },
     {
       "id": "US:JPM:2026-10-09T103031p0800",
@@ -4513,14 +4515,16 @@
       "combined_context_score": 100.0,
       "context_guidance": "环境配合·按技术位执行",
       "context_guidance_en": "Context aligned · Follow technical levels",
-      "last_seen_at": "2026-10-09T10:30:31+08:00",
+      "last_seen_at": "2026-10-09T22:32:35+08:00",
       "latest_score": 86.9,
       "latest_stage": "trigger",
       "latest_date": "2026-10-08",
       "latest_price": 331.42001343,
       "current_return": 4e-08,
       "outcomes": {},
-      "pricing_status": "ready"
+      "pricing_status": "ready",
+      "latest_macro_context_score": null,
+      "latest_macro_context_label": "宏观数据缺失"
     }
   ]
 }
