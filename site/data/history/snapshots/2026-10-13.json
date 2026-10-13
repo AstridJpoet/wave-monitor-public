@@ -260,6 +260,68 @@
         }
       ],
       "macro_contexts": []
+    },
+    {
+      "published_at": "2026-10-13T23:14:14+08:00",
+      "scan_generated_at": "2026-10-13T15:14:14.283861",
+      "recommendation_count": 2,
+      "recommendations": [
+        {
+          "market": "US",
+          "symbol": "UNP",
+          "monitor_symbol": "UNP",
+          "name": "UNP",
+          "signal_stage": "trigger",
+          "stage_label": "右侧触发",
+          "recommend_score": 92.8,
+          "recommend_label": "优先",
+          "last_date": "2026-10-12",
+          "last_close": 281.57,
+          "pattern": "4浪回踩候选",
+          "wave_level": "中级别",
+          "support": 279.6598,
+          "invalid_below": 264.3633,
+          "target_1": 309.1852,
+          "target_2": 356.9515,
+          "risk_reward": 1.605,
+          "market_context_score": 95.0,
+          "market_context_label": "大盘强势",
+          "macro_context_score": null,
+          "macro_context_label": "宏观数据缺失",
+          "macro_adjustment": 0.0,
+          "combined_context_score": 95.0,
+          "context_guidance": "环境配合·按技术位执行",
+          "context_guidance_en": "Context aligned · Follow technical levels"
+        },
+        {
+          "market": "US",
+          "symbol": "GOOGL",
+          "monitor_symbol": "GOOGL",
+          "name": "GOOGL",
+          "signal_stage": "trigger",
+          "stage_label": "右侧触发",
+          "recommend_score": 87.7,
+          "recommend_label": "优先",
+          "last_date": "2026-10-12",
+          "last_close": 352.72,
+          "pattern": "4浪回踩候选",
+          "wave_level": "大级别",
+          "support": 352.0556,
+          "invalid_below": 337.3438,
+          "target_1": 400.3034,
+          "target_2": 478.3589,
+          "risk_reward": 3.095,
+          "market_context_score": 95.0,
+          "market_context_label": "大盘强势",
+          "macro_context_score": null,
+          "macro_context_label": "宏观数据缺失",
+          "macro_adjustment": 0.0,
+          "combined_context_score": 95.0,
+          "context_guidance": "环境配合·按技术位执行",
+          "context_guidance_en": "Context aligned · Follow technical levels"
+        }
+      ],
+      "macro_contexts": []
     }
   ]
 }

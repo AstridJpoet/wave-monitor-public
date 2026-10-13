@@ -1,6 +1,6 @@
 {
   "schema_version": 1,
-  "updated_at": "2026-10-13T11:11:54+08:00",
+  "updated_at": "2026-10-13T23:14:14+08:00",
   "methodology": {
     "minimum_score": 85.0,
     "eligible_stages": [
@@ -11,7 +11,7 @@
     "win_definition": "forward close return > 0"
   },
   "snapshot_day_count": 54,
-  "snapshot_run_count": 92,
+  "snapshot_run_count": 93,
   "signal_count": 115,
   "tracking_since": "2026-08-10",
   "horizons": [
@@ -71,8 +71,8 @@
   "snapshots": [
     {
       "date": "2026-10-13",
-      "run_count": 2,
-      "latest_published_at": "2026-10-13T11:11:54+08:00",
+      "run_count": 3,
+      "latest_published_at": "2026-10-13T23:14:14+08:00",
       "recommendation_count": 2,
       "path": "./data/history/snapshots/2026-10-13.json"
     },
@@ -474,7 +474,7 @@
       "combined_context_score": 95.0,
       "context_guidance": "环境配合·按技术位执行",
       "context_guidance_en": "Context aligned · Follow technical levels",
-      "last_seen_at": "2026-10-13T11:11:54+08:00",
+      "last_seen_at": "2026-10-13T23:14:14+08:00",
       "latest_score": 92.8,
       "latest_stage": "trigger",
       "latest_date": "2026-10-12",
@@ -544,7 +544,7 @@
       "combined_context_score": 95.0,
       "context_guidance": "环境配合·按技术位执行",
       "context_guidance_en": "Context aligned · Follow technical levels",
-      "last_seen_at": "2026-10-13T11:11:54+08:00",
+      "last_seen_at": "2026-10-13T23:14:14+08:00",
       "latest_score": 87.7,
       "latest_stage": "trigger",
       "latest_date": "2026-10-12",
