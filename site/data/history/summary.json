@@ -1,6 +1,6 @@
 {
   "schema_version": 1,
-  "updated_at": "2026-10-14T09:27:53+08:00",
+  "updated_at": "2026-10-14T21:02:13+08:00",
   "methodology": {
     "minimum_score": 85.0,
     "eligible_stages": [
@@ -11,7 +11,7 @@
     "win_definition": "forward close return > 0"
   },
   "snapshot_day_count": 55,
-  "snapshot_run_count": 94,
+  "snapshot_run_count": 95,
   "signal_count": 115,
   "tracking_since": "2026-08-10",
   "horizons": [
@@ -71,8 +71,8 @@
   "snapshots": [
     {
       "date": "2026-10-14",
-      "run_count": 1,
-      "latest_published_at": "2026-10-14T09:27:53+08:00",
+      "run_count": 2,
+      "latest_published_at": "2026-10-14T21:02:13+08:00",
       "recommendation_count": 4,
       "path": "./data/history/snapshots/2026-10-14.json"
     },
@@ -481,7 +481,7 @@
       "combined_context_score": 95.0,
       "context_guidance": "环境配合·按技术位执行",
       "context_guidance_en": "Context aligned · Follow technical levels",
-      "last_seen_at": "2026-10-14T09:27:53+08:00",
+      "last_seen_at": "2026-10-14T21:02:13+08:00",
       "latest_score": 92.8,
       "latest_stage": "trigger",
       "latest_date": "2026-10-12",
@@ -551,7 +551,7 @@
       "combined_context_score": 95.0,
       "context_guidance": "环境配合·按技术位执行",
       "context_guidance_en": "Context aligned · Follow technical levels",
-      "last_seen_at": "2026-10-14T09:27:53+08:00",
+      "last_seen_at": "2026-10-14T21:02:13+08:00",
       "latest_score": 87.7,
       "latest_stage": "trigger",
       "latest_date": "2026-10-12",
@@ -727,7 +727,7 @@
       "combined_context_score": 100.0,
       "context_guidance": "环境配合·按技术位执行",
       "context_guidance_en": "Context aligned · Follow technical levels",
-      "last_seen_at": "2026-10-14T09:27:53+08:00",
+      "last_seen_at": "2026-10-14T21:02:13+08:00",
       "latest_score": 85.2,
       "latest_stage": "trigger",
       "latest_date": "2026-10-12",
@@ -763,7 +763,7 @@
       "combined_context_score": 100.0,
       "context_guidance": "环境配合·按技术位执行",
       "context_guidance_en": "Context aligned · Follow technical levels",
-      "last_seen_at": "2026-10-14T09:27:53+08:00",
+      "last_seen_at": "2026-10-14T21:02:13+08:00",
       "latest_score": 96.0,
       "latest_stage": "trigger",
       "latest_date": "2026-10-12",
