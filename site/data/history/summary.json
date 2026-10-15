@@ -1,6 +1,6 @@
 {
   "schema_version": 1,
-  "updated_at": "2026-10-15T08:48:32+08:00",
+  "updated_at": "2026-10-15T20:49:26+08:00",
   "methodology": {
     "minimum_score": 85.0,
     "eligible_stages": [
@@ -11,7 +11,7 @@
     "win_definition": "forward close return > 0"
   },
   "snapshot_day_count": 56,
-  "snapshot_run_count": 96,
+  "snapshot_run_count": 97,
   "signal_count": 119,
   "tracking_since": "2026-08-10",
   "horizons": [
@@ -71,8 +71,8 @@
   "snapshots": [
     {
       "date": "2026-10-15",
-      "run_count": 1,
-      "latest_published_at": "2026-10-15T08:48:32+08:00",
+      "run_count": 2,
+      "latest_published_at": "2026-10-15T20:49:26+08:00",
       "recommendation_count": 6,
       "path": "./data/history/snapshots/2026-10-15.json"
     },
@@ -488,14 +488,16 @@
       "combined_context_score": 65.0,
       "context_guidance": "环境配合·按技术位执行",
       "context_guidance_en": "Context aligned · Follow technical levels",
-      "last_seen_at": "2026-10-15T08:48:32+08:00",
+      "last_seen_at": "2026-10-15T20:49:26+08:00",
       "latest_score": 90.9,
       "latest_stage": "trigger",
       "latest_date": "2026-10-14",
       "latest_price": 522.22998047,
       "current_return": -4e-08,
       "outcomes": {},
-      "pricing_status": "ready"
+      "pricing_status": "ready",
+      "latest_macro_context_score": null,
+      "latest_macro_context_label": "宏观数据缺失"
     },
     {
       "id": "US:BBY:2026-10-15T084832p0800",
@@ -522,14 +524,16 @@
       "combined_context_score": 65.0,
       "context_guidance": "环境配合·按技术位执行",
       "context_guidance_en": "Context aligned · Follow technical levels",
-      "last_seen_at": "2026-10-15T08:48:32+08:00",
+      "last_seen_at": "2026-10-15T20:49:26+08:00",
       "latest_score": 87.3,
       "latest_stage": "trigger",
       "latest_date": "2026-10-14",
       "latest_price": 89.09999847,
       "current_return": -2e-08,
       "outcomes": {},
-      "pricing_status": "ready"
+      "pricing_status": "ready",
+      "latest_macro_context_score": null,
+      "latest_macro_context_label": "宏观数据缺失"
     },
     {
       "id": "US:DLTR:2026-10-15T084832p0800",
@@ -556,14 +560,16 @@
       "combined_context_score": 65.0,
       "context_guidance": "环境配合·按技术位执行",
       "context_guidance_en": "Context aligned · Follow technical levels",
-      "last_seen_at": "2026-10-15T08:48:32+08:00",
+      "last_seen_at": "2026-10-15T20:49:26+08:00",
       "latest_score": 86.3,
       "latest_stage": "trigger",
       "latest_date": "2026-10-14",
       "latest_price": 121.76000214,
       "current_return": 2e-08,
       "outcomes": {},
-      "pricing_status": "ready"
+      "pricing_status": "ready",
+      "latest_macro_context_score": null,
+      "latest_macro_context_label": "宏观数据缺失"
     },
     {
       "id": "US:MA:2026-10-15T084832p0800",
@@ -590,14 +596,16 @@
       "combined_context_score": 65.0,
       "context_guidance": "环境配合·按技术位执行",
       "context_guidance_en": "Context aligned · Follow technical levels",
-      "last_seen_at": "2026-10-15T08:48:32+08:00",
+      "last_seen_at": "2026-10-15T20:49:26+08:00",
       "latest_score": 86.2,
       "latest_stage": "trigger",
       "latest_date": "2026-10-14",
       "latest_price": 603.23999023,
       "current_return": -2e-08,
       "outcomes": {},
-      "pricing_status": "ready"
+      "pricing_status": "ready",
+      "latest_macro_context_score": null,
+      "latest_macro_context_label": "宏观数据缺失"
     },
     {
       "id": "US:UNP:2026-10-13T005808p0800",
@@ -660,7 +668,7 @@
       "combined_context_score": 95.0,
       "context_guidance": "环境配合·按技术位执行",
       "context_guidance_en": "Context aligned · Follow technical levels",
-      "last_seen_at": "2026-10-15T08:48:32+08:00",
+      "last_seen_at": "2026-10-15T20:49:26+08:00",
       "latest_score": 85.0,
       "latest_stage": "probe",
       "latest_date": "2026-10-13",
@@ -872,7 +880,7 @@
       "combined_context_score": 100.0,
       "context_guidance": "环境配合·按技术位执行",
       "context_guidance_en": "Context aligned · Follow technical levels",
-      "last_seen_at": "2026-10-15T08:48:32+08:00",
+      "last_seen_at": "2026-10-15T20:49:26+08:00",
       "latest_score": 87.4,
       "latest_stage": "trigger",
       "latest_date": "2026-10-14",
