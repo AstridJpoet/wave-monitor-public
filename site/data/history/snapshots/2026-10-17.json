@@ -1,0 +1,68 @@
+{
+  "schema_version": 1,
+  "date": "2026-10-17",
+  "runs": [
+    {
+      "published_at": "2026-10-17T08:46:37+08:00",
+      "scan_generated_at": "2026-10-17T00:46:37.092140",
+      "recommendation_count": 2,
+      "recommendations": [
+        {
+          "market": "US",
+          "symbol": "DVA",
+          "monitor_symbol": "DVA",
+          "name": "DaVita",
+          "signal_stage": "trigger",
+          "stage_label": "右侧触发",
+          "recommend_score": 89.7,
+          "recommend_label": "优先",
+          "last_date": "2026-10-15",
+          "last_close": 189.16,
+          "pattern": "4浪回踩候选",
+          "wave_level": "大级别",
+          "support": 188.3863,
+          "invalid_below": 176.2,
+          "target_1": 240.09,
+          "target_2": 323.7363,
+          "risk_reward": 3.93,
+          "market_context_score": 40.0,
+          "market_context_label": "大盘震荡",
+          "macro_context_score": null,
+          "macro_context_label": "宏观数据缺失",
+          "macro_adjustment": 0.0,
+          "combined_context_score": 40.0,
+          "context_guidance": "环境偏弱·等待强确认",
+          "context_guidance_en": "Weak context · Wait for stronger confirmation"
+        },
+        {
+          "market": "US",
+          "symbol": "DRI",
+          "monitor_symbol": "DRI",
+          "name": "Darden Restaurants",
+          "signal_stage": "trigger",
+          "stage_label": "右侧触发",
+          "recommend_score": 85.9,
+          "recommend_label": "优先",
+          "last_date": "2026-10-15",
+          "last_close": 214.31,
+          "pattern": "4浪回踩候选",
+          "wave_level": "中级别",
+          "support": 212.8476,
+          "invalid_below": 210.2926,
+          "target_1": 225.8406,
+          "target_2": 246.8606,
+          "risk_reward": 2.87,
+          "market_context_score": 40.0,
+          "market_context_label": "大盘震荡",
+          "macro_context_score": null,
+          "macro_context_label": "宏观数据缺失",
+          "macro_adjustment": 0.0,
+          "combined_context_score": 40.0,
+          "context_guidance": "环境偏弱·等待强确认",
+          "context_guidance_en": "Weak context · Wait for stronger confirmation"
+        }
+      ],
+      "macro_contexts": []
+    }
+  ]
+}
