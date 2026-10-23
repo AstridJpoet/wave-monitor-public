@@ -36,6 +36,41 @@
         }
       ],
       "macro_contexts": []
+    },
+    {
+      "published_at": "2026-10-23T20:47:50+08:00",
+      "scan_generated_at": "2026-10-23T12:47:50.846784",
+      "recommendation_count": 1,
+      "recommendations": [
+        {
+          "market": "US",
+          "symbol": "DDOG",
+          "monitor_symbol": "DDOG",
+          "name": "Datadog",
+          "signal_stage": "trigger",
+          "stage_label": "右侧触发",
+          "recommend_score": 88.1,
+          "recommend_label": "优先",
+          "last_date": "2026-10-21",
+          "last_close": 273.09,
+          "pattern": "4浪回踩候选",
+          "wave_level": "中级别",
+          "support": 271.4337,
+          "invalid_below": 270.73,
+          "target_1": 288.15,
+          "target_2": 315.1937,
+          "risk_reward": 6.381,
+          "market_context_score": 35.0,
+          "market_context_label": "大盘偏弱",
+          "macro_context_score": null,
+          "macro_context_label": "宏观数据缺失",
+          "macro_adjustment": 0.0,
+          "combined_context_score": 35.0,
+          "context_guidance": "环境偏弱·等待强确认",
+          "context_guidance_en": "Weak context · Wait for stronger confirmation"
+        }
+      ],
+      "macro_contexts": []
     }
   ]
 }
