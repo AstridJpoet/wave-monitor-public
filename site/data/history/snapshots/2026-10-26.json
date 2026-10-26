@@ -1,0 +1,41 @@
+{
+  "schema_version": 1,
+  "date": "2026-10-26",
+  "runs": [
+    {
+      "published_at": "2026-10-26T22:33:58+08:00",
+      "scan_generated_at": "2026-10-26T14:33:58.185010",
+      "recommendation_count": 1,
+      "recommendations": [
+        {
+          "market": "CN",
+          "symbol": "002415",
+          "monitor_symbol": "002415.SZ",
+          "name": "海康威视",
+          "signal_stage": "trigger",
+          "stage_label": "右侧触发",
+          "recommend_score": 85.7,
+          "recommend_label": "优先",
+          "last_date": "2026-10-26",
+          "last_close": 34.99,
+          "pattern": "4浪回踩候选",
+          "wave_level": "中级别",
+          "support": 34.7734,
+          "invalid_below": 34.92,
+          "target_1": 38.0261,
+          "target_2": 43.2882,
+          "risk_reward": 43.373,
+          "market_context_score": 0.0,
+          "market_context_label": "大盘偏弱",
+          "macro_context_score": null,
+          "macro_context_label": "宏观数据缺失",
+          "macro_adjustment": 0.0,
+          "combined_context_score": 0.0,
+          "context_guidance": "环境偏弱·等待强确认",
+          "context_guidance_en": "Weak context · Wait for stronger confirmation"
+        }
+      ],
+      "macro_contexts": []
+    }
+  ]
+}
