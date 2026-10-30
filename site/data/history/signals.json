@@ -1,6 +1,6 @@
 {
   "schema_version": 1,
-  "updated_at": "2026-10-30T10:11:08+08:00",
+  "updated_at": "2026-10-30T22:27:25+08:00",
   "signals": [
     {
       "id": "US:NVDA:2026-08-11T125800p0800",
@@ -5655,7 +5655,7 @@
       "combined_context_score": 60.0,
       "context_guidance": "环境中性·控制试错",
       "context_guidance_en": "Neutral context · Limit initial risk",
-      "last_seen_at": "2026-10-30T10:11:08+08:00",
+      "last_seen_at": "2026-10-30T22:27:25+08:00",
       "latest_score": 90.6,
       "latest_stage": "trigger",
       "latest_date": "2026-10-29",
@@ -5763,14 +5763,16 @@
       "combined_context_score": 60.0,
       "context_guidance": "环境中性·控制试错",
       "context_guidance_en": "Neutral context · Limit initial risk",
-      "last_seen_at": "2026-10-30T10:11:08+08:00",
+      "last_seen_at": "2026-10-30T22:27:25+08:00",
       "latest_score": 95.7,
       "latest_stage": "trigger",
       "latest_date": "2026-10-29",
       "latest_price": 660.0,
       "current_return": 0.0,
       "outcomes": {},
-      "pricing_status": "ready"
+      "pricing_status": "ready",
+      "latest_macro_context_score": null,
+      "latest_macro_context_label": "宏观数据缺失"
     },
     {
       "id": "US:COF:2026-10-30T101108p0800",
@@ -5797,14 +5799,16 @@
       "combined_context_score": 60.0,
       "context_guidance": "环境中性·控制试错",
       "context_guidance_en": "Neutral context · Limit initial risk",
-      "last_seen_at": "2026-10-30T10:11:08+08:00",
+      "last_seen_at": "2026-10-30T22:27:25+08:00",
       "latest_score": 92.9,
       "latest_stage": "trigger",
       "latest_date": "2026-10-29",
       "latest_price": 208.74000549,
       "current_return": 3e-08,
       "outcomes": {},
-      "pricing_status": "ready"
+      "pricing_status": "ready",
+      "latest_macro_context_score": null,
+      "latest_macro_context_label": "宏观数据缺失"
     },
     {
       "id": "US:UPS:2026-10-30T101108p0800",
@@ -5831,14 +5835,16 @@
       "combined_context_score": 60.0,
       "context_guidance": "环境中性·控制试错",
       "context_guidance_en": "Neutral context · Limit initial risk",
-      "last_seen_at": "2026-10-30T10:11:08+08:00",
+      "last_seen_at": "2026-10-30T22:27:25+08:00",
       "latest_score": 92.8,
       "latest_stage": "trigger",
       "latest_date": "2026-10-29",
       "latest_price": 107.33000183,
       "current_return": 2e-08,
       "outcomes": {},
-      "pricing_status": "ready"
+      "pricing_status": "ready",
+      "latest_macro_context_score": null,
+      "latest_macro_context_label": "宏观数据缺失"
     },
     {
       "id": "US:GEN:2026-10-30T101108p0800",
@@ -5865,14 +5871,16 @@
       "combined_context_score": 60.0,
       "context_guidance": "环境中性·控制试错",
       "context_guidance_en": "Neutral context · Limit initial risk",
-      "last_seen_at": "2026-10-30T10:11:08+08:00",
+      "last_seen_at": "2026-10-30T22:27:25+08:00",
       "latest_score": 92.3,
       "latest_stage": "trigger",
       "latest_date": "2026-10-29",
       "latest_price": 28.20000076,
       "current_return": 3e-08,
       "outcomes": {},
-      "pricing_status": "ready"
+      "pricing_status": "ready",
+      "latest_macro_context_score": null,
+      "latest_macro_context_label": "宏观数据缺失"
     },
     {
       "id": "US:AMAT:2026-10-30T101108p0800",
@@ -5899,14 +5907,16 @@
       "combined_context_score": 60.0,
       "context_guidance": "环境中性·控制试错",
       "context_guidance_en": "Neutral context · Limit initial risk",
-      "last_seen_at": "2026-10-30T10:11:08+08:00",
+      "last_seen_at": "2026-10-30T22:27:25+08:00",
       "latest_score": 90.7,
       "latest_stage": "trigger",
       "latest_date": "2026-10-29",
       "latest_price": 421.66000366,
       "current_return": 1e-08,
       "outcomes": {},
-      "pricing_status": "ready"
+      "pricing_status": "ready",
+      "latest_macro_context_score": null,
+      "latest_macro_context_label": "宏观数据缺失"
     },
     {
       "id": "US:EG:2026-10-30T101108p0800",
@@ -5933,14 +5943,16 @@
       "combined_context_score": 60.0,
       "context_guidance": "环境中性·控制试错",
       "context_guidance_en": "Neutral context · Limit initial risk",
-      "last_seen_at": "2026-10-30T10:11:08+08:00",
+      "last_seen_at": "2026-10-30T22:27:25+08:00",
       "latest_score": 89.3,
       "latest_stage": "trigger",
       "latest_date": "2026-10-29",
       "latest_price": 400.58999634,
       "current_return": -1e-08,
       "outcomes": {},
-      "pricing_status": "ready"
+      "pricing_status": "ready",
+      "latest_macro_context_score": null,
+      "latest_macro_context_label": "宏观数据缺失"
     },
     {
       "id": "US:FRT:2026-10-30T101108p0800",
@@ -5967,14 +5979,16 @@
       "combined_context_score": 60.0,
       "context_guidance": "环境中性·控制试错",
       "context_guidance_en": "Neutral context · Limit initial risk",
-      "last_seen_at": "2026-10-30T10:11:08+08:00",
+      "last_seen_at": "2026-10-30T22:27:25+08:00",
       "latest_score": 89.0,
       "latest_stage": "trigger",
       "latest_date": "2026-10-29",
       "latest_price": 111.44000244,
       "current_return": 2e-08,
       "outcomes": {},
-      "pricing_status": "ready"
+      "pricing_status": "ready",
+      "latest_macro_context_score": null,
+      "latest_macro_context_label": "宏观数据缺失"
     },
     {
       "id": "US:DVA:2026-10-30T101108p0800",
@@ -6001,14 +6015,16 @@
       "combined_context_score": 60.0,
       "context_guidance": "环境中性·控制试错",
       "context_guidance_en": "Neutral context · Limit initial risk",
-      "last_seen_at": "2026-10-30T10:11:08+08:00",
+      "last_seen_at": "2026-10-30T22:27:25+08:00",
       "latest_score": 88.2,
       "latest_stage": "trigger",
       "latest_date": "2026-10-29",
       "latest_price": 193.30999756,
       "current_return": -1e-08,
       "outcomes": {},
-      "pricing_status": "ready"
+      "pricing_status": "ready",
+      "latest_macro_context_score": null,
+      "latest_macro_context_label": "宏观数据缺失"
     },
     {
       "id": "US:BXP:2026-10-30T101108p0800",
@@ -6035,14 +6051,16 @@
       "combined_context_score": 60.0,
       "context_guidance": "环境中性·控制试错",
       "context_guidance_en": "Neutral context · Limit initial risk",
-      "last_seen_at": "2026-10-30T10:11:08+08:00",
+      "last_seen_at": "2026-10-30T22:27:25+08:00",
       "latest_score": 87.9,
       "latest_stage": "trigger",
       "latest_date": "2026-10-29",
       "latest_price": 63.02000046,
       "current_return": 1e-08,
       "outcomes": {},
-      "pricing_status": "ready"
+      "pricing_status": "ready",
+      "latest_macro_context_score": null,
+      "latest_macro_context_label": "宏观数据缺失"
     },
     {
       "id": "US:USB:2026-10-30T101108p0800",
@@ -6069,14 +6087,16 @@
       "combined_context_score": 60.0,
       "context_guidance": "环境中性·控制试错",
       "context_guidance_en": "Neutral context · Limit initial risk",
-      "last_seen_at": "2026-10-30T10:11:08+08:00",
+      "last_seen_at": "2026-10-30T22:27:25+08:00",
       "latest_score": 87.5,
       "latest_stage": "trigger",
       "latest_date": "2026-10-29",
       "latest_price": 60.63999939,
       "current_return": -1e-08,
       "outcomes": {},
-      "pricing_status": "ready"
+      "pricing_status": "ready",
+      "latest_macro_context_score": null,
+      "latest_macro_context_label": "宏观数据缺失"
     },
     {
       "id": "US:GD:2026-10-30T101108p0800",
@@ -6103,14 +6123,16 @@
       "combined_context_score": 60.0,
       "context_guidance": "环境中性·控制试错",
       "context_guidance_en": "Neutral context · Limit initial risk",
-      "last_seen_at": "2026-10-30T10:11:08+08:00",
+      "last_seen_at": "2026-10-30T22:27:25+08:00",
       "latest_score": 87.2,
       "latest_stage": "trigger",
       "latest_date": "2026-10-29",
       "latest_price": 370.82000732,
       "current_return": 2e-08,
       "outcomes": {},
-      "pricing_status": "ready"
+      "pricing_status": "ready",
+      "latest_macro_context_score": null,
+      "latest_macro_context_label": "宏观数据缺失"
     },
     {
       "id": "US:GM:2026-10-30T101108p0800",
@@ -6137,14 +6159,16 @@
       "combined_context_score": 60.0,
       "context_guidance": "环境中性·控制试错",
       "context_guidance_en": "Neutral context · Limit initial risk",
-      "last_seen_at": "2026-10-30T10:11:08+08:00",
+      "last_seen_at": "2026-10-30T22:27:25+08:00",
       "latest_score": 86.8,
       "latest_stage": "trigger",
       "latest_date": "2026-10-29",
       "latest_price": 85.72000122,
       "current_return": 1e-08,
       "outcomes": {},
-      "pricing_status": "ready"
+      "pricing_status": "ready",
+      "latest_macro_context_score": null,
+      "latest_macro_context_label": "宏观数据缺失"
     },
     {
       "id": "US:GRMN:2026-10-30T101108p0800",
@@ -6171,14 +6195,16 @@
       "combined_context_score": 60.0,
       "context_guidance": "环境中性·控制试错",
       "context_guidance_en": "Neutral context · Limit initial risk",
-      "last_seen_at": "2026-10-30T10:11:08+08:00",
+      "last_seen_at": "2026-10-30T22:27:25+08:00",
       "latest_score": 86.2,
       "latest_stage": "trigger",
       "latest_date": "2026-10-29",
       "latest_price": 279.94000244,
       "current_return": 1e-08,
       "outcomes": {},
-      "pricing_status": "ready"
+      "pricing_status": "ready",
+      "latest_macro_context_score": null,
+      "latest_macro_context_label": "宏观数据缺失"
     },
     {
       "id": "US:IBM:2026-10-30T101108p0800",
@@ -6205,14 +6231,16 @@
       "combined_context_score": 60.0,
       "context_guidance": "环境中性·控制试错",
       "context_guidance_en": "Neutral context · Limit initial risk",
-      "last_seen_at": "2026-10-30T10:11:08+08:00",
+      "last_seen_at": "2026-10-30T22:27:25+08:00",
       "latest_score": 86.0,
       "latest_stage": "trigger",
       "latest_date": "2026-10-29",
       "latest_price": 258.27999878,
       "current_return": -0.0,
       "outcomes": {},
-      "pricing_status": "ready"
+      "pricing_status": "ready",
+      "latest_macro_context_score": null,
+      "latest_macro_context_label": "宏观数据缺失"
     },
     {
       "id": "US:AJG:2026-10-30T101108p0800",
@@ -6239,14 +6267,16 @@
       "combined_context_score": 60.0,
       "context_guidance": "环境中性·控制试错",
       "context_guidance_en": "Neutral context · Limit initial risk",
-      "last_seen_at": "2026-10-30T10:11:08+08:00",
+      "last_seen_at": "2026-10-30T22:27:25+08:00",
       "latest_score": 85.4,
       "latest_stage": "trigger",
       "latest_date": "2026-10-29",
       "latest_price": 268.20001221,
       "current_return": 5e-08,
       "outcomes": {},
-      "pricing_status": "ready"
+      "pricing_status": "ready",
+      "latest_macro_context_score": null,
+      "latest_macro_context_label": "宏观数据缺失"
     }
   ]
 }
