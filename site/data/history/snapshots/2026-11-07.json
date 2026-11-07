@@ -1,0 +1,13 @@
+{
+  "schema_version": 1,
+  "date": "2026-11-07",
+  "runs": [
+    {
+      "published_at": "2026-11-07T10:12:48+08:00",
+      "scan_generated_at": "2026-11-07T02:12:47.913309",
+      "recommendation_count": 0,
+      "recommendations": [],
+      "macro_contexts": []
+    }
+  ]
+}
