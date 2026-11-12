@@ -1,6 +1,6 @@
 {
   "schema_version": 1,
-  "updated_at": "2026-11-12T11:20:36+08:00",
+  "updated_at": "2026-11-13T00:10:17+08:00",
   "methodology": {
     "minimum_score": 85.0,
     "eligible_stages": [
@@ -10,8 +10,8 @@
     "episode_gap_days": 7,
     "win_definition": "forward close return > 0"
   },
-  "snapshot_day_count": 78,
-  "snapshot_run_count": 136,
+  "snapshot_day_count": 79,
+  "snapshot_run_count": 137,
   "signal_count": 150,
   "tracking_since": "2026-08-10",
   "horizons": [
@@ -69,6 +69,13 @@
     }
   ],
   "snapshots": [
+    {
+      "date": "2026-11-13",
+      "run_count": 1,
+      "latest_published_at": "2026-11-13T00:10:17+08:00",
+      "recommendation_count": 1,
+      "path": "./data/history/snapshots/2026-11-13.json"
+    },
     {
       "date": "2026-11-12",
       "run_count": 1,
@@ -642,14 +649,16 @@
       "combined_context_score": 7.5,
       "context_guidance": "环境偏弱·等待强确认",
       "context_guidance_en": "Weak context · Wait for stronger confirmation",
-      "last_seen_at": "2026-11-12T11:20:36+08:00",
+      "last_seen_at": "2026-11-13T00:10:17+08:00",
       "latest_score": 88.4,
       "latest_stage": "trigger",
       "latest_date": "2026-11-11",
       "latest_price": 342.75,
       "current_return": 0.0,
       "outcomes": {},
-      "pricing_status": "ready"
+      "pricing_status": "ready",
+      "latest_macro_context_score": null,
+      "latest_macro_context_label": "宏观数据缺失"
     },
     {
       "id": "US:DE:2026-10-30T101108p0800",

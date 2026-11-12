@@ -1,0 +1,41 @@
+{
+  "schema_version": 1,
+  "date": "2026-11-13",
+  "runs": [
+    {
+      "published_at": "2026-11-13T00:10:17+08:00",
+      "scan_generated_at": "2026-11-12T16:10:17.335426",
+      "recommendation_count": 1,
+      "recommendations": [
+        {
+          "market": "US",
+          "symbol": "GE",
+          "monitor_symbol": "GE",
+          "name": "GE",
+          "signal_stage": "trigger",
+          "stage_label": "右侧触发",
+          "recommend_score": 88.4,
+          "recommend_label": "优先",
+          "last_date": "2026-11-11",
+          "last_close": 342.75,
+          "pattern": "4浪回踩候选",
+          "wave_level": "大级别",
+          "support": 339.7696,
+          "invalid_below": 341.7744,
+          "target_1": 376.4775,
+          "target_2": 435.8635,
+          "risk_reward": 34.571,
+          "market_context_score": 7.5,
+          "market_context_label": "大盘偏弱",
+          "macro_context_score": null,
+          "macro_context_label": "宏观数据缺失",
+          "macro_adjustment": 0.0,
+          "combined_context_score": 7.5,
+          "context_guidance": "环境偏弱·等待强确认",
+          "context_guidance_en": "Weak context · Wait for stronger confirmation"
+        }
+      ],
+      "macro_contexts": []
+    }
+  ]
+}
