@@ -43,6 +43,13 @@
       "recommendation_count": 0,
       "recommendations": [],
       "macro_contexts": []
+    },
+    {
+      "published_at": "2026-11-13T23:37:13+08:00",
+      "scan_generated_at": "2026-11-13T15:37:13.439317",
+      "recommendation_count": 0,
+      "recommendations": [],
+      "macro_contexts": []
     }
   ]
 }
