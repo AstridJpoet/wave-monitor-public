@@ -1,6 +1,6 @@
 {
   "schema_version": 1,
-  "updated_at": "2026-11-17T01:16:06+08:00",
+  "updated_at": "2026-11-17T12:45:33+08:00",
   "signals": [
     {
       "id": "US:NVDA:2026-08-11T125800p0800",
@@ -24,8 +24,8 @@
       "latest_score": 88.8,
       "latest_stage": "trigger",
       "latest_date": "2026-11-16",
-      "latest_price": 158.19500732,
-      "current_return": -0.2728338,
+      "latest_price": 156.13999939,
+      "current_return": -0.28227994,
       "outcomes": {
         "d5": {
           "sessions": 5,
@@ -70,8 +70,8 @@
       "latest_score": 86.0,
       "latest_stage": "trigger",
       "latest_date": "2026-11-16",
-      "latest_price": 285.15499878,
-      "current_return": -0.19864265,
+      "latest_price": 281.26000977,
+      "current_return": -0.20958855,
       "outcomes": {
         "d5": {
           "sessions": 5,
@@ -116,8 +116,8 @@
       "latest_score": 85.9,
       "latest_stage": "trigger",
       "latest_date": "2026-11-16",
-      "latest_price": 121.83499908,
-      "current_return": -0.09898684,
+      "latest_price": 121.31999969,
+      "current_return": -0.10279545,
       "outcomes": {
         "d5": {
           "sessions": 5,
@@ -379,9 +379,9 @@
       "last_seen_at": "2026-08-18T06:52:02+08:00",
       "latest_score": 88.5,
       "latest_stage": "trigger",
-      "latest_date": "2026-11-16",
-      "latest_price": 3871.60009766,
-      "current_return": -0.1342382,
+      "latest_date": "2026-11-17",
+      "latest_price": 3870.89990234,
+      "current_return": -0.13439478,
       "outcomes": {
         "d5": {
           "sessions": 5,
@@ -598,8 +598,8 @@
       "latest_score": 94.6,
       "latest_stage": "trigger",
       "latest_date": "2026-11-16",
-      "latest_price": 78.73999786,
-      "current_return": 0.1984779,
+      "latest_price": 78.90000153,
+      "current_return": 0.20091327,
       "outcomes": {
         "d5": {
           "sessions": 5,
@@ -644,8 +644,8 @@
       "latest_score": 88.9,
       "latest_stage": "trigger",
       "latest_date": "2026-11-16",
-      "latest_price": 195.94999695,
-      "current_return": 0.0292032,
+      "latest_price": 196.03999329,
+      "current_return": 0.02967589,
       "outcomes": {
         "d5": {
           "sessions": 5,
@@ -690,8 +690,8 @@
       "latest_score": 85.4,
       "latest_stage": "trigger",
       "latest_date": "2026-11-16",
-      "latest_price": 220.875,
-      "current_return": -0.05592836,
+      "latest_price": 217.94999695,
+      "current_return": -0.06843051,
       "outcomes": {
         "d5": {
           "sessions": 5,
@@ -816,8 +816,8 @@
       "latest_score": 91.6,
       "latest_stage": "trigger",
       "latest_date": "2026-11-16",
-      "latest_price": 353.46499634,
-      "current_return": 0.11562982,
+      "latest_price": 352.77999878,
+      "current_return": 0.11346779,
       "outcomes": {
         "d5": {
           "sessions": 5,
@@ -856,8 +856,8 @@
       "latest_score": 88.0,
       "latest_stage": "trigger",
       "latest_date": "2026-11-16",
-      "latest_price": 354.23498535,
-      "current_return": -0.14402913,
+      "latest_price": 352.92999268,
+      "current_return": -0.1471825,
       "outcomes": {
         "d5": {
           "sessions": 5,
@@ -896,8 +896,8 @@
       "latest_score": 87.0,
       "latest_stage": "trigger",
       "latest_date": "2026-11-16",
-      "latest_price": 84.30380249,
-      "current_return": -0.00772361,
+      "latest_price": 83.66999817,
+      "current_return": -0.01518364,
       "outcomes": {
         "d5": {
           "sessions": 5,
@@ -936,8 +936,8 @@
       "latest_score": 89.7,
       "latest_stage": "trigger",
       "latest_date": "2026-11-16",
-      "latest_price": 140.69999695,
-      "current_return": 0.04307211,
+      "latest_price": 140.52000427,
+      "current_return": 0.04173774,
       "outcomes": {
         "d5": {
           "sessions": 5,
@@ -1018,8 +1018,8 @@
       "latest_score": 89.9,
       "latest_stage": "trigger",
       "latest_date": "2026-11-16",
-      "latest_price": 664.09002686,
-      "current_return": 0.02566918,
+      "latest_price": 653.98999023,
+      "current_return": 0.01006995,
       "outcomes": {
         "d5": {
           "sessions": 5,
@@ -1220,8 +1220,8 @@
       "latest_score": 85.2,
       "latest_stage": "trigger",
       "latest_date": "2026-11-16",
-      "latest_price": 328.04501343,
-      "current_return": -0.0583431,
+      "latest_price": 325.17999268,
+      "current_return": -0.06656718,
       "outcomes": {
         "d5": {
           "sessions": 5,
@@ -1300,8 +1300,8 @@
       "latest_score": 87.9,
       "latest_stage": "trigger",
       "latest_date": "2026-11-16",
-      "latest_price": 285.15499878,
-      "current_return": -0.17248034,
+      "latest_price": 281.26000977,
+      "current_return": -0.1837836,
       "outcomes": {
         "d5": {
           "sessions": 5,
@@ -1380,8 +1380,8 @@
       "latest_score": 86.2,
       "latest_stage": "trigger",
       "latest_date": "2026-11-16",
-      "latest_price": 172.74989319,
-      "current_return": 0.17837581,
+      "latest_price": 173.02000427,
+      "current_return": 0.18021831,
       "outcomes": {
         "d5": {
           "sessions": 5,
@@ -1619,9 +1619,9 @@
       "last_seen_at": "2026-08-28T02:23:16+08:00",
       "latest_score": 87.0,
       "latest_stage": "trigger",
-      "latest_date": "2026-11-13",
-      "latest_price": 34.45000076,
-      "current_return": -0.0240793,
+      "latest_date": "2026-11-17",
+      "latest_price": 35.27000046,
+      "current_return": -0.00084985,
       "outcomes": {
         "d5": {
           "sessions": 5,
@@ -1700,8 +1700,8 @@
       "latest_score": 88.8,
       "latest_stage": "trigger",
       "latest_date": "2026-11-16",
-      "latest_price": 158.19500732,
-      "current_return": -0.30610138,
+      "latest_price": 156.13999939,
+      "current_return": -0.31511536,
       "outcomes": {
         "d5": {
           "sessions": 5,
@@ -1900,8 +1900,8 @@
       "latest_score": 89.4,
       "latest_stage": "trigger",
       "latest_date": "2026-11-16",
-      "latest_price": 353.46499634,
-      "current_return": 0.10561463,
+      "latest_price": 352.77999878,
+      "current_return": 0.103472,
       "outcomes": {
         "d5": {
           "sessions": 5,
@@ -2264,8 +2264,8 @@
       "latest_score": 94.5,
       "latest_stage": "trigger",
       "latest_date": "2026-11-16",
-      "latest_price": 360.72000122,
-      "current_return": -0.01407603,
+      "latest_price": 359.69000244,
+      "current_return": -0.01689124,
       "outcomes": {
         "d5": {
           "sessions": 5,
@@ -2468,8 +2468,8 @@
       "latest_score": 87.0,
       "latest_stage": "trigger",
       "latest_date": "2026-11-16",
-      "latest_price": 85.52429962,
-      "current_return": 0.0174197,
+      "latest_price": 85.33999634,
+      "current_return": 0.01522718,
       "outcomes": {
         "d5": {
           "sessions": 5,
@@ -2555,8 +2555,8 @@
       "latest_score": 92.9,
       "latest_stage": "trigger",
       "latest_date": "2026-11-16",
-      "latest_price": 161.47999573,
-      "current_return": 0.05666795,
+      "latest_price": 160.6499939,
+      "current_return": 0.05123671,
       "outcomes": {
         "d5": {
           "sessions": 5,
@@ -2796,8 +2796,8 @@
       "latest_score": 89.7,
       "latest_stage": "trigger",
       "latest_date": "2026-11-16",
-      "latest_price": 508.55099487,
-      "current_return": -0.02408176,
+      "latest_price": 504.27999878,
+      "current_return": -0.03227788,
       "outcomes": {
         "d5": {
           "sessions": 5,
@@ -2939,8 +2939,8 @@
       "latest_score": 93.5,
       "latest_stage": "trigger",
       "latest_date": "2026-11-16",
-      "latest_price": 195.94999695,
-      "current_return": 0.00792139,
+      "latest_price": 196.03999329,
+      "current_return": 0.00838431,
       "outcomes": {
         "d5": {
           "sessions": 5,
@@ -3086,8 +3086,8 @@
       "latest_score": 86.8,
       "latest_stage": "trigger",
       "latest_date": "2026-11-16",
-      "latest_price": 508.55099487,
-      "current_return": -0.06703298,
+      "latest_price": 504.27999878,
+      "current_return": -0.07486837,
       "outcomes": {
         "d5": {
           "sessions": 5,
@@ -3133,8 +3133,8 @@
       "latest_score": 85.4,
       "latest_stage": "trigger",
       "latest_date": "2026-11-16",
-      "latest_price": 259.0,
-      "current_return": 0.031092,
+      "latest_price": 257.75,
+      "current_return": 0.02611569,
       "outcomes": {
         "d5": {
           "sessions": 5,
@@ -3180,8 +3180,8 @@
       "latest_score": 85.1,
       "latest_stage": "trigger",
       "latest_date": "2026-11-16",
-      "latest_price": 55.78480148,
-      "current_return": -0.48727205,
+      "latest_price": 55.47000122,
+      "current_return": -0.49016543,
       "outcomes": {
         "d5": {
           "sessions": 5,
@@ -3278,8 +3278,8 @@
       "latest_score": 92.9,
       "latest_stage": "trigger",
       "latest_date": "2026-11-16",
-      "latest_price": 285.15499878,
-      "current_return": -0.18916345,
+      "latest_price": 281.26000977,
+      "current_return": -0.20023883,
       "outcomes": {
         "d5": {
           "sessions": 5,
@@ -3327,8 +3327,8 @@
       "latest_score": 89.0,
       "latest_stage": "trigger",
       "latest_date": "2026-11-16",
-      "latest_price": 468.23001099,
-      "current_return": 0.19617313,
+      "latest_price": 462.32000732,
+      "current_return": 0.18107502,
       "outcomes": {
         "d5": {
           "sessions": 5,
@@ -3472,8 +3472,8 @@
       "latest_score": 93.9,
       "latest_stage": "trigger",
       "latest_date": "2026-11-16",
-      "latest_price": 334.76998901,
-      "current_return": -0.06386849,
+      "latest_price": 333.3999939,
+      "current_return": -0.06769947,
       "outcomes": {
         "d5": {
           "sessions": 5,
@@ -3521,8 +3521,8 @@
       "latest_score": 90.4,
       "latest_stage": "trigger",
       "latest_date": "2026-11-16",
-      "latest_price": 158.19500732,
-      "current_return": -0.28827549,
+      "latest_price": 156.13999939,
+      "current_return": -0.29752104,
       "outcomes": {
         "d5": {
           "sessions": 5,
@@ -3570,8 +3570,8 @@
       "latest_score": 87.7,
       "latest_stage": "trigger",
       "latest_date": "2026-11-16",
-      "latest_price": 356.82998657,
-      "current_return": -0.19735928,
+      "latest_price": 350.25,
+      "current_return": -0.21216006,
       "outcomes": {
         "d5": {
           "sessions": 5,
@@ -3619,8 +3619,8 @@
       "latest_score": 88.8,
       "latest_stage": "trigger",
       "latest_date": "2026-11-16",
-      "latest_price": 50.27999878,
-      "current_return": -0.12904904,
+      "latest_price": 50.08000183,
+      "current_return": -0.13251339,
       "outcomes": {
         "d5": {
           "sessions": 5,
@@ -3668,8 +3668,8 @@
       "latest_score": 88.2,
       "latest_stage": "trigger",
       "latest_date": "2026-11-16",
-      "latest_price": 60.72999954,
-      "current_return": 0.0111555,
+      "latest_price": 60.43000031,
+      "current_return": 0.00616051,
       "outcomes": {
         "d5": {
           "sessions": 5,
@@ -3717,8 +3717,8 @@
       "latest_score": 86.0,
       "latest_stage": "trigger",
       "latest_date": "2026-11-16",
-      "latest_price": 288.18499756,
-      "current_return": -0.1755307,
+      "latest_price": 283.72000122,
+      "current_return": -0.18830463,
       "outcomes": {
         "d5": {
           "sessions": 5,
@@ -3913,8 +3913,8 @@
       "latest_score": 88.8,
       "latest_stage": "trigger",
       "latest_date": "2026-11-16",
-      "latest_price": 214.3500061,
-      "current_return": -0.29088922,
+      "latest_price": 210.83000183,
+      "current_return": -0.30253407,
       "outcomes": {
         "d5": {
           "sessions": 5,
@@ -4011,8 +4011,8 @@
       "latest_score": 85.5,
       "latest_stage": "trigger",
       "latest_date": "2026-11-16",
-      "latest_price": 732.88000488,
-      "current_return": -0.33141147,
+      "latest_price": 719.02001953,
+      "current_return": -0.34405559,
       "outcomes": {
         "d5": {
           "sessions": 5,
@@ -4109,8 +4109,8 @@
       "latest_score": 89.9,
       "latest_stage": "trigger",
       "latest_date": "2026-11-16",
-      "latest_price": 161.47999573,
-      "current_return": 0.04456948,
+      "latest_price": 160.6499939,
+      "current_return": 0.03920043,
       "outcomes": {
         "d5": {
           "sessions": 5,
@@ -4207,8 +4207,8 @@
       "latest_score": 87.4,
       "latest_stage": "trigger",
       "latest_date": "2026-11-16",
-      "latest_price": 183.41000366,
-      "current_return": 0.07698182,
+      "latest_price": 181.67999268,
+      "current_return": 0.06682321,
       "outcomes": {
         "d5": {
           "sessions": 5,
@@ -4546,8 +4546,8 @@
       "latest_score": 89.5,
       "latest_stage": "trigger",
       "latest_date": "2026-11-16",
-      "latest_price": 732.88000488,
-      "current_return": -0.33216085,
+      "latest_price": 719.02001953,
+      "current_return": -0.3447908,
       "outcomes": {
         "d5": {
           "sessions": 5,
@@ -4691,8 +4691,8 @@
       "latest_score": 85.2,
       "latest_stage": "trigger",
       "latest_date": "2026-11-16",
-      "latest_price": 259.0,
-      "current_return": 0.02965731,
+      "latest_price": 257.75,
+      "current_return": 0.02468792,
       "outcomes": {
         "d5": {
           "sessions": 5,
@@ -4885,8 +4885,8 @@
       "latest_score": 88.1,
       "latest_stage": "trigger",
       "latest_date": "2026-11-16",
-      "latest_price": 341.77999878,
-      "current_return": 0.03125943,
+      "latest_price": 338.20999146,
+      "current_return": 0.02048757,
       "outcomes": {
         "d5": {
           "sessions": 5,
@@ -5028,8 +5028,8 @@
       "latest_score": 92.8,
       "latest_stage": "trigger",
       "latest_date": "2026-11-16",
-      "latest_price": 304.75,
-      "current_return": 0.08769363,
+      "latest_price": 303.70999146,
+      "current_return": 0.0839817,
       "outcomes": {
         "d5": {
           "sessions": 5,
@@ -5077,8 +5077,8 @@
       "latest_score": 85.0,
       "latest_stage": "probe",
       "latest_date": "2026-11-16",
-      "latest_price": 285.15499878,
-      "current_return": -0.18494541,
+      "latest_price": 281.26000977,
+      "current_return": -0.1960784,
       "outcomes": {
         "d5": {
           "sessions": 5,
@@ -5126,8 +5126,8 @@
       "latest_score": 87.7,
       "latest_stage": "trigger",
       "latest_date": "2026-11-16",
-      "latest_price": 288.18499756,
-      "current_return": -0.18502023,
+      "latest_price": 283.72000122,
+      "current_return": -0.19764712,
       "outcomes": {
         "d5": {
           "sessions": 5,
@@ -5175,8 +5175,8 @@
       "latest_score": 90.9,
       "latest_stage": "trigger",
       "latest_date": "2026-11-16",
-      "latest_price": 586.0,
-      "current_return": 0.12211095,
+      "latest_price": 585.21002197,
+      "current_return": 0.12059825,
       "outcomes": {
         "d5": {
           "sessions": 5,
@@ -5322,8 +5322,8 @@
       "latest_score": 86.2,
       "latest_stage": "trigger",
       "latest_date": "2026-11-16",
-      "latest_price": 665.28997803,
-      "current_return": 0.10286118,
+      "latest_price": 661.71002197,
+      "current_return": 0.09692663,
       "outcomes": {
         "d5": {
           "sessions": 5,
@@ -5616,8 +5616,8 @@
       "latest_score": 92.5,
       "latest_stage": "trigger",
       "latest_date": "2026-11-16",
-      "latest_price": 60.72999954,
-      "current_return": 0.02775427,
+      "latest_price": 60.43000031,
+      "current_return": 0.02267728,
       "outcomes": {
         "d5": {
           "sessions": 5,
@@ -5659,8 +5659,8 @@
       "latest_score": 88.1,
       "latest_stage": "trigger",
       "latest_date": "2026-11-16",
-      "latest_price": 183.41000366,
-      "current_return": 0.07025736,
+      "latest_price": 181.67999268,
+      "current_return": 0.06016218,
       "outcomes": {
         "d5": {
           "sessions": 5,
@@ -5744,9 +5744,9 @@
       "last_seen_at": "2026-10-26T22:33:58+08:00",
       "latest_score": 85.7,
       "latest_stage": "trigger",
-      "latest_date": "2026-11-13",
-      "latest_price": 34.45000076,
-      "current_return": -0.01543296,
+      "latest_date": "2026-11-17",
+      "latest_price": 35.27000046,
+      "current_return": 0.0080023,
       "outcomes": {
         "d5": {
           "sessions": 5,
@@ -5958,8 +5958,8 @@
       "latest_score": 88.4,
       "latest_stage": "trigger",
       "latest_date": "2026-11-16",
-      "latest_price": 508.55099487,
-      "current_return": -0.12082326,
+      "latest_price": 504.27999878,
+      "current_return": -0.1282069,
       "outcomes": {
         "d5": {
           "sessions": 5,
@@ -6001,8 +6001,8 @@
       "latest_score": 88.2,
       "latest_stage": "trigger",
       "latest_date": "2026-11-16",
-      "latest_price": 285.15499878,
-      "current_return": -0.11412284,
+      "latest_price": 281.26000977,
+      "current_return": -0.12622321,
       "outcomes": {
         "d5": {
           "sessions": 5,
@@ -6044,8 +6044,8 @@
       "latest_score": 95.7,
       "latest_stage": "trigger",
       "latest_date": "2026-11-16",
-      "latest_price": 664.09002686,
-      "current_return": 0.00619701,
+      "latest_price": 653.98999023,
+      "current_return": -0.00910608,
       "outcomes": {
         "d5": {
           "sessions": 5,
@@ -6087,8 +6087,8 @@
       "latest_score": 92.9,
       "latest_stage": "trigger",
       "latest_date": "2026-11-16",
-      "latest_price": 193.72999573,
-      "current_return": -0.07190766,
+      "latest_price": 193.22000122,
+      "current_return": -0.07435086,
       "outcomes": {
         "d5": {
           "sessions": 5,
@@ -6130,8 +6130,8 @@
       "latest_score": 92.8,
       "latest_stage": "trigger",
       "latest_date": "2026-11-16",
-      "latest_price": 111.76999664,
-      "current_return": 0.04136771,
+      "latest_price": 111.81999969,
+      "current_return": 0.04183359,
       "outcomes": {
         "d5": {
           "sessions": 5,
@@ -6216,8 +6216,8 @@
       "latest_score": 90.7,
       "latest_stage": "trigger",
       "latest_date": "2026-11-16",
-      "latest_price": 356.82998657,
-      "current_return": -0.1537495,
+      "latest_price": 350.25,
+      "current_return": -0.16935446,
       "outcomes": {
         "d5": {
           "sessions": 5,
@@ -6431,8 +6431,8 @@
       "latest_score": 87.5,
       "latest_stage": "trigger",
       "latest_date": "2026-11-16",
-      "latest_price": 60.72999954,
-      "current_return": 0.00148416,
+      "latest_price": 60.43000031,
+      "current_return": -0.00346306,
       "outcomes": {
         "d5": {
           "sessions": 5,
@@ -6474,8 +6474,8 @@
       "latest_score": 87.2,
       "latest_stage": "trigger",
       "latest_date": "2026-11-16",
-      "latest_price": 360.72000122,
-      "current_return": -0.02723693,
+      "latest_price": 359.69000244,
+      "current_return": -0.03001456,
       "outcomes": {
         "d5": {
           "sessions": 5,
@@ -6517,8 +6517,8 @@
       "latest_score": 86.8,
       "latest_stage": "trigger",
       "latest_date": "2026-11-16",
-      "latest_price": 84.30380249,
-      "current_return": -0.0165212,
+      "latest_price": 83.66999817,
+      "current_return": -0.02391509,
       "outcomes": {
         "d5": {
           "sessions": 5,
@@ -6603,8 +6603,8 @@
       "latest_score": 86.0,
       "latest_stage": "trigger",
       "latest_date": "2026-11-16",
-      "latest_price": 244.54499817,
-      "current_return": -0.05317873,
+      "latest_price": 242.50999451,
+      "current_return": -0.06105779,
       "outcomes": {
         "d5": {
           "sessions": 5,
@@ -6689,8 +6689,8 @@
       "latest_score": 88.4,
       "latest_stage": "trigger",
       "latest_date": "2026-11-16",
-      "latest_price": 328.04501343,
-      "current_return": -0.04290295,
+      "latest_price": 325.17999268,
+      "current_return": -0.05126187,
       "outcomes": {},
       "pricing_status": "ready",
       "latest_macro_context_score": null,
