@@ -1,6 +1,6 @@
 {
   "schema_version": 1,
-  "updated_at": "2026-11-17T12:45:33+08:00",
+  "updated_at": "2026-11-18T01:03:02+08:00",
   "methodology": {
     "minimum_score": 85.0,
     "eligible_stages": [
@@ -10,8 +10,8 @@
     "episode_gap_days": 7,
     "win_definition": "forward close return > 0"
   },
-  "snapshot_day_count": 81,
-  "snapshot_run_count": 142,
+  "snapshot_day_count": 82,
+  "snapshot_run_count": 143,
   "signal_count": 150,
   "tracking_since": "2026-08-10",
   "horizons": [
@@ -69,6 +69,13 @@
     }
   ],
   "snapshots": [
+    {
+      "date": "2026-11-18",
+      "run_count": 1,
+      "latest_published_at": "2026-11-18T01:03:02+08:00",
+      "recommendation_count": 0,
+      "path": "./data/history/snapshots/2026-11-18.json"
+    },
     {
       "date": "2026-11-17",
       "run_count": 2,
