@@ -1,0 +1,41 @@
+{
+  "schema_version": 1,
+  "date": "2026-11-20",
+  "runs": [
+    {
+      "published_at": "2026-11-20T00:48:52+08:00",
+      "scan_generated_at": "2026-11-19T16:48:52.377805",
+      "recommendation_count": 1,
+      "recommendations": [
+        {
+          "market": "US",
+          "symbol": "APH",
+          "monitor_symbol": "APH",
+          "name": "Amphenol",
+          "signal_stage": "trigger",
+          "stage_label": "右侧触发",
+          "recommend_score": 89.1,
+          "recommend_label": "优先",
+          "last_date": "2026-11-19",
+          "last_close": 78.17,
+          "pattern": "4浪回踩候选",
+          "wave_level": "大级别",
+          "support": 77.7164,
+          "invalid_below": 75.2994,
+          "target_1": 87.24,
+          "target_2": 102.6472,
+          "risk_reward": 3.16,
+          "market_context_score": 0.0,
+          "market_context_label": "大盘偏弱",
+          "macro_context_score": null,
+          "macro_context_label": "宏观数据缺失",
+          "macro_adjustment": 0.0,
+          "combined_context_score": 0.0,
+          "context_guidance": "环境偏弱·等待强确认",
+          "context_guidance_en": "Weak context · Wait for stronger confirmation"
+        }
+      ],
+      "macro_contexts": []
+    }
+  ]
+}
