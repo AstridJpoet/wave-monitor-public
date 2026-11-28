@@ -8,6 +8,41 @@
       "recommendation_count": 0,
       "recommendations": [],
       "macro_contexts": []
+    },
+    {
+      "published_at": "2026-11-28T12:07:59+08:00",
+      "scan_generated_at": "2026-11-28T04:07:59.534454",
+      "recommendation_count": 1,
+      "recommendations": [
+        {
+          "market": "US",
+          "symbol": "USB",
+          "monitor_symbol": "USB",
+          "name": "USB",
+          "signal_stage": "trigger",
+          "stage_label": "右侧触发",
+          "recommend_score": 88.9,
+          "recommend_label": "优先",
+          "last_date": "2026-11-27",
+          "last_close": 59.29,
+          "pattern": "4浪回踩候选",
+          "wave_level": "大级别",
+          "support": 58.94,
+          "invalid_below": 59.0068,
+          "target_1": 64.8124,
+          "target_2": 74.3127,
+          "risk_reward": 19.5,
+          "market_context_score": 10.0,
+          "market_context_label": "大盘偏弱",
+          "macro_context_score": null,
+          "macro_context_label": "宏观数据缺失",
+          "macro_adjustment": 0.0,
+          "combined_context_score": 10.0,
+          "context_guidance": "环境偏弱·等待强确认",
+          "context_guidance_en": "Weak context · Wait for stronger confirmation"
+        }
+      ],
+      "macro_contexts": []
     }
   ]
 }
